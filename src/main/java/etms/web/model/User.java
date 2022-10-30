@@ -1,39 +1,69 @@
+
 package etms.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
 
 /**
- * 用户的Model. 对应数据库中的etms_user数据表.
+ * 用户的Model. 对应数据库中的axos_users数据表.
  *
  */
-public class User
+@Component
+public class User implements Serializable
 {
     /**
-     * 用户空构造函数
+     * 用户的默认构造函数.
      */
     public User()
     {
-
     }
+
     /**
-     *用户构造函数
-     * @param uid 用户id
-     * @param userGroup 用户组id
-     * @param userName 用户名
-     * @param password 用户密码
-     * @param email 用户电子邮件地址
+     * 用户的构造函数.
+     *
+     * @param username       - 用户名
+     * @param password       - 密码
+     * @param email          - 电子邮件地址
+     * @param userGroup     - 用户组
      */
-    public User(long uid, int userGroup, String userName, String password, String email)
+    public User(
+            String username,
+            String password,
+            String email,
+            UserGroup userGroup)
     {
-        this.uid = uid;
-        this.userGroup = userGroup;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
+        this.userGroup = userGroup;
     }
 
     /**
-     * 获取用户id
-     * @return 用户uid
+     * User类的构造函数.
+     *
+     * @param uid            - 用户唯一标识符
+     * @param username       - 用户名
+     * @param password       - 密码
+     * @param email          - 电子邮件地址
+     * @param userGroup      - 用户组
+     */
+    public User(
+            int uid,
+            String username,
+            String password,
+            String email,
+            UserGroup userGroup)
+    {
+        this(username, password, email, userGroup);
+        this.uid = uid;
+    }
+
+    /**
+     * 获取用户唯一标识符.
+     *
+     * @return 用户唯一标识符
      */
     public long getUid()
     {
@@ -41,8 +71,9 @@ public class User
     }
 
     /**
-     * 设置用户id
-     * @param uid 用户id
+     * 设置用户唯一标识符.
+     *
+     * @param uid - 用户唯一标识符
      */
     public void setUid(long uid)
     {
@@ -50,44 +81,29 @@ public class User
     }
 
     /**
-     * 获取用户组
-     * @return 用户组id
-     */
-    public int getuserGroup()
-    {
-        return userGroup;
-    }
-
-    /**
-     * 设置用户组id
-     * @param userGroup 用户组id
-     */
-    public void setUserGroup(int userGroup)
-    {
-        this.userGroup = userGroup;
-    }
-
-    /**
-     * 获取用户名
+     * 获取用户名.
+     *
      * @return 用户名
      */
-    public String getUserName()
+    public String getUsername()
     {
-        return userName;
+        return username;
     }
 
     /**
-     * 设置用户名
-     * @param userName 用户名
+     * 设置用户名.
+     *
+     * @param username - 用户名
      */
-    public void setUserName(String userName)
+    public void setUsername(String username)
     {
-        this.userName = userName;
+        this.username = username;
     }
 
     /**
-     * 获取用户密码
-     * @return 用户密码
+     * 获取密码(已采用MD5加密).
+     *
+     * @return 密码
      */
     public String getPassword()
     {
@@ -95,8 +111,9 @@ public class User
     }
 
     /**
-     * 设置用户密码
-     * @param password 用户密码
+     * 设置密码.
+     *
+     * @param password - 密码
      */
     public void setPassword(String password)
     {
@@ -104,8 +121,9 @@ public class User
     }
 
     /**
-     * 获取用户电子邮件地址
-     * @return 用户电子邮件地址
+     * 获取电子邮件地址.
+     *
+     * @return 电子邮件地址
      */
     public String getEmail()
     {
@@ -113,8 +131,9 @@ public class User
     }
 
     /**
-     * 设置用户电子邮件地址
-     * @param email 用户电子邮件地址
+     * 设置电子邮件地址
+     *
+     * @param email - 电子邮件地址
      */
     public void setEmail(String email)
     {
@@ -122,23 +141,84 @@ public class User
     }
 
     /**
-     * 用户id
+     * 获取用户组.
+     *
+     * @return 用户组对象
+     */
+    public UserGroup getUserGroup()
+    {
+        return userGroup;
+    }
+
+    /**
+     * 设置用户组.
+     *
+     * @param userGroupId - 用户组对象
+     */
+    public void setUserGroup(UserGroup userGroupId)
+    {
+        this.userGroup = userGroupId;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    public int hashCode()
+    {
+        return (int) uid;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof User)
+        {
+            User anotherUser = (User) obj;
+            return anotherUser.getUid() == uid;
+        }
+        return false;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+        return String.format(
+                "User: [Uid=%s, Username=%s, Email=%s, userGroupId={%s}]",
+                new Object[]{uid, username, email, userGroup});
+    }
+
+    /**
+     * 用户的唯一标识符.
      */
     private long uid;
+
     /**
-     * 用户组id
+     * 用户名.
      */
-    private int userGroup;
+    private String username;
+
     /**
-     * 用户名
+     * 密码(已采用MD5加密).
      */
-    private String userName;
-    /**
-     * 用户密码
-     */
+    @JsonIgnore
     private String password;
+
     /**
-     * 用户电子邮件地址
+     * 电子邮件地址.
      */
     private String email;
+
+    /**
+     * 用户组对象.
+     */
+    @JsonIgnore
+    private UserGroup userGroup;
+    /**
+     * 唯一的序列化标识符.
+     */
+    private static final long serialVersionUID = 2264535351943252507L;
 }

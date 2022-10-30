@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.LessonMapper">
+    <!-- ResultMap -->
+    <resultMap id="LessonResultMap" type="etms.web.model.Lesson">
+        <id property="lessonId" column="lesson_id"/>
+        <result property="lessonName" column="lesson_name"/>
+        <result property="description" column="description"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="lecturerId" column="lecturer_id"/>
+    </resultMap>
+
+    <select id="getLessonUsingLessonId"
+            parameterType="etms.web.model.Lesson"
+            resultMap="LessonResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lessons
+        WHERE lesson_id = #{lessonId}
+    </select>
+
+    <select id="getLessonUsingLecturerId"
+            parameterType="etms.web.model.Lesson"
+            resultMap="LessonResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lessons
+        WHERE lecturer_id = #{lecturerId}
+    </select>
+
+    <select id="getLessonUsingLessonName"
+            parameterType="etms.web.model.Lesson"
+            resultMap="LessonResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lessons
+        WHERE lesson_name = #{lessonName}
+    </select>
+
+    <insert id="createLesson"
+            parameterType="etms.web.model.Lesson"
+            flushCache="true"
+            keyProperty="lessonId"
+            keyColumn="lesson_id"
+            useGeneratedKeys="true">
+        INSERT INTO etms_lessons (lesson_id, lesson_name, description, start_time, end_time, lecturer_id)
+        VALUES (#{lessonId}, #{lessonName}, #{description},#{startTime},#{endTime},#{lecturerId})
+    </insert>
+
+    <update id="updateLesson"
+            parameterType="etms.web.model.Lesson"
+            flushCache="true">
+        UPDATE etms.etms_lessons
+        SET lesson_id       = #{lesson.lessonId},
+            lesson_name     = #{lesson.lessonName},
+            description     = #{lesson.description},
+            start_time      = #{lesson.startTime},
+            end_time        = #{lesson.endTime},
+            lecturer_id     = #{lesson.lecturerId}
+        WHERE lesson_id     = #{lesson.lessonId}
+    </update>
+
+    <delete id="deleteLesson"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_lessons
+        WHERE lesson_id = #{lessonId}
+    </delete>
+</mapper>

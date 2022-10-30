@@ -1,12 +1,15 @@
 
 package etms.web.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
 /**
  * 用户组的Model. 对应数据库中的etms_user_groups数据表.
  *
  */
+@Component
 public class UserGroup
 {
     /**

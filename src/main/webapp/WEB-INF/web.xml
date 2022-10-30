@@ -20,6 +20,11 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
     </context-param>
+    <!-- Log4j -->
+        <context-param>
+            <param-name>log4jConfigLocation</param-name>
+            <param-value>classpath:log4j2.xml</param-value>
+        </context-param>
     <listener>
         <listener-class>etms.web.util.DriverMangerListener</listener-class>
     </listener>

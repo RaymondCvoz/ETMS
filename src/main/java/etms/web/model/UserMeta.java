@@ -1,11 +1,14 @@
 package etms.web.model;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
 /**
  * 用户元信息,对应数据库中的etms_user_meta数据表.
  *
  */
+@Component
 public class UserMeta
 {
     /**
@@ -127,7 +130,6 @@ public class UserMeta
      * 用户元信息的唯一标识符.
      */
     private long metaId;
-
     /**
      * 元信息对应的用户对象.
      */

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.LessonParticipantMapper">
+    <!-- ResultMap -->
+    <resultMap id="LessonParticipantResultMap" type="etms.web.model.LessonParticipant">
+        <result property="lessonId" column="lesson_id"/>
+        <result property="participantId" column="participant_id"/>
+    </resultMap>
+
+    <select id="getLessonParticipantUsingLessonId"
+            parameterType="etms.web.model.LessonParticipant"
+            resultMap="LessonParticipantResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lesson_participant
+        WHERE lesson_id = #{lessonId}
+    </select>
+
+    <select id="getLessonParticipantUsingParticipantId"
+            parameterType="etms.web.model.LessonParticipant"
+            resultMap="LessonParticipantResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lesson_participant
+        WHERE participant_id = #{participantId}
+    </select>
+
+    <insert id="createLessonParticipant"
+            parameterType="etms.web.model.LessonParticipant"
+            flushCache="true">
+        INSERT INTO etms_lesson_participant (lesson_id, participant_id)
+        VALUES (#{lesson.lessonId}, #{user.uid})
+    </insert>
+
+    <update id="updateLessonParticipantUsingLessonId"
+            parameterType="etms.web.model.LessonParticipant"
+            flushCache="true">
+        UPDATE etms.etms_lesson_participant
+        SET lesson_id       = #{lesson.lessonId},
+            participant_id  = #{user.uid}
+        WHERE lesson_id     = #{lesson.lessonId}
+    </update>
+
+    <update id="updateLessonParticipantUsingParticipantId"
+            parameterType="etms.web.model.LessonParticipant"
+            flushCache="true">
+        UPDATE etms.etms_lesson_participant
+        SET lesson_id       = #{lesson.lessonId},
+            participant_id  = #{user.uid}
+        WHERE lesson_id     = #{user.uid}
+    </update>
+
+    <delete id="deleteLessonParticipantUsingLessonId"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_lesson_participant
+        WHERE lesson_id = #{lessonId}
+    </delete>
+    <delete id="deleteLessonParticipantUsingParticipantId"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_lesson_participant
+        WHERE participant_id = #{participantId}
+    </delete>
+</mapper>

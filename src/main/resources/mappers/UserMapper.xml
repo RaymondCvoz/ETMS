@@ -24,6 +24,7 @@
         FROM etms_users
         WHERE user_group_id = #{userGroup.userGroupId}
     </select>
+
     <select id="getNumberOfUsersUsingUserGroupAndUsername"
             parameterType="map"
             resultType="long"
@@ -77,6 +78,7 @@
           AND uid > #{uid}
         LIMIT #{limit}
     </select>
+
     <select id="getUserUsingUserGroupAndUsername"
             parameterType="map"
             resultMap="UserResultMap"
@@ -111,7 +113,7 @@
         SET username           = #{username},
             password           = #{password},
             email              = #{email},
-            user_group_id      = #{userGroup.userGroupId},
+            user_group_id      = #{userGroup.userGroupId}
         WHERE uid = #{uid}
     </update>
 
