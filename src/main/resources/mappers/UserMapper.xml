@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.UserMapper">
+    <!-- ResultMap -->
+    <resultMap id="UserResultMap"
+               type="etms.web.model.User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <association property="userGroup"
+                     javaType="etms.web.model.UserGroup"
+                     column="user_group_id"
+                     select="etms.web.mapper.UserGroupMapper.getUserGroupUsingId"/>
+    </resultMap>
+    <!-- Methods -->
+    <select id="getNumberOfUsersUsingUserGroup"
+            parameterType="etms.web.model.UserGroup"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(*)
+        FROM etms_users
+        WHERE user_group_id = #{userGroup.userGroupId}
+    </select>
+    <select id="getNumberOfUsersUsingUserGroupAndUsername"
+            parameterType="map"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(*)
+        FROM etms_users
+        <where>
+            <if test="userGroup != null">
+                user_group_id = #{userGroup.userGroupId}
+            </if>
+            <if test="username != null and username != ''">
+                AND username LIKE "%"#{username}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserUsingUid"
+            parameterType="long"
+            resultMap="UserResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_users
+        WHERE uid = #{uid}
+    </select>
+
+    <select id="getUserUsingUsername"
+            parameterType="String"
+            resultMap="UserResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_users
+        WHERE username = #{username}
+    </select>
+
+    <select id="getUserUsingEmail"
+            parameterType="String"
+            resultMap="UserResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_users
+        WHERE email = #{email}
+    </select>
+
+    <select id="getUserUsingUserGroup"
+            parameterType="map"
+            resultMap="UserResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_users
+        WHERE user_group_id = #{userGroup.userGroupId}
+          AND uid > #{uid}
+        LIMIT #{limit}
+    </select>
+    <select id="getUserUsingUserGroupAndUsername"
+            parameterType="map"
+            resultMap="UserResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_users
+        <where>
+            <if test="userGroup != null">
+                user_group_id = #{userGroup.userGroupId}
+            </if>
+            <if test="username != null and username != ''">
+                AND username LIKE "%"#{username}"%"
+            </if>
+        </where>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <insert id="createUser"
+            parameterType="etms.web.model.User"
+            flushCache="true"
+            keyProperty="uid"
+            keyColumn="uid"
+            useGeneratedKeys="true">
+        INSERT INTO etms_users (username, password, email, user_group_id)
+        VALUES (#{username}, #{password}, #{email}, #{userGroup.userGroupId})
+    </insert>
+
+    <update id="updateUser"
+            parameterType="etms.web.model.User"
+            flushCache="true">
+        UPDATE etms_users
+        SET username           = #{username},
+            password           = #{password},
+            email              = #{email},
+            user_group_id      = #{userGroup.userGroupId},
+        WHERE uid = #{uid}
+    </update>
+
+    <delete id="deleteUser"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_users
+        WHERE uid = #{uid}
+    </delete>
+</mapper>
