@@ -8,7 +8,6 @@
         <id property="optionId" column="option_id"/>
         <result property="optionName" column="option_name"/>
         <result property="optionValue" column="option_value"/>
-        <result property="isAutoload" column="is_autoload"/>
     </resultMap>
 
     <!-- Methods -->
