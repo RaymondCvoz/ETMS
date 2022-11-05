@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="getLessonUsingLessonId"
-            parameterType="etms.web.model.Lesson"
+            parameterType="long"
             resultMap="LessonResultMap"
             useCache="true">
         SELECT *
@@ -23,7 +23,7 @@
     </select>
 
     <select id="getLessonUsingLecturerId"
-            parameterType="etms.web.model.Lesson"
+            parameterType="long"
             resultMap="LessonResultMap"
             useCache="true">
         SELECT *
@@ -32,7 +32,7 @@
     </select>
 
     <select id="getLessonUsingLessonName"
-            parameterType="etms.web.model.Lesson"
+            parameterType="String"
             resultMap="LessonResultMap"
             useCache="true">
         SELECT *
@@ -54,13 +54,13 @@
             parameterType="etms.web.model.Lesson"
             flushCache="true">
         UPDATE etms.etms_lessons
-        SET lesson_id       = #{lesson.lessonId},
-            lesson_name     = #{lesson.lessonName},
-            description     = #{lesson.description},
-            start_time      = #{lesson.startTime},
-            end_time        = #{lesson.endTime},
-            lecturer_id     = #{lesson.lecturerId}
-        WHERE lesson_id     = #{lesson.lessonId}
+        SET lesson_id       = #{lessonId},
+            lesson_name     = #{lessonName},
+            description     = #{description},
+            start_time      = #{startTime},
+            end_time        = #{endTime},
+            lecturer_id     = #{lecturerId}
+        WHERE lesson_id     = #{lessonId}
     </update>
 
     <delete id="deleteLesson"

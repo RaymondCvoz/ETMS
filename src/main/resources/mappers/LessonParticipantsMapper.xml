@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.LessonParticipantsMapper">
+    <!-- ResultMap -->
+    <resultMap id="LessonParticipantResultMap" type="etms.web.model.LessonParticipant">
+        <result property="lessonId" column="lesson_id"/>
+        <result property="participantId" column="participant_id"/>
+    </resultMap>
+
+    <select id="getLessonParticipantUsingLessonId"
+            parameterType="long"
+            resultMap="LessonParticipantResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lesson_participants
+        WHERE lesson_id = #{lessonId}
+    </select>
+
+    <select id="getLessonParticipantUsingParticipantId"
+            parameterType="long"
+            resultMap="LessonParticipantResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_lesson_participants
+        WHERE participant_id = #{participantId}
+    </select>
+
+    <select id="getLessonParticipantUsingLessonIdAndParticipantId"
+            parameterType="long"
+            resultMap="etms.web.model.LessonParticipant"
+            useCache="true">
+        SELECT *
+        FROM etms_lesson_participants
+        WHERE participant_id = #{participantId}
+        AND lesson_id = #{lessonId}
+    </select>
+
+    <insert id="createLessonParticipant"
+            parameterType="etms.web.model.LessonParticipant"
+            flushCache="true">
+        INSERT INTO etms_lesson_participants (lesson_id, participant_id)
+        VALUES (#{lesson.lessonId}, #{user.uid})
+    </insert>
+
+
+    <delete id="deleteLessonParticipantUsingLessonId"
+            parameterType="etms.web.model.LessonParticipant"
+            flushCache="true">
+        DELETE
+        FROM etms_lesson_participants
+        WHERE lesson_id = #{lesson.lessonId}
+        AND participant_id = #{user.uid}
+    </delete>
+
+</mapper>
