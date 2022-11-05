@@ -68,7 +68,7 @@
         <property name="mapperLocations" value="classpath:/mappers/*.xml"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="axos.web.mapper"/>
+        <property name="basePackage" value="etms.web.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
     </bean>
     <bean id="transactionManager"

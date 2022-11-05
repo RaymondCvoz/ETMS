@@ -2,6 +2,7 @@ package etms.web.mapper;
 
 import etms.web.model.LessonParticipant;
 import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * User Data Access Object
  */
 @CacheNamespace(implementation = org.mybatis.caches.ehcache.EhcacheCache.class)
-@Component
+@Mapper
 public interface LessonParticipantsMapper
 {
     /**

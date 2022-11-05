@@ -4,6 +4,7 @@ package etms.web.mapper;
 import etms.web.model.User;
 import etms.web.model.UserMeta;
 import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ import java.util.List;
  *
  */
 @CacheNamespace(implementation = org.mybatis.caches.ehcache.EhcacheCache.class)
-@Component
+@Mapper
 public interface UserMetaMapper
 {
     /**
