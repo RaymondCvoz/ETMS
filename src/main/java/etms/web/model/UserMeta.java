@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * 用户元信息,对应数据库中的etms_user_meta数据表.
+ * 用户元信息
  *
  */
 @Component

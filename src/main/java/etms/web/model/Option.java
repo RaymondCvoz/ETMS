@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  */
 @Component
-public class Option implements Serializable
+public class Option
 {
     /**
      * Option类的默认构造函数.
@@ -129,9 +129,4 @@ public class Option implements Serializable
      * 选项的值.
      */
     private String optionValue;
-
-    /**
-     * 唯一的序列化标识符.
-     */
-    private static final long serialVersionUID = -1533277464247886659L;
 }

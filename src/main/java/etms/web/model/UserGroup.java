@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * 用户组的Model. 对应数据库中的etms_user_groups数据表.
+ * 用户组
  *
  */
 @Component
@@ -119,8 +119,4 @@ public class UserGroup
      */
     private String userGroupName;
 
-    /**
-     * 唯一的序列化标识符.
-     */
-    private static final long serialVersionUID = -4267702283058634035L;
 }

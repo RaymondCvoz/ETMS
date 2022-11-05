@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * 用户的Model. 对应数据库中的axos_users数据表.
+ * 用户
  *
  */
 @Component
-public class User implements Serializable
+public class User
 {
     /**
      * 用户的默认构造函数.
