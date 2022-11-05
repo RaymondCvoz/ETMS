@@ -22,10 +22,6 @@ public class SessionListener implements HttpSessionListener
     {
         return totalSessions;
     }
-
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpSessionListener#sessionCreated(javax.servlet.http.HttpSessionEvent)
-     */
     @Override
     public void sessionCreated(HttpSessionEvent se)
     {
@@ -37,9 +33,6 @@ public class SessionListener implements HttpSessionListener
         LOGGER.debug("Total Sessions: " + totalSessions);
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpSessionListener#sessionDestroyed(javax.servlet.http.HttpSessionEvent)
-     */
     @Override
     public void sessionDestroyed(HttpSessionEvent se)
     {
