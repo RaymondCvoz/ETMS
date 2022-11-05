@@ -93,15 +93,14 @@ public class UserGroup
         this.userGroupName = userGroupName;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString()
     {
-        return String.format(
-                "UserGroup [ID=%d, Slug=%s, Name=%s]",
-                new Object[]{userGroupId, userGroupSlug, userGroupName});
+        return "UserGroup{" +
+                "userGroupId=" + userGroupId +
+                ", userGroupSlug='" + userGroupSlug + '\'' +
+                ", userGroupName='" + userGroupName + '\'' +
+                '}';
     }
 
     /**

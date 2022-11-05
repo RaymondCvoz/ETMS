@@ -146,6 +146,19 @@ public class Lesson
         this.lecturerId = lecturerId;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Lesson{" +
+                "lessonId=" + lessonId +
+                ", lessonName='" + lessonName + '\'' +
+                ", description='" + description + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", lecturerId=" + lecturerId +
+                '}';
+    }
+
     /**
      * 课程唯一标识符
      */

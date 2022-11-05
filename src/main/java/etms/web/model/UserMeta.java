@@ -126,6 +126,17 @@ public class UserMeta
         this.metaValue = metaValue;
     }
 
+    @Override
+    public String toString()
+    {
+        return "UserMeta{" +
+                "metaId=" + metaId +
+                ", user=" + user +
+                ", metaKey='" + metaKey + '\'' +
+                ", metaValue='" + metaValue + '\'' +
+                '}';
+    }
+
     /**
      * 用户元信息的唯一标识符.
      */

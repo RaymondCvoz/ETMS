@@ -104,15 +104,14 @@ public class Option
         this.optionValue = optionValue;
     }
 
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
-        return String.format(
-                "Option [ID=%d, Name=%s, Value=%s, isAutoLoad=%s]",
-                new Object[]{optionId, optionName, optionValue});
+        return "Option{" +
+                "optionId=" + optionId +
+                ", optionName='" + optionName + '\'' +
+                ", optionValue='" + optionValue + '\'' +
+                '}';
     }
 
     /**

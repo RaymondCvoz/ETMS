@@ -160,17 +160,6 @@ public class User
         this.userGroup = userGroupId;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode()
-    {
-        return (int) uid;
-    }
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     public boolean equals(Object obj)
     {
         if (obj instanceof User)
@@ -181,14 +170,16 @@ public class User
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
-        return String.format(
-                "User: [Uid=%s, Username=%s, Email=%s, userGroupId={%s}]",
-                new Object[]{uid, username, email, userGroup});
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", userGroup=" + userGroup +
+                '}';
     }
 
     /**
