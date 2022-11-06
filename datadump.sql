@@ -261,6 +261,7 @@ CREATE TABLE `etms_problem_checkpoints` (
   `problem_id` bigint(20) DEFAULT NULL COMMENT '题目唯一标识符',
   `checkpoint_id` int(11) NOT NULL COMMENT '测试点唯一标识符',
   `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '测试点是否精确匹配（填空题）',
+  `checkpoint_type` text NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
   `checkpoint_score` int(11) NOT NULL COMMENT '测试点得分',
   `checkpoint_answer` longtext COMMENT '测试点答案',
   KEY `etms_problem_checkpoints_etms_problems_null_fk` (`problem_id`),
@@ -505,4 +506,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-06 10:53:56
+-- Dump completed on 2022-11-06 11:53:05
