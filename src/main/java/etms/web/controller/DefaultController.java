@@ -13,6 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/")
 public class DefaultController
 {
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public ModelAndView indexView(HttpServletRequest request, HttpServletResponse response)
+    {
+        ModelAndView view = null;
+        view = new ModelAndView("index");
+        return view;
+    }
+
     @RequestMapping(value = "/help",method = RequestMethod.GET)
     public ModelAndView helpView(HttpServletRequest request, HttpServletResponse response)
     {

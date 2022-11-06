@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><spring:message code="axos.misc.help.title" text="Help Center"/>}</title>
+    <title><spring:message code="axos.misc.help.title" text="Help Center"/></title>
 </head>
 <body>
     <h1>Help</h1>

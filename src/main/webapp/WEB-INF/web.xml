@@ -63,10 +63,10 @@
         <url-pattern>/druid/*</url-pattern>
     </servlet-mapping>
 
-<!--    &lt;!&ndash; Home Page &ndash;&gt;-->
-<!--    <welcome-file-list>-->
-<!--        <welcome-file>/index</welcome-file>-->
-<!--    </welcome-file-list>-->
+    <!-- Home Page -->
+    <welcome-file-list>
+        <welcome-file>/index</welcome-file>
+    </welcome-file-list>
 
     <!-- Error Page -->
     <error-page>

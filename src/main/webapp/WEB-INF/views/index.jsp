@@ -8,6 +8,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Test Page</h2>
+<h2>Index Page</h2>
 </body>
 </html>
