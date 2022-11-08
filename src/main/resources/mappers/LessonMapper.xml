@@ -46,8 +46,8 @@
             keyProperty="lessonId"
             keyColumn="lesson_id"
             useGeneratedKeys="true">
-        INSERT INTO etms_lessons (lesson_id, lesson_name, description, start_time, end_time, lecturer_id)
-        VALUES (#{lessonId}, #{lessonName}, #{description},#{startTime},#{endTime},#{lecturerId})
+        INSERT INTO etms_lessons (lesson_name, description, start_time, end_time, lecturer_id)
+        VALUES (#{lessonName}, #{description},#{startTime},#{endTime},#{lecturerId})
     </insert>
 
     <update id="updateLesson"

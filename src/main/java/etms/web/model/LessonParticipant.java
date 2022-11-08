@@ -62,15 +62,6 @@ public class LessonParticipant
         this.user = user;
     }
 
-    @Override
-    public String toString()
-    {
-        return "LessonParticipant{" +
-                "lesson=" + lesson +
-                ", user=" + user +
-                '}';
-    }
-
     /**
      *课程
      */

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.ProblemMapper">
+    <!-- ResultMap -->
+    <resultMap id="ProblemResultMap" type="etms.web.model.Problem">
+        <id property="problemId" column="problem_id"/>
+        <result property="isPublic" column="problem_is_public"/>
+        <result property="problemName" column="problem_name"/>
+        <result property="description" column="problem_description"/>
+        <result property="hint" column="problem_hint"/>
+        <result property="problemType" column="problem_type"/>
+        <result property="answer" column="problem_answer"/>
+    </resultMap>
+
+    <!-- Methods -->
+    <select id="getNumberOfProblems"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(*)
+        FROM etms_problems
+    </select>
+
+    <select id="getNumberOfProblemsUsingFilters"
+            parameterType="map"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(DISTINCT(problem_id))
+        FROM etms_problems
+        NATURAL JOIN etms_problem_tag_relationships ptr
+        NATURAL JOIN etms_problem_tags pt
+        WHERE problem_is_public = #{isPublic}
+        <if test="keyword != null and keyword != ''">
+            AND problem_name LIKE "%"#{keyword}"%"
+        </if>
+        <if test="problemCategoryId != 0">
+            AND problem_tag_id = #{problemCategoryId}
+        </if>
+    </select>
+
+    <select id="getLowerBoundOfProblems"
+            resultType="long"
+            useCache="true">
+        SELECT MIN(problem_id)
+        FROM etms_problems
+    </select>
+
+    <select id="getUpperBoundOfProblems"
+            resultType="long"
+            useCache="true">
+        SELECT MAX(problem_id)
+        FROM etms_problems
+    </select>
+
+    <select id="getUpperBoundOfProblemsWithLimit"
+            parameterType="map"
+            resultType="long"
+            useCache="true">
+        SELECT MAX(problem_id)
+        FROM (
+        SELECT problem_id
+        FROM etms_problems
+        WHERE problem_id >= #{problemId}
+        <if test="isPublicOnly == true">
+            AND problem_is_public = 1
+        </if>
+        LIMIT #{limit}
+        ) p
+    </select>
+
+    <select id="getProblem"
+            parameterType="long"
+            resultMap="ProblemResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_problems p
+        WHERE problem_id = #{problemId}
+    </select>
+
+    <select id="getProblemsUsingFilters"
+            parameterType="map"
+            resultMap="ProblemResultMap"
+            useCache="true">
+        SELECT DISTINCT(p.problem_id), problem_name, problem_is_public,
+        FROM etms_problems p
+        <if test="problemTagId != 0">
+            NATURAL JOIN etms_problem_tag_relationships ptr
+        </if>
+        WHERE p.problem_id &gt;= #{problemId}
+        AND problem_is_public = #{isPublic}
+        <if test="keyword != null and keyword != ''">
+            AND problem_name LIKE "%"#{keyword}"%"
+        </if>
+        <if test="problemTagId != 0">
+            AND problem_tag_id = #{problemTagId}
+        </if>
+        LIMIT #{limit}
+    </select>
+
+    <insert id="createProblem"
+            parameterType="etms.web.model.Problem"
+            flushCache="true"
+            keyProperty="problemId"
+            keyColumn="problem_id"
+            useGeneratedKeys="true">
+        INSERT INTO etms_problems (problem_is_public, problem_name, problem_description,
+                                   problem_hint, problem_type, problem_answer)
+        VALUES (#{isPublic},#{problemName},#{description},#{hint},#{problemType},#{answer})
+    </insert>
+
+    <update id="updateProblem"
+            parameterType="etms.web.model.Problem"
+            flushCache="true">
+        UPDATE etms_problems
+        SET problem_is_public     = #{isPublic},
+            problem_name          = #{problemName},
+            problem_description   = #{description},
+            problem_hint          = #{hint},
+            problem_type          = #{problemType},
+            problem_answer        = #{answer}
+        WHERE problem_id = #{problemId}
+    </update>
+
+    <delete id="deleteProblem"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_problems
+        WHERE problem_id = #{problemId}
+    </delete>
+</mapper>

@@ -12,7 +12,7 @@ import java.util.Date;
 public class Lesson
 {
     /**
-     * Lesson默认构造函数
+     * 课程类默认构造函数
      */
     public Lesson()
     {
@@ -20,13 +20,30 @@ public class Lesson
     }
 
     /**
-     * Lesson构造函数
-     * @param lessonId      课程id
+     * 课程构造函数
+     * @param lessonName 课程名称
+     * @param description 课程描述
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param lecturerId 讲师唯一标识符
+     */
+    public Lesson(String lessonName, String description, Date startTime, Date endTime, long lecturerId)
+    {
+        this.lessonName = lessonName;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.lecturerId = lecturerId;
+    }
+
+    /**
+     * 课程类构造函数
+     * @param lessonId      课程唯一标识符
      * @param lessonName    课程名
      * @param description   课程描述
      * @param startTime     课程开始时间
      * @param endTime       课程结束时间
-     * @param lecturerId    讲师id
+     * @param lecturerId    讲师唯一标识符
      */
     public Lesson(long lessonId, String lessonName, String description, Date startTime, Date endTime, long lecturerId)
     {

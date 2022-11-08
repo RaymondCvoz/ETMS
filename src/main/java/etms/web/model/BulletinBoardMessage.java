@@ -11,7 +11,7 @@ import java.util.Date;
 public class BulletinBoardMessage
 {
     /**
-     * 公告信息默认构造函数
+     * 公告信息类默认构造函数
      */
     public BulletinBoardMessage()
     {
@@ -19,6 +19,19 @@ public class BulletinBoardMessage
 
     /**
      * 公告信息构造函数
+     * @param messageName 公告信息名称
+     * @param messageBody 公告信息内容
+     * @param messageCreateTime 公告信息创建时间
+     */
+    public BulletinBoardMessage(String messageName, String messageBody, Date messageCreateTime)
+    {
+        this.messageName = messageName;
+        this.messageBody = messageBody;
+        this.messageCreateTime = messageCreateTime;
+    }
+
+    /**
+     * 公告信息类构造函数
      * @param messageId 公告信息唯一标识符
      * @param messageName 公告信息标题
      * @param messageBody 公告信息内容

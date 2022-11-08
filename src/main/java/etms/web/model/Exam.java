@@ -16,6 +16,25 @@ public class Exam
 
     /**
      * 测试构造函数
+     * @param examName 测试名称
+     * @param examNotes 测试备注
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param examType 测试类型
+     * @param examProblems 测试包含题目
+     */
+    public Exam(String examName, String examNotes, Date startTime, Date endTime, String examType, String examProblems)
+    {
+        this.examName = examName;
+        this.examNotes = examNotes;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.examType = examType;
+        this.examProblems = examProblems;
+    }
+
+    /**
+     * 测试类构造函数
      * @param examId        测试唯一标识符
      * @param examName      测试名称
      * @param examNotes     测试备注
