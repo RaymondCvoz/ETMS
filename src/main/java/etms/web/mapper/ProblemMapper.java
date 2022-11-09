@@ -25,13 +25,13 @@ public interface ProblemMapper
      * 根据筛选条件获取试题的总数量.
      *
      * @param keyword           - 关键词
-     * @param problemCategoryId - 试题分类的唯一标识符
+     * @param problemTagId - 试题分类的唯一标识符
      * @param isPublicOnly      - 是否只筛选公开试题
      * @return 符合筛选条件试题的总数量
      */
     long getNumberOfProblemsUsingFilters(
             @Param("keyword") String keyword,
-            @Param("problemCategoryId") int problemCategoryId,
+            @Param("problemTagId") int problemTagId,
             @Param("isPublicOnly") boolean isPublicOnly);
 
     /**
@@ -73,8 +73,7 @@ public interface ProblemMapper
      * 通过试题唯一标识符和关键字获取某个范围内的所有试题.
      *
      * @param keyword           - 关键词
-     * @param problemCategoryId - 试题分类的唯一标识符
-     * @param problemTagId      - 试题标签的唯一标识符
+     * @param problemTagId      - 试题类别的唯一标识符
      * @param isPublicOnly      - 是否只筛选公开试题
      * @param offset            - 试题唯一标识符的起始编号
      * @param limit             - 需要获取的试题的数量
@@ -82,7 +81,6 @@ public interface ProblemMapper
      */
     List<Problem> getProblemsUsingFilters(
             @Param("keyword") String keyword,
-            @Param("problemCategoryId") int problemCategoryId,
             @Param("problemTagId") long problemTagId,
             @Param("isPublicOnly") boolean isPublicOnly,
             @Param("problemId") long offset,

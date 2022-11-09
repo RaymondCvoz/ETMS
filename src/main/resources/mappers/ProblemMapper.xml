@@ -35,7 +35,7 @@
             AND problem_name LIKE "%"#{keyword}"%"
         </if>
         <if test="problemCategoryId != 0">
-            AND problem_tag_id = #{problemCategoryId}
+            AND problem_tag_id = #{problemTagId}
         </if>
     </select>
 
@@ -62,9 +62,7 @@
         SELECT problem_id
         FROM etms_problems
         WHERE problem_id >= #{problemId}
-        <if test="isPublicOnly == true">
-            AND problem_is_public = 1
-        </if>
+        AND problem_is_public = #{isPublicOnly}
         LIMIT #{limit}
         ) p
     </select>
