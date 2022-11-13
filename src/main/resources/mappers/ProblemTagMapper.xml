@@ -25,7 +25,7 @@
         FROM etms_problem_tags
     </select>
     <select id="getProblemTagUsingTagId"
-            parameterType="int"
+            parameterType="long"
             resultMap="ProblemTagResultMap"
             useCache="true">
         SELECT *
@@ -83,7 +83,7 @@
         WHERE problem_Tag_id = #{problemTagId}
     </update>
     <delete id="deleteProblemTag"
-            parameterType="int"
+            parameterType="long"
             flushCache="true">
         DELETE
         FROM etms_problem_tags

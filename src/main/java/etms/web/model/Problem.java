@@ -45,7 +45,6 @@ public class Problem
      * @param problemId 试题唯一标识符
      * @param isPublic 试题是否公开
      * @param problemName 实体名称
-     * @param problemTags 试题类别
      * @param description 试题描述
      * @param hint 试题提示
      * @param problemType 试题类型
@@ -55,7 +54,6 @@ public class Problem
             long problemId,
             boolean isPublic,
             String problemName,
-            List<ProblemTag> problemTags,
             String description,
             String hint,
             int problemType,
@@ -64,7 +62,6 @@ public class Problem
         this.problemId = problemId;
         this.isPublic = isPublic;
         this.problemName = problemName;
-        this.problemTags = problemTags;
         this.description = description;
         this.hint = hint;
         this.problemType = problemType;

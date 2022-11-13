@@ -37,7 +37,7 @@ public class ProblemTag{
      *
      * @return 试题分类的唯一标识符
      */
-    public int getProblemTagId()
+    public long getProblemTagId()
     {
         return problemTagId;
     }

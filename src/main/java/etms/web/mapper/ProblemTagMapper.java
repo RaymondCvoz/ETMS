@@ -20,7 +20,7 @@ public interface ProblemTagMapper
      *
      * @return 包含全部题目分类的列表
      */
-    List<ProblemTag> getProblemCategories();
+    List<ProblemTag> getProblemTags();
 
     /**
      * 通过题目分类的唯一标识符获取题目分类对象.
@@ -28,7 +28,7 @@ public interface ProblemTagMapper
      * @param ProblemTagId - 题目分类的唯一标识符
      * @return 预期的题目分类对象或空引用
      */
-    ProblemTag getProblemTagUsingCategoryId(int ProblemTagId);
+    ProblemTag getProblemTagUsingTagId(int ProblemTagId);
 
     /**
      * 获取题目的分类列表.
@@ -36,7 +36,7 @@ public interface ProblemTagMapper
      * @param problemId - 题目的唯一标识符.
      * @return 包含题目分类的列表
      */
-    List<ProblemTag> getProblemCategoriesUsingProblemId(long problemId);
+    List<ProblemTag> getProblemTagsUsingProblemId(long problemId);
 
     /**
      * 获取某个区间内各题目的分类.
@@ -45,7 +45,7 @@ public interface ProblemTagMapper
      * @param problemIdUpperBound - 题目ID区间的上界
      * @return 包含题目分类信息的列表
      */
-    List<ProblemTagRelationship> getProblemCategoriesOfProblems(
+    List<ProblemTagRelationship> getProblemTagsOfProblems(
             @Param(value = "problemIdLowerBound") long problemIdLowerBound,
             @Param(value = "problemIdUpperBound") long problemIdUpperBound);
 
@@ -55,7 +55,7 @@ public interface ProblemTagMapper
      * @param ProblemTagSlug - 题目分类的别名
      * @return 预期的题目分类对象或空引用
      */
-    ProblemTag getProblemTagUsingCategorySlug(String ProblemTagSlug);
+    ProblemTag getProblemTagUsingTagSlug(String ProblemTagSlug);
 
     /**
      * 创建题目分类对象.

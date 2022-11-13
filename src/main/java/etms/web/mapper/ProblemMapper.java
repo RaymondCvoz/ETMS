@@ -31,7 +31,7 @@ public interface ProblemMapper
      */
     long getNumberOfProblemsUsingFilters(
             @Param("keyword") String keyword,
-            @Param("problemTagId") int problemTagId,
+            @Param("problemTagId") long problemTagId,
             @Param("isPublicOnly") boolean isPublicOnly);
 
     /**
