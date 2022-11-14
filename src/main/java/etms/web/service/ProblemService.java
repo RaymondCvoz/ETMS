@@ -603,17 +603,17 @@ public class ProblemService
     /**
      * 检查试题分类是否存在(检查Slug是否重复)
      *
-     * @param ProblemTag     - 当前的试题分类对象
-     * @param ProblemTagSlug - 试题分类的别名
+     * @param problemTag     - 当前的试题分类对象
+     * @param problemTagSlug - 试题分类的别名
      * @return 试题分类是否存在
      */
     private boolean isProblemTagSlugExists(
-            ProblemTag ProblemTag, String ProblemTagSlug)
+            ProblemTag problemTag, String problemTagSlug)
     {
         ProblemTag anotherProblemTag =
-                ProblemTagMapper.getProblemTagUsingTagSlug(ProblemTagSlug);
+                ProblemTagMapper.getProblemTagUsingTagSlug(problemTagSlug);
         return anotherProblemTag != null
-                && anotherProblemTag.getProblemTagId() != ProblemTag.getProblemTagId();
+                && anotherProblemTag.getProblemTagId() != problemTag.getProblemTagId();
     }
 
     /**
