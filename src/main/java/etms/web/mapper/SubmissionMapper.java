@@ -175,4 +175,5 @@ public interface SubmissionMapper
      * @param submissionId - 提交记录的唯一标识符
      */
     int deleteSubmission(@Param("submissionId") long submissionId);
+
 }

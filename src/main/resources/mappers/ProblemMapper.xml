@@ -12,6 +12,7 @@
         <result property="hint" column="problem_hint"/>
         <result property="problemType" column="problem_type"/>
         <result property="answer" column="problem_answer"/>
+        <result property="score" column="problem_score"/>
     </resultMap>
 
     <!-- Methods -->
@@ -103,8 +104,8 @@
             keyColumn="problem_id"
             useGeneratedKeys="true">
         INSERT INTO etms_problems (problem_is_public, problem_name, problem_description,
-                                   problem_hint, problem_type, problem_answer)
-        VALUES (#{isPublic},#{problemName},#{description},#{hint},#{problemType},#{answer})
+                                   problem_hint, problem_type, problem_answer,problem_score)
+        VALUES (#{isPublic},#{problemName},#{description},#{hint},#{problemType},#{answer},#{score})
     </insert>
 
     <update id="updateProblem"
@@ -116,7 +117,8 @@
             problem_description   = #{description},
             problem_hint          = #{hint},
             problem_type          = #{problemType},
-            problem_answer        = #{answer}
+            problem_answer        = #{answer},
+            problem_score         = #{score}
         WHERE problem_id = #{problemId}
     </update>
 

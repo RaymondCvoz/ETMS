@@ -181,6 +181,7 @@ public class ProblemService
      * @param problemType 试题类型
      * @param answer 试题答案
      * @param problemTags 试题类别
+     * @param score 试题满分
      * @return 包含试题创建结果的map对象
      */
     public Map<String, Object> createProblem(
@@ -190,6 +191,7 @@ public class ProblemService
             String hint,
             int problemType,
             String answer,
+            int score,
             String problemTags)
     {
         Problem problem =
@@ -199,7 +201,8 @@ public class ProblemService
                         description,
                         hint,
                         problemType,
-                        answer);
+                        answer,
+                        score);
         @SuppressWarnings("unchecked")
         Map<String, Object> result = (Map<String, Object>) getProblemCreationResult(problem);
 
@@ -255,6 +258,7 @@ public class ProblemService
             String hint,
             int problemType,
             String answer,
+            int score,
             String problemTags)
     {
         Problem problem =
@@ -265,7 +269,8 @@ public class ProblemService
                         description,
                         hint,
                         problemType,
-                        answer);
+                        answer,
+                        score);
         Map<String, Boolean> result = getProblemEditResult(problem);
 
         if (result.get("isSuccessful"))

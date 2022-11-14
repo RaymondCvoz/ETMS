@@ -23,6 +23,7 @@ public class Problem
      * @param hint 试题提示
      * @param problemType 试题类型
      * @param answer 试题答案
+     * @param score 试题满分
      */
     public Problem(
             boolean isPublic,
@@ -30,7 +31,8 @@ public class Problem
             String description,
             String hint,
             int problemType,
-            String answer)
+            String answer,
+            int score)
     {
         this.isPublic = isPublic;
         this.problemName = problemName;
@@ -38,6 +40,7 @@ public class Problem
         this.hint = hint;
         this.problemType = problemType;
         this.answer = answer;
+        this.score = score;
     }
 
     /**
@@ -48,7 +51,8 @@ public class Problem
      * @param description 试题描述
      * @param hint 试题提示
      * @param problemType 试题类型
-     * @param answer 试题大难
+     * @param answer 试题答案
+     * @param score 试题满分
      */
     public Problem(
             long problemId,
@@ -57,7 +61,8 @@ public class Problem
             String description,
             String hint,
             int problemType,
-            String answer)
+            String answer,
+            int score)
     {
         this.problemId = problemId;
         this.isPublic = isPublic;
@@ -66,6 +71,7 @@ public class Problem
         this.hint = hint;
         this.problemType = problemType;
         this.answer = answer;
+        this.score = score;
     }
 
     /**
@@ -226,6 +232,24 @@ public class Problem
     }
 
     /**
+     * 获取试题满分
+     * @return 试题满分
+     */
+    public int getScore()
+    {
+        return score;
+    }
+
+    /**
+     * 设置试题满分
+     * @param score 试题满分
+     */
+    public void setScore(int score)
+    {
+        this.score = score;
+    }
+
+    /**
      * 试题的唯一标识符.
      */
     private long problemId;
@@ -266,4 +290,9 @@ public class Problem
      */
     @JsonIgnore
     private String answer;
+
+    /**
+     * 试题满分
+     */
+    private int score;
 }
