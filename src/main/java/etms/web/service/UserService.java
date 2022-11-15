@@ -115,33 +115,10 @@ public class UserService
             if (user != null && user.getPassword().equals(password))
             {
                 result.put("isAccountValid", true);
-                if (isAllowedToAccess(user.getUserGroup()))
-                {
-                    result.put("isAllowedToAccess", true);
-                    result.put("isSuccessful", true);
-                }
+                result.put("isSuccessful", true);
             }
         }
         return result;
-    }
-
-    /**
-     * 验证用户是否被允许登录.
-     *
-     * @param userGroup - 用户所属用户组的对象
-     * @return 用户是否被允许登录
-     */
-    private boolean isAllowedToAccess(UserGroup userGroup)
-    {
-        String[] allowedUserGroups = {"users", "administrators"};
-        for (String allowedUserGroup : allowedUserGroups)
-        {
-            if (allowedUserGroup.equals(userGroup.getUserGroupSlug()))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -167,7 +144,7 @@ public class UserService
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
         User user =
-                new User(username, DigestUtils.md5Hex(password), email, userGroup);
+                new User(username, password, email, userGroup);
 
         Map<String, Boolean> result =
                 getUserCreationResult(user, password, isCsrfTokenValid, isAllowRegister);
@@ -194,7 +171,7 @@ public class UserService
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
         User user =
-                new User(username, DigestUtils.md5Hex(password), email, userGroup);
+                new User(username, password, email, userGroup);
 
         Map<String, Boolean> result = getUserCreationResult(user, password, true, true);
         if (result.get("isSuccessful"))
@@ -279,7 +256,7 @@ public class UserService
 
         if (result.get("isSuccessful"))
         {
-            user.setPassword(DigestUtils.md5Hex(newPassword));
+            user.setPassword(newPassword);
             userMapper.updateUser(user);
         }
         return result;
@@ -439,7 +416,7 @@ public class UserService
         {
             return true;
         }
-        return oldPassword.equals(DigestUtils.md5Hex(submitedPassword));
+        return oldPassword.equals(submitedPassword);
     }
 
     /**
@@ -598,7 +575,7 @@ public class UserService
         {
             if (!password.isEmpty())
             {
-                user.setPassword(DigestUtils.md5Hex(password));
+                user.setPassword(password);
             }
             user.setUserGroup(userGroup);
             userMapper.updateUser(user);

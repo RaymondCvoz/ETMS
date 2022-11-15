@@ -17,57 +17,57 @@ public class LessonParticipant
 
     /**
      *LessonParticipant构造函数
-     * @param lesson    课程
-     * @param user      学生用户
+     * @param lessonId          课程
+     * @param participantId  学生用户
      */
-    public LessonParticipant(Lesson lesson, User user)
+    public LessonParticipant(long lessonId, long participantId)
     {
-        this.lesson = lesson;
-        this.user = user;
+        this.lessonId = lessonId;
+        this.participantId = participantId;
     }
 
     /**
      * 获取课程
      * @return 课程对象
      */
-    public Lesson getLesson()
+    public long getLessonId()
     {
-        return lesson;
+        return lessonId;
     }
 
     /**
      * 设置课程
-     * @param lesson 课程对象
+     * @param lessonId 课程对象
      */
-    public void setLesson(Lesson lesson)
+    public void setLesson(long lessonId)
     {
-        this.lesson = lesson;
+        this.lessonId = lessonId;
     }
 
     /**
      * 获取学生用户
      * @return 学生用户
      */
-    public User getUser()
+    public long getParticipantId()
     {
-        return user;
+        return participantId;
     }
 
     /**
      * 设置学生用户
-     * @param user 学生用户
+     * @param participantId 学生用户
      */
-    public void setUser(User user)
+    public void setParticipantId(long participantId)
     {
-        this.user = user;
+        this.participantId = participantId;
     }
 
     /**
      *课程
      */
-    private Lesson lesson;
+    private long lessonId;
     /**
      * 学生用户
      */
-    private User user;
+    private long participantId;
 }

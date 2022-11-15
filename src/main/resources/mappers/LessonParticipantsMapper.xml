@@ -29,7 +29,7 @@
 
     <select id="getLessonParticipantUsingLessonIdAndParticipantId"
             parameterType="long"
-            resultMap="etms.web.model.LessonParticipant"
+            resultMap="LessonParticipantResultMap"
             useCache="true">
         SELECT *
         FROM etms_lesson_participants

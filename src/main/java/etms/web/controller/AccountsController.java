@@ -80,9 +80,6 @@ public class AccountsController
     private void destroySession(HttpServletRequest request, HttpSession session)
     {
         User currentUser = HttpSessionParser.getCurrentUser(request.getSession());
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
-        LOGGER.info(String.format("%s logged out at %s", new Object[]{currentUser, ipAddress}));
-
         session.setAttribute("isLoggedIn", false);
     }
 
@@ -95,7 +92,7 @@ public class AccountsController
     private boolean isLoggedIn(HttpSession session)
     {
         Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
-        if (isLoggedIn == null || !isLoggedIn.booleanValue())
+        if (isLoggedIn == null || !isLoggedIn)
         {
             return false;
         }
@@ -106,7 +103,7 @@ public class AccountsController
      * 处理用户的登录请求.
      *
      * @param username - 用户名
-     * @param password - 密码(已使用MD5加密)
+     * @param password - 密码
      * @param request  - HttpServletRequest对象
      * @return 一个包含登录验证结果的Map<String, Boolean>对象
      */
@@ -118,11 +115,7 @@ public class AccountsController
             @RequestParam(value = "rememberMe") boolean isAutoLoginAllowed,
             HttpServletRequest request)
     {
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
         Map<String, Boolean> result = userService.isAllowedToLogin(username, password);
-        LOGGER.info(
-                String.format(
-                        "User: [Username=%s] tried to log in at %s", new Object[]{username, ipAddress}));
         if (result.get("isSuccessful"))
         {
             User user = userService.getUserUsingUsernameOrEmail(username);
@@ -144,8 +137,6 @@ public class AccountsController
         session.setAttribute("isLoggedIn", true);
         session.setAttribute("isAutoLoginAllowed", isAutoLoginAllowed);
         session.setAttribute("uid", user.getUid());
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
-        LOGGER.info(String.format("%s logged in at %s", new Object[]{user, ipAddress}));
     }
 
     /**
@@ -219,10 +210,6 @@ public class AccountsController
         {
             User user = userService.getUserUsingUsernameOrEmail(username);
             getSession(request, user, false);
-
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-            LOGGER.info(
-                    String.format("User: [Username=%s] created at %s.", new Object[]{username, ipAddress}));
         }
         return result;
     }
@@ -242,10 +229,6 @@ public class AccountsController
             HttpServletResponse response)
     {
         User user = userService.getUserUsingUid(userId);
-        if (user == null || "judgers".equals(user.getUserGroup().getUserGroupSlug()))
-        {
-            throw new ResourceNotFoundException();
-        }
 
         ModelAndView view = new ModelAndView("accounts/user");
         view.addObject("user", user);
@@ -338,15 +321,9 @@ public class AccountsController
             HttpServletRequest request)
     {
         User currentUser = HttpSessionParser.getCurrentUser(request.getSession());
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
 
         Map<String, Boolean> result =
                 userService.changePassword(currentUser, oldPassword, newPassword, confirmPassword);
-        if (result.get("isSuccessful"))
-        {
-            LOGGER.info(
-                    String.format("%s changed password at %s", new Object[]{currentUser, ipAddress}));
-        }
         return result;
     }
 
@@ -365,16 +342,11 @@ public class AccountsController
             HttpServletRequest request)
     {
         User currentUser = HttpSessionParser.getCurrentUser(request.getSession());
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
         boolean isCsrfTokenValid = CsrfProtector.isCsrfTokenValid(csrfToken, request.getSession());
 
         Map<String, Boolean> result =
                 userService.updateProfile(
                         currentUser, email, isCsrfTokenValid);
-        if (result.get("isSuccessful"))
-        {
-            LOGGER.info(String.format("%s updated profile at %s", new Object[]{currentUser, ipAddress}));
-        }
         return result;
     }
 
@@ -396,8 +368,4 @@ public class AccountsController
     @Autowired
     private OptionService optionService;
 
-    /**
-     * 日志记录器.
-     */
-    private static final Logger LOGGER = LogManager.getLogger(AccountsController.class);
 }
