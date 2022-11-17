@@ -55,18 +55,17 @@
                                                               text="Password"/></label>
                         <input id="password" name="password" class="span12" type="password" maxlength="16"/>
                     </p>
-                    <p class="row-fluid">
-                        <label for="language-preference"><spring:message
-                                code="etms.accounts.register.language-preference" text="Language Preference"/></label>
-                        <select id="language-preference" class="span12">
-                            <c:forEach var="language" items="${languages}">
-                                <option value="${language.languageSlug}">${language.languageName}</option>
-                            </c:forEach>
-                        </select>
-                    </p>
+<%--                    <p class="row-fluid">--%>
+<%--                        <label for="language-preference"><spring:message--%>
+<%--                                code="etms.accounts.register.language-preference" text="Language Preference"/></label>--%>
+<%--                        <select id="language-preference" class="span12">--%>
+<%--                            <c:forEach var="language" items="${languages}">--%>
+<%--                                <option value="${language.languageSlug}">${language.languageName}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </select>--%>
+<%--                    </p>--%>
 
                     <p>
-                        <input id="csrf-token" type="hidden" value="${csrfToken}"/>
                         <button class="btn btn-primary btn-block" type="submit"><spring:message
                                 code="etms.accounts.register.create-account" text="Create Account"/></button>
                     </p>
@@ -95,21 +94,17 @@
 
             var username = $('#username').val(),
                 password = $('#password').val(),
-                email = $('#email').val(),
-                languagePreference = $('#language-preference').val(),
-                csrfToken = $('#csrf-token').val();
+                email = $('#email').val();
 
-            return doRegisterAction(username, password, email, languagePreference, csrfToken);
+            return doRegisterAction(username, password, email);
         };
     </script>
     <script type="text/javascript">
-        function doRegisterAction(username, password, email, languagePreference, csrfToken) {
+        function doRegisterAction(username, password, email) {
             var postData = {
                 'username': username,
                 'password': password,
-                'email': email,
-                'languagePreference': languagePreference,
-                'csrfToken': csrfToken
+                'email': email
             };
 
             $.ajax({
@@ -131,9 +126,6 @@
             } else {
                 var errorMessage = '';
 
-                if (!result['isCsrfTokenValid']) {
-                    errorMessage += '<spring:message code="etms.accounts.register.invalid-token" text="Invalid token." />';
-                }
                 if (result['isUsernameEmpty']) {
                     errorMessage += '<spring:message code="etms.accounts.register.username-empty" text="You can&apos;t leave Username empty." /><br>';
                 } else if (!result['isUsernameLegal']) {
@@ -160,9 +152,6 @@
                     errorMessage += '<spring:message code="etms.accounts.register.email-illegal" text="The Email seems invalid." /><br>';
                 } else if (result['isEmailExists']) {
                     errorMessage += '<spring:message code="etms.accounts.register.email-existing" text="Someone already use that email." /><br>';
-                }
-                if (!result['isLanguageLegal']) {
-                    errorMessage += '<spring:message code="etms.accounts.register.language-empty" text="You can&apos;t leave Language Preference empty." /><br>';
                 }
 
                 $('.alert-error').html(errorMessage);

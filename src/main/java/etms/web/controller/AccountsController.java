@@ -177,8 +177,6 @@ public class AccountsController
      * @param username     - 用户名
      * @param password     - 密码
      * @param email        - 电子邮件地址
-     * @param languageSlug - 偏好语言的别名
-     * @param csrfToken    - Csrf的Token
      * @param request      - HttpServletRequest对象
      * @return 一个包含账户创建结果的Map<String, Boolean>对象
      */
@@ -188,13 +186,10 @@ public class AccountsController
             @RequestParam(value = "username") String username,
             @RequestParam(value = "password") String password,
             @RequestParam(value = "email") String email,
-            @RequestParam(value = "languagePreference") String languageSlug,
-            @RequestParam(value = "csrfToken") String csrfToken,
             HttpServletRequest request)
     {
         boolean isAllowRegister =
                 optionService.getOption("allowUserRegister").getOptionValue().equals("1");
-        boolean isCsrfTokenValid = CsrfProtector.isCsrfTokenValid(csrfToken, request.getSession());
         String userGroupSlug = "users";
         Map<String, Boolean> result =
                 userService.createUser(
@@ -202,8 +197,6 @@ public class AccountsController
                         password,
                         email,
                         userGroupSlug,
-                        languageSlug,
-                        isCsrfTokenValid,
                         isAllowRegister);
 
         if (result.get("isSuccessful"))

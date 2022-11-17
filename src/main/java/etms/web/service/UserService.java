@@ -128,8 +128,6 @@ public class UserService
      * @param password         - 密码(未使用MD5加密)
      * @param email            - 电子邮件地址
      * @param userGroupSlug    - 用户组的别名
-     * @param languageSlug     - 偏好语言的别名
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @param isAllowRegister  - 系统是否允许注册新用户
      * @return 一个包含账户创建结果的Map<String, Boolean>对象
      */
@@ -138,8 +136,6 @@ public class UserService
             String password,
             String email,
             String userGroupSlug,
-            String languageSlug,
-            boolean isCsrfTokenValid,
             boolean isAllowRegister)
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
@@ -147,7 +143,7 @@ public class UserService
                 new User(username, password, email, userGroup);
 
         Map<String, Boolean> result =
-                getUserCreationResult(user, password, isCsrfTokenValid, isAllowRegister);
+                getUserCreationResult(user, password, isAllowRegister);
         if (result.get("isSuccessful"))
         {
             userMapper.createUser(user);
@@ -163,17 +159,16 @@ public class UserService
      * @param password      - 密码(未使用MD5加密)
      * @param email         - 电子邮件地址
      * @param userGroupSlug - 用户组的别名
-     * @param languageSlug  - 偏好语言的别名
      * @return 一个包含账户创建结果的Map<String, Boolean>对象
      */
     public Map<String, Boolean> createUser(
-            String username, String password, String email, String userGroupSlug, String languageSlug)
+            String username, String password, String email, String userGroupSlug)
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
         User user =
                 new User(username, password, email, userGroup);
 
-        Map<String, Boolean> result = getUserCreationResult(user, password, true, true);
+        Map<String, Boolean> result = getUserCreationResult(user, password, true);
         if (result.get("isSuccessful"))
         {
             userMapper.createUser(user);
@@ -201,12 +196,11 @@ public class UserService
      *
      * @param user             - 待创建的User对象
      * @param password         - 密码(未使用MD5加密)
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @param isAllowRegister  - 系统是否允许注册新用户
      * @return 一个包含账户信息验证结果的Map<String, Boolean>对象
      */
     private Map<String, Boolean> getUserCreationResult(
-            User user, String password, boolean isCsrfTokenValid, boolean isAllowRegister)
+            User user, String password, boolean isAllowRegister)
     {
         Map<String, Boolean> result = new HashMap<>(13, 1);
         result.put("isUsernameEmpty", user.getUsername().isEmpty());
@@ -218,7 +212,6 @@ public class UserService
         result.put("isEmailLegal", isEmailLegal(user.getEmail()));
         result.put("isEmailExists", isEmailExists(user.getEmail()));
         result.put("isUserGroupLegal", user.getUserGroup() != null);
-        result.put("isCsrfTokenValid", isCsrfTokenValid);
         result.put("isAllowRegister", isAllowRegister);
 
         boolean isSuccessful =
@@ -231,8 +224,6 @@ public class UserService
                         && result.get("isEmailLegal")
                         && !result.get("isEmailExists")
                         && result.get("isUserGroupLegal")
-                        && result.get("isLanguageLegal")
-                        && result.get("isCsrfTokenValid")
                         && result.get("isAllowRegister");
         result.put("isSuccessful", isSuccessful);
         return result;

@@ -442,7 +442,7 @@ UNLOCK TABLES;
 -- Table structure for table `etms_user_meta`
 --
 
-DROP TABLE IF EXISTS `etms_user_meta`;
+DROP TABLE IF EXISTS etms_usermeta;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_user_meta` (
@@ -460,10 +460,10 @@ CREATE TABLE `etms_user_meta` (
 -- Dumping data for table `etms_user_meta`
 --
 
-LOCK TABLES `etms_user_meta` WRITE;
-/*!40000 ALTER TABLE `etms_user_meta` DISABLE KEYS */;
-INSERT INTO `etms_user_meta` VALUES (1,10000,'registerDate','2022-11-01');
-/*!40000 ALTER TABLE `etms_user_meta` ENABLE KEYS */;
+LOCK TABLES etms_usermeta WRITE;
+/*!40000 ALTER TABLE etms_usermeta DISABLE KEYS */;
+INSERT INTO etms_usermeta VALUES (1,10000,'registerDate','2022-11-01');
+/*!40000 ALTER TABLE etms_usermeta ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
