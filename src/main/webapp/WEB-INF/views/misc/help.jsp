@@ -6,9 +6,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><spring:message code="axos.misc.help.title" text="Help Center"/></title>
+    <title><spring:message code="etms.misc.help.title" text="Help Center"/></title>
 </head>
 <body>
+<!-- Header -->
+<%@ include file="/WEB-INF/views/include/header.jsp" %>
     <h1>Help</h1>
+<!-- Footer -->
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

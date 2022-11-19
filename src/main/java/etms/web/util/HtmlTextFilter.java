@@ -3,7 +3,6 @@ package etms.web.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
 
 /**
  * HTML文本过滤组件.
