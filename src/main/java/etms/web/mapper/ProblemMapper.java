@@ -26,13 +26,13 @@ public interface ProblemMapper
      *
      * @param keyword           - 关键词
      * @param problemTagId - 试题分类的唯一标识符
-     * @param isPublicOnly      - 是否只筛选公开试题
+     * @param isPublic      - 是否只筛选公开试题
      * @return 符合筛选条件试题的总数量
      */
     long getNumberOfProblemsUsingFilters(
             @Param("keyword") String keyword,
             @Param("problemTagId") long problemTagId,
-            @Param("isPublicOnly") boolean isPublicOnly);
+            @Param("isPublic") boolean isPublic);
 
     /**
      * 获取第一个试题的ID.
@@ -51,13 +51,13 @@ public interface ProblemMapper
     /**
      * 获取某个试题区间内最后一个试题的ID.
      *
-     * @param isPublicOnly - 是否只筛选公开试题
+     * @param isPublic     - 是否只筛选公开试题
      * @param offset       - 试题唯一标识符的起始编号
      * @param limit        - 需要获取的试题的数量
      * @return 某个试题区间内最后一个试题的ID
      */
     long getUpperBoundOfProblemsWithLimit(
-            @Param("isPublicOnly") boolean isPublicOnly,
+            @Param("isPublic") boolean isPublic,
             @Param("problemId") long offset,
             @Param("limit") int limit);
 
@@ -74,7 +74,7 @@ public interface ProblemMapper
      *
      * @param keyword           - 关键词
      * @param problemTagId      - 试题类别的唯一标识符
-     * @param isPublicOnly      - 是否只筛选公开试题
+     * @param isPublic          - 是否只筛选公开试题
      * @param offset            - 试题唯一标识符的起始编号
      * @param limit             - 需要获取的试题的数量
      * @return 某个范围内的符合条件的试题
@@ -82,7 +82,7 @@ public interface ProblemMapper
     List<Problem> getProblemsUsingFilters(
             @Param("keyword") String keyword,
             @Param("problemTagId") long problemTagId,
-            @Param("isPublicOnly") boolean isPublicOnly,
+            @Param("isPublic") boolean isPublic,
             @Param("problemId") long offset,
             @Param("limit") int limit);
 

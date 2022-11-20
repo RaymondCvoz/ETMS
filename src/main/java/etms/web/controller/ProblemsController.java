@@ -36,7 +36,7 @@ public class ProblemsController
      *
      * @param startIndex          - 试题的起始下标
      * @param keyword             - 关键词
-     * @param problemCategorySlug - 试题分类的别名
+     * @param problemTagSlug - 试题分类的别名
      * @param request             - HttpRequest对象
      * @param response            - HttpResponse对象
      * @return 包含试题库页面信息的ModelAndView对象
@@ -45,7 +45,7 @@ public class ProblemsController
     public ModelAndView problemsView(
             @RequestParam(value = "start", required = false, defaultValue = "1") long startIndex,
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "category", required = false) String problemCategorySlug,
+            @RequestParam(value = "tag", required = false) String problemTagSlug,
             HttpServletRequest request,
             HttpServletResponse response)
             throws UnsupportedEncodingException
@@ -58,9 +58,9 @@ public class ProblemsController
 
         List<Problem> problems =
                 problemService.getProblemsUsingFilters(
-                        startIndex, keyword, problemCategorySlug,true, NUMBER_OF_PROBLEMS_PER_PAGE);
+                        startIndex, keyword, problemTagSlug,true, NUMBER_OF_PROBLEMS_PER_PAGE);
         long totalProblems =
-                problemService.getNumberOfProblemsUsingFilters(keyword, problemCategorySlug, true);
+                problemService.getNumberOfProblemsUsingFilters(keyword, problemTagSlug, true);
         ModelAndView view = new ModelAndView("problems/problems");
         view.addObject("problems", problems)
                 .addObject("startIndexOfProblems", startIndexOfProblems)

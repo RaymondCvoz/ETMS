@@ -35,7 +35,7 @@
         <if test="keyword != null and keyword != ''">
             AND problem_name LIKE "%"#{keyword}"%"
         </if>
-        <if test="problemCategoryId != 0">
+        <if test="problemTagId != 0">
             AND problem_tag_id = #{problemTagId}
         </if>
     </select>
@@ -63,7 +63,7 @@
         SELECT problem_id
         FROM etms_problems
         WHERE problem_id >= #{problemId}
-        AND problem_is_public = #{isPublicOnly}
+        AND problem_is_public = #{isPublic}
         LIMIT #{limit}
         ) p
     </select>
@@ -81,7 +81,7 @@
             parameterType="map"
             resultMap="ProblemResultMap"
             useCache="true">
-        SELECT DISTINCT(p.problem_id), problem_name, problem_is_public,
+        SELECT DISTINCT(p.problem_id), problem_name, problem_is_public
         FROM etms_problems p
         <if test="problemTagId != 0">
             NATURAL JOIN etms_problem_tag_relationships ptr

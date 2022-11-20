@@ -32,15 +32,6 @@ public class OptionService
         return optionMapper.getOptions();
     }
 
-    /**
-     * 获取自动加载的系统选项.
-     *
-     * @return 一个包含自动加载系统选项的列表
-     */
-    public List<Option> getAutoloadOptions()
-    {
-        return optionMapper.getAutoloadOptions();
-    }
 
     /**
      * 根据系统选项的名称获取选项的值.

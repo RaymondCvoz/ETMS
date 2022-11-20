@@ -31,14 +31,14 @@ public class ProblemService
     /**
      * 获取试题的结束编号.
      *
-     * @param isPublicOnly - 是否只筛选公开试题
+     * @param isPublic     - 是否只筛选公开试题
      * @param offset       - 试题唯一标识符的起始序号
      * @param limit        - 每次加载试题的数量
      * @return 试题的结束编号
      */
-    public long getLastIndexOfProblems(boolean isPublicOnly, long offset, int limit)
+    public long getLastIndexOfProblems(boolean isPublic, long offset, int limit)
     {
-        return problemMapper.getUpperBoundOfProblemsWithLimit(isPublicOnly, offset, limit);
+        return problemMapper.getUpperBoundOfProblemsWithLimit(isPublic, offset, limit);
     }
 
     /**
@@ -58,7 +58,7 @@ public class ProblemService
      * @param offset              - 试题唯一标识符的起始序号
      * @param keyword             - 关键字
      * @param problemTagSlug      - 试题标签的别名
-     * @param isPublicOnly        - 是否只筛选公开试题
+     * @param isPublic            - 是否只筛选公开试题
      * @param limit               - 每次加载试题的数量
      * @return 试题列表(List < Problem > 对象)
      */
@@ -66,12 +66,11 @@ public class ProblemService
             long offset,
             String keyword,
             String problemTagSlug,
-            boolean isPublicOnly,
+            boolean isPublic,
             int limit)
     {
         ProblemTag problemTag =
                 problemTagMapper.getProblemTagUsingTagSlug(problemTagSlug);
-        int ProblemTagId = 0;
         long problemTagId = 0;
         if (offset < 0)
         {
@@ -83,19 +82,19 @@ public class ProblemService
             problemTagId = problemTag.getProblemTagId();
         }
         return problemMapper.getProblemsUsingFilters(
-                keyword, problemTagId, isPublicOnly, offset, limit);
+                keyword, problemTagId, isPublic, offset, limit);
     }
 
     /**
      * 获取试题的总数量.
      *
      * @param keyword             - 关键字
-     * @param ProblemTagSlug - 试题分类的别名
-     * @param isPublicOnly        - 是否只筛选公开试题
+     * @param ProblemTagSlug      - 试题分类的别名
+     * @param isPublic            - 是否只筛选公开试题
      * @return 试题的总数量
      */
     public long getNumberOfProblemsUsingFilters(
-            String keyword, String ProblemTagSlug, boolean isPublicOnly)
+            String keyword, String ProblemTagSlug, boolean isPublic)
     {
         ProblemTag ProblemTag =
                 ProblemTagMapper.getProblemTagUsingTagSlug(ProblemTagSlug);
@@ -104,7 +103,7 @@ public class ProblemService
         {
             problemTagId = ProblemTag.getProblemTagId();
         }
-        return problemMapper.getNumberOfProblemsUsingFilters(keyword, problemTagId, isPublicOnly);
+        return problemMapper.getNumberOfProblemsUsingFilters(keyword, problemTagId, isPublic);
     }
 
     /**

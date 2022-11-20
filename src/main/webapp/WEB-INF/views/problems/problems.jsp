@@ -68,21 +68,21 @@
                         <td class="name">
                             <a href="<c:url value="/p/${problem.problemId}" />" style="color: #3E35A8">P${problem.problemId} ${problem.problemName}</a>
                         </td>
-                        <td>${problem.acceptedSubmission}/${problem.totalSubmission}</td>
-                        <c:if test="${isLogin}">
-                            <c:choose>
-                                <c:when test="${submissionOfProblems[problem.problemId] == null}">
-                                    <td></td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td class="flag-${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}">
-                                        <a href="<c:url value="/submission/${submissionOfProblems[problem.problemId].submissionId}" />">
-                                                ${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}
-                                        </a>
-                                    </td>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:if>
+<%--                        <td>${problem.acceptedSubmission}/${problem.totalSubmission}</td>--%>
+<%--                        <c:if test="${isLogin}">--%>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${submissionOfProblems[problem.problemId] == null}">--%>
+<%--                                    <td></td>--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    <td class="flag-${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}">--%>
+<%--                                        <a href="<c:url value="/submission/${submissionOfProblems[problem.problemId].submissionId}" />">--%>
+<%--                                                ${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}--%>
+<%--                                        </a>--%>
+<%--                                    </td>--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
+<%--                        </c:if>--%>
                     </tr>
                 </c:forEach>
                 </tbody>
