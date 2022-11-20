@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: etms
 -- ------------------------------------------------------
--- Server version	5.7.36-log
+-- Server version	5.7.40-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -252,6 +252,34 @@ INSERT INTO `etms_options` VALUES (1,'allowUserRegister','1');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `etms_problem_checkpoints`
+--
+
+DROP TABLE IF EXISTS `etms_problem_checkpoints`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `etms_problem_checkpoints` (
+  `problem_id` bigint(20) DEFAULT NULL COMMENT '题目唯一标识符',
+  `checkpoint_id` int(11) NOT NULL COMMENT '测试点唯一标识符',
+  `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '测试点是否精确匹配（填空题）',
+  `checkpoint_type` text NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
+  `checkpoint_score` int(11) NOT NULL COMMENT '测试点得分',
+  `checkpoint_answer` longtext COMMENT '测试点答案',
+  KEY `etms_problem_checkpoints_etms_problems_null_fk` (`problem_id`),
+  CONSTRAINT `etms_problem_checkpoints_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目测试点信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `etms_problem_checkpoints`
+--
+
+LOCK TABLES `etms_problem_checkpoints` WRITE;
+/*!40000 ALTER TABLE `etms_problem_checkpoints` DISABLE KEYS */;
+/*!40000 ALTER TABLE `etms_problem_checkpoints` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `etms_problem_tag_relationships`
 --
 
@@ -429,7 +457,7 @@ CREATE TABLE `etms_usermeta` (
   PRIMARY KEY (`meta_id`),
   KEY `etms_user_meta_etms_users_null_fk` (`uid`),
   CONSTRAINT `etms_user_meta_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='用户其他信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='用户其他信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +466,7 @@ CREATE TABLE `etms_usermeta` (
 
 LOCK TABLES `etms_usermeta` WRITE;
 /*!40000 ALTER TABLE `etms_usermeta` DISABLE KEYS */;
-INSERT INTO `etms_usermeta` VALUES (1,10000,'registerDate','2022-11-01'),(2,10003,'registerTime','2022-11-17 23:41:37');
+INSERT INTO `etms_usermeta` VALUES (1,10005,'registerTime','2022-11-20 10:37:09');
 /*!40000 ALTER TABLE `etms_usermeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +488,7 @@ CREATE TABLE `etms_users` (
   UNIQUE KEY `etms_users_email_pk` (`email`),
   KEY `etms_users_etms_user_groups_null_fk` (`user_group_id`),
   CONSTRAINT `etms_users_etms_user_groups_null_fk` FOREIGN KEY (`user_group_id`) REFERENCES `etms_user_groups` (`user_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10004 DEFAULT CHARSET=latin1 COMMENT='用户基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=latin1 COMMENT='用户基本信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +497,7 @@ CREATE TABLE `etms_users` (
 
 LOCK TABLES `etms_users` WRITE;
 /*!40000 ALTER TABLE `etms_users` DISABLE KEYS */;
-INSERT INTO `etms_users` VALUES (10000,'admin','0000',NULL,3),(10001,'raymond','0000',NULL,3),(10003,'testtest','000000','1@axos.com',1);
+INSERT INTO `etms_users` VALUES (10000,'admin','0000',NULL,3),(10001,'raymond','0000',NULL,3),(10003,'testtest','000000','1@axos.com',1),(10005,'testau1','000000','testau1@etms.com',1);
 /*!40000 ALTER TABLE `etms_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -482,4 +510,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-20 10:33:04
+-- Dump completed on 2022-11-20 10:37:52
