@@ -40,7 +40,6 @@ public class ProblemsController
      * @param request             - HttpRequest对象
      * @param response            - HttpResponse对象
      * @return 包含试题库页面信息的ModelAndView对象
-     * @throws UnsupportedEncodingException
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView problemsView(
@@ -136,11 +135,7 @@ public class ProblemsController
     private boolean isLoggedIn(HttpSession session)
     {
         Boolean isLoggedIn = (Boolean) session.getAttribute("isLoggedIn");
-        if (isLoggedIn == null || !isLoggedIn.booleanValue())
-        {
-            return false;
-        }
-        return true;
+        return isLoggedIn != null && isLoggedIn;
     }
 
     /**
