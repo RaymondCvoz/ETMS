@@ -8,13 +8,13 @@
     <div class="container">
         <div id="nav" class="span6">
             <ul class="inline">
-                <li><a href="<c:url value="/lesson" />" style="font-size: 16px; color: #ffffff">
+                <li><a href="${pageContext.request.contextPath}/lesson" style="font-size: 16px; color: #ffffff">
                     <spring:message code="etms.include.header.lessons" text="Lesson"/></a></li>
-                <li><a href="<c:url value="/p" />" style="font-size: 16px; color: #ffffff" >
+                <li><a href="${pageContext.request.contextPath}/p" style="font-size: 16px; color: #ffffff" >
                     <spring:message code="etms.include.header.problems" text="Problems"/></a></li>
-                <li><a href="<c:url value="/exam" />" style="font-size: 16px; color: #ffffff">
+                <li><a href="${pageContext.request.contextPath}/exam" style="font-size: 16px; color: #ffffff">
                     <spring:message code="etms.include.header.exams" text="Exam"/></a></li>
-                <li><a href="<c:url value="/submission" />" style="font-size: 16px; color: #ffffff">
+                <li><a href="${pageContext.request.contextPath}/submission" style="font-size: 16px; color: #ffffff">
                     <spring:message code="etms.include.header.submission" text="Submission"/></a></li>
 
             </ul>
@@ -23,21 +23,21 @@
             <ul class="inline">
                 <c:choose>
                     <c:when test="${isLogin}">
-                        <li><a href="<c:url value="/accounts/login?logout=true&forward=" />${requestScope['javax.servlet.forward.request_uri']}"
+                        <li><a href="${pageContext.request.contextPath}/accounts/login?logout=true&forward=${requestScope['javax.servlet.forward.request_uri']}"
                             style="font-size: 16px;color: #ffffff">
                             <spring:message code="etms.include.header.sign-out" text="Sign out"/></a></li>
                     </c:when>
                     <c:otherwise>
                         <li>
-                            <a href="<c:url value="/accounts/login?forward=" />${requestScope['javax.servlet.forward.request_uri']}"
+                            <a href="${pageContext.request.contextPath}/accounts/login?forward=${requestScope['javax.servlet.forward.request_uri']}"
                                style="font-size: 16px; color: #ffffff">
                                 <spring:message code="etms.include.header.sign-in" text="Sign in"/></a></li>
                     </c:otherwise>
                 </c:choose>
-                <li><a href="<c:url value="/accounts/dashboard" />" style="font-size: 16px; color: #ffffff">
+                <li><a href="${pageContext.request.contextPath}/accounts/dashboard" style="font-size: 16px; color: #ffffff">
                     <spring:message code="etms.include.header.more" text="More"/></a></li>
                 <c:if test="${myProfile.userGroup.userGroupSlug == 'administrators'}">
-                    <li><a href="<c:url value="/administration" />" style="font-size: 16px; color: #ffffff"><spring:message
+                    <li><a href="${pageContext.request.contextPath}/administration" style="font-size: 16px; color: #ffffff"><spring:message
                             code="etms.accounts.dashboard.system-administration" text="System Administration"/></a></li>
                 </c:if>
             </ul>
