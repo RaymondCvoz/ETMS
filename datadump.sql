@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `etms_bulletin_board_messages`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_bulletin_board_messages` (
   `message_id` bigint(20) DEFAULT NULL COMMENT '公告唯一标识符',
-  `message_title` varchar(128) DEFAULT NULL COMMENT '公告标题',
-  `message_body` text COMMENT '公告内容',
+  `message_title` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '公告标题',
+  `message_body` text COLLATE utf8mb4_unicode_ci COMMENT '公告内容',
   `message_create_time` timestamp NULL DEFAULT NULL COMMENT '公告创建时间'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='公告栏信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公告栏信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `etms_exam_participants` (
   KEY `etms_exam_participants_etms_users_null_fk` (`participant_id`),
   CONSTRAINT `etms_exam_participants_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_exam_participants_etms_users_null_fk` FOREIGN KEY (`participant_id`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='测试与参与测试学生对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与参与测试学生对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `etms_exam_submissions` (
   KEY `etms_exam_submissions_etms_submissions_null_fk` (`submission_id`),
   CONSTRAINT `etms_exam_submissions_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_exam_submissions_etms_submissions_null_fk` FOREIGN KEY (`submission_id`) REFERENCES `etms_submissions` (`submission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='测试与提交对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与提交对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,14 +100,14 @@ DROP TABLE IF EXISTS `etms_exams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exams` (
   `exam_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '测试唯一标识符',
-  `exam_name` varchar(128) NOT NULL COMMENT '测试名称',
-  `exam_notes` text COMMENT '测试备注',
+  `exam_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试名称',
+  `exam_notes` text COLLATE utf8mb4_unicode_ci COMMENT '测试备注',
   `exam_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '测试开始时间',
   `exam_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '测试结束时间',
-  `exam_type` varchar(4) NOT NULL COMMENT '测试类型',
-  `exam_problems` text NOT NULL COMMENT '测试题目',
+  `exam_type` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试类型',
+  `exam_problems` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试题目',
   PRIMARY KEY (`exam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='测试信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,7 +133,7 @@ CREATE TABLE `etms_lesson_exams` (
   KEY `etms_lesson_exams_etms_lessons_null_fk` (`lesson_id`),
   CONSTRAINT `etms_lesson_exams_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_lesson_exams_etms_lessons_null_fk` FOREIGN KEY (`lesson_id`) REFERENCES `etms_lessons` (`lesson_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='课程与测试对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与测试对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `etms_lesson_participants` (
   `participant_id` int(11) NOT NULL COMMENT '选课学生唯一标识符',
   KEY `etms_lesson_participant_etms_lessons_null_fk` (`lesson_id`),
   KEY `etms_lesson_participant_etms_users_null_fk` (`participant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='学生选课信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学生选课信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +184,7 @@ CREATE TABLE `etms_lesson_resources` (
   PRIMARY KEY (`lesson_resource_id`),
   KEY `resource_to_lesson_etms_lessons_null_fk` (`lesson_id`),
   KEY `resource_to_lesson_etms_resources_null_fk` (`resource_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='课程与资源对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与资源对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,15 +205,15 @@ DROP TABLE IF EXISTS `etms_lessons`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_lessons` (
   `lesson_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '课程唯一标识符',
-  `lesson_name` varchar(64) NOT NULL COMMENT '课程名称',
-  `description` varchar(256) DEFAULT NULL COMMENT '课程描述',
+  `lesson_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '课程名称',
+  `description` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '课程描述',
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '课程开始时间',
   `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '课程结束时间',
   `lecturer_id` bigint(20) DEFAULT NULL COMMENT '讲师用户唯一标识符',
   PRIMARY KEY (`lesson_id`),
   KEY `etms_lessons_etms_users_null_fk` (`lecturer_id`),
   CONSTRAINT `etms_lessons_etms_users_null_fk` FOREIGN KEY (`lecturer_id`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='课程信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,11 +234,11 @@ DROP TABLE IF EXISTS `etms_options`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_options` (
   `option_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '设置选项唯一标识符',
-  `option_name` varchar(256) NOT NULL COMMENT '选项名称',
-  `option_value` varchar(256) NOT NULL COMMENT '选项值',
+  `option_name` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '选项名称',
+  `option_value` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '选项值',
   PRIMARY KEY (`option_id`),
   UNIQUE KEY `etms_options_pk` (`option_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='系统设置信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统设置信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,12 +262,12 @@ CREATE TABLE `etms_problem_checkpoints` (
   `problem_id` bigint(20) DEFAULT NULL COMMENT '题目唯一标识符',
   `checkpoint_id` int(11) NOT NULL COMMENT '测试点唯一标识符',
   `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '测试点是否精确匹配（填空题）',
-  `checkpoint_type` text NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
+  `checkpoint_type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
   `checkpoint_score` int(11) NOT NULL COMMENT '测试点得分',
-  `checkpoint_answer` longtext COMMENT '测试点答案',
+  `checkpoint_answer` longtext COLLATE utf8mb4_unicode_ci COMMENT '测试点答案',
   KEY `etms_problem_checkpoints_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_problem_checkpoints_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目测试点信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目测试点信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +293,7 @@ CREATE TABLE `etms_problem_tag_relationships` (
   KEY `etms_problem_tag_relationships_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_problem_tag_relationships_etms_problem_tags_null_fk` FOREIGN KEY (`problem_tag_id`) REFERENCES `etms_problem_tags` (`problem_tag_id`),
   CONSTRAINT `etms_problem_tag_relationships_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目与类别对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目与类别对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -314,10 +314,10 @@ DROP TABLE IF EXISTS `etms_problem_tags`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_problem_tags` (
   `problem_tag_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '题目类别唯一标识符',
-  `problem_tag_slug` varchar(32) NOT NULL COMMENT '题目类别简易标识',
-  `problem_tag_name` varchar(32) NOT NULL COMMENT '题目类别名称',
+  `problem_tag_slug` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '题目类别简易标识',
+  `problem_tag_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '题目类别名称',
   PRIMARY KEY (`problem_tag_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目类别信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目类别信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,6 +326,7 @@ CREATE TABLE `etms_problem_tags` (
 
 LOCK TABLES `etms_problem_tags` WRITE;
 /*!40000 ALTER TABLE `etms_problem_tags` DISABLE KEYS */;
+INSERT INTO `etms_problem_tags` VALUES (1,'none','无');
 /*!40000 ALTER TABLE `etms_problem_tags` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,14 +340,14 @@ DROP TABLE IF EXISTS `etms_problems`;
 CREATE TABLE `etms_problems` (
   `problem_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '题目唯一标识符',
   `problem_is_public` tinyint(4) NOT NULL COMMENT '题目是否公开',
-  `problem_name` varchar(128) NOT NULL COMMENT '题目名称',
-  `problem_description` text NOT NULL COMMENT '题目描述',
-  `problem_hint` text COMMENT '题目提示',
+  `problem_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '题目名称',
+  `problem_description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '题目描述',
+  `problem_hint` text COLLATE utf8mb4_unicode_ci COMMENT '题目提示',
   `problem_type` int(11) NOT NULL DEFAULT '0' COMMENT '题目类型',
-  `problem_answer` text COMMENT '题目标准答案',
+  `problem_answer` text COLLATE utf8mb4_unicode_ci COMMENT '题目标准答案',
   `problem_score` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -355,6 +356,7 @@ CREATE TABLE `etms_problems` (
 
 LOCK TABLES `etms_problems` WRITE;
 /*!40000 ALTER TABLE `etms_problems` DISABLE KEYS */;
+INSERT INTO `etms_problems` VALUES (1,1,'1+1 Problem','1+1',NULL,1,'2',10);
 /*!40000 ALTER TABLE `etms_problems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,13 +369,13 @@ DROP TABLE IF EXISTS `etms_resources`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_resources` (
   `resource_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '资源唯一标识符',
-  `resource_type` varchar(32) NOT NULL COMMENT '资源类型',
-  `resource_name` varchar(64) NOT NULL COMMENT '资源名称',
-  `resource_path` varchar(256) DEFAULT NULL COMMENT '资源文件路径',
-  `resource_info` text COMMENT '资源其他信息',
+  `resource_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源类型',
+  `resource_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '资源名称',
+  `resource_path` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '资源文件路径',
+  `resource_info` text COLLATE utf8mb4_unicode_ci COMMENT '资源其他信息',
   PRIMARY KEY (`resource_id`),
   UNIQUE KEY `etms_resources_pk` (`resource_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='系统资源信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='系统资源信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,13 +400,13 @@ CREATE TABLE `etms_submissions` (
   `uid` bigint(20) DEFAULT NULL COMMENT '用户唯一标识符',
   `submission_submit_time` timestamp NULL DEFAULT NULL COMMENT '提交时间',
   `submission_judge_score` int(11) DEFAULT NULL COMMENT '题目得分',
-  `submission_context` text COMMENT '提交内容',
+  `submission_context` text COLLATE utf8mb4_unicode_ci COMMENT '提交内容',
   PRIMARY KEY (`submission_id`),
   KEY `etms_submissions_etms_users_null_fk` (`uid`),
   KEY `etms_submissions_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='题目提交信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目提交信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -425,11 +427,11 @@ DROP TABLE IF EXISTS `etms_user_groups`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_user_groups` (
   `user_group_id` bigint(20) NOT NULL COMMENT '用户组唯一标识符',
-  `user_group_name` varchar(32) NOT NULL COMMENT '用户组名称',
-  `user_group_slug` varchar(32) DEFAULT NULL COMMENT '用户组简易标识',
+  `user_group_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户组名称',
+  `user_group_slug` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户组简易标识',
   PRIMARY KEY (`user_group_id`),
   UNIQUE KEY `etms_user_groups_pk` (`user_group_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='用户组信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户组信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,7 +440,7 @@ CREATE TABLE `etms_user_groups` (
 
 LOCK TABLES `etms_user_groups` WRITE;
 /*!40000 ALTER TABLE `etms_user_groups` DISABLE KEYS */;
-INSERT INTO `etms_user_groups` VALUES (1,'student','users'),(2,'faculty','fac'),(3,'administrator','admin');
+INSERT INTO `etms_user_groups` VALUES (1,'student','users'),(2,'faculty','fac'),(3,'administrator','administrators');
 /*!40000 ALTER TABLE `etms_user_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,12 +454,12 @@ DROP TABLE IF EXISTS `etms_usermeta`;
 CREATE TABLE `etms_usermeta` (
   `meta_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '每条信息的唯一标识符',
   `uid` bigint(20) NOT NULL COMMENT '用户唯一标识符',
-  `meta_key` varchar(256) NOT NULL COMMENT '信息键',
-  `meta_value` text COMMENT '信息值',
+  `meta_key` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '信息键',
+  `meta_value` text COLLATE utf8mb4_unicode_ci COMMENT '信息值',
   PRIMARY KEY (`meta_id`),
   KEY `etms_user_meta_etms_users_null_fk` (`uid`),
   CONSTRAINT `etms_user_meta_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='用户其他信息';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户其他信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -479,16 +481,16 @@ DROP TABLE IF EXISTS `etms_users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_users` (
   `uid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户唯一标识符',
-  `username` varchar(32) NOT NULL COMMENT '用户名',
-  `password` varchar(32) NOT NULL COMMENT '用户密码',
-  `email` varchar(64) DEFAULT NULL COMMENT '用户电子邮箱',
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户名',
+  `password` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户密码',
+  `email` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户电子邮箱',
   `user_group_id` bigint(20) NOT NULL COMMENT '用户所属用户组的唯一标识符',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `etms_users_user_name_pk` (`username`),
   UNIQUE KEY `etms_users_email_pk` (`email`),
   KEY `etms_users_etms_user_groups_null_fk` (`user_group_id`),
   CONSTRAINT `etms_users_etms_user_groups_null_fk` FOREIGN KEY (`user_group_id`) REFERENCES `etms_user_groups` (`user_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=latin1 COMMENT='用户基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户基本信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,4 +512,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-20 10:37:52
+-- Dump completed on 2022-11-21 14:12:06
