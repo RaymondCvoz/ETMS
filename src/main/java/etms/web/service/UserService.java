@@ -285,17 +285,14 @@ public class UserService
      *
      * @param user             - 待更改资料的用户
      * @param email            - 用户的电子邮件地址
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @return 一个包含个人资料修改结果的Map<String, Boolean>对象
      */
     public Map<String, Boolean> updateProfile(
             User user,
-            String email,
-            boolean isCsrfTokenValid)
+            String email)
     {
         Map<String, Boolean> result =
-                getUpdateProfileResult(
-                        user, email, isCsrfTokenValid);
+                getUpdateProfileResult(user, email);
 
         if (result.get("isSuccessful"))
         {
@@ -310,25 +307,21 @@ public class UserService
      *
      * @param user             - 待更改资料的用户
      * @param email            - 用户的电子邮件地址
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @return 一个包含个人资料修改结果的Map<String, Boolean>对象
      */
     private Map<String, Boolean> getUpdateProfileResult(
             User user,
-            String email,
-            boolean isCsrfTokenValid)
+            String email)
     {
         Map<String, Boolean> result = new HashMap<>(7, 1);
         result.put("isEmailEmpty", email.isEmpty());
         result.put("isEmailLegal", isEmailLegal(email));
         result.put("isEmailExists", isEmailExists(user.getEmail(), email));
-        result.put("isCsrfTokenValid", isCsrfTokenValid);
 
         boolean isSuccessful =
                 !result.get("isEmailEmpty")
                         && result.get("isEmailLegal")
-                        && !result.get("isEmailExists")
-                        && result.get("isCsrfTokenValid");
+                        && !result.get("isEmailExists");
         result.put("isSuccessful", isSuccessful);
         return result;
     }
@@ -553,15 +546,13 @@ public class UserService
      * @param user               - 待更改个人信息的用户.
      * @param password           - 用户的密码
      * @param userGroupSlug      - 用户所属用户组的别名
-     * @param preferLanguageSlug - 用户偏好编程语言的别名
      * @return 包含用户个人信息更改结果的Map<String, Boolean>对象
      */
     public Map<String, Boolean> updateProfile(
-            User user, String password, String userGroupSlug, String preferLanguageSlug)
+            User user, String password, String userGroupSlug)
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
         Map<String, Boolean> result = getUpdateProfileResult(password, userGroup);
-
         if (result.get("isSuccessful"))
         {
             if (!password.isEmpty())

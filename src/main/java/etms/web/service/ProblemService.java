@@ -411,13 +411,11 @@ public class ProblemService
      *
      * @param ProblemTagSlug       - 试题分类的别名
      * @param ProblemTagName       - 试题分类的名称
-     * @param parentProblemTagSlug - 父级试题分类的别名
      * @return 包含试题分类创建结果的Map<String, Object>对象
      */
     public Map<String, Object> createProblemTag(
-            String ProblemTagSlug, String ProblemTagName, String parentProblemTagSlug)
+            String ProblemTagSlug, String ProblemTagName)
     {
-        int parentProblemTagId = getProblemTagIdUsingSlug(parentProblemTagSlug);
         ProblemTag ProblemTag =
                 new ProblemTag(ProblemTagSlug, ProblemTagName);
         @SuppressWarnings("unchecked")
