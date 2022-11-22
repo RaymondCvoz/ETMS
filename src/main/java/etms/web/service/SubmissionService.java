@@ -294,13 +294,11 @@ public class SubmissionService
      *
      * @param user             - 已登录的用户对象
      * @param problemId        - 试题的唯一标识符
-     * @param languageSlug     - 编程语言的别名
      * @param context          - 提交内容
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @return 一个包含提交记录创建结果的Map<String, Object>对象, 并包含创建的提交记录的唯一标识符.
      */
     public Map<String, Object> createSubmission(
-            User user, long problemId, String languageSlug, String context, boolean isCsrfTokenValid)
+            User user, long problemId, String context)
     {
         Problem problem = problemMapper.getProblem(problemId);
         Date date = new Date();
@@ -308,7 +306,7 @@ public class SubmissionService
 
         @SuppressWarnings("unchecked")
         Map<String, Object> result =
-                (Map<String, Object>) getSubmissionCreationResult(submission, isCsrfTokenValid);
+                (Map<String, Object>) getSubmissionCreationResult(submission);
         boolean isSuccessful = (Boolean) result.get("isSuccessful");
         if (isSuccessful)
         {
@@ -316,7 +314,7 @@ public class SubmissionService
             long submissionId = submission.getSubmissionId();
             if(problem.getProblemType() == 1)
             {
-                getSubmissionResult(submissionId,problemId);
+                submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
             }
             result.put("submissionId", submissionId);
         }
@@ -344,21 +342,17 @@ public class SubmissionService
      * 验证提交记录数据.
      *
      * @param submission       - 待创建的提交记录对象
-     * @param isCsrfTokenValid - CSRF的Token是否正确
      * @return 一个包含提交记录的验证结果的Map<String, Boolean>对象
      */
     private Map<String, ? extends Object> getSubmissionCreationResult(
-            Submission submission, boolean isCsrfTokenValid)
+            Submission submission)
     {
         Map<String, Boolean> result = new HashMap<>(6, 1);
         result.put("isUserLogined", submission.getUid() != 0);
         result.put("isProblemExists", submission.getProblemId() != 0);
-        result.put("isCsrfTokenValid", isCsrfTokenValid);
-
         boolean isSuccessful =
                 result.get("isUserLogined")
-                        && result.get("isProblemExists")
-                        && result.get("isCsrfTokenValid");
+                        && result.get("isProblemExists");
         result.put("isSuccessful", isSuccessful);
         return result;
     }

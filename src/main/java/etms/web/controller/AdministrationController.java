@@ -350,7 +350,7 @@ public class AdministrationController
     public ModelAndView allProblemsView(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
             @RequestParam(value = "problemTag", required = false, defaultValue = "")
-                    String problemTagSlug,
+            String problemTagSlug,
             @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
             HttpServletRequest request,
             HttpServletResponse response)

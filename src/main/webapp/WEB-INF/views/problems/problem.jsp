@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="${language}"/>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <spring:eval expression="@propertyConfigurer.getProperty('url.cdn')" var="cdnUrl"/>
 <spring:eval expression="@propertyConfigurer.getProperty('build.version')" var="version"/>
 <!DOCTYPE html>
-<html lang="${language}" >
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>P${problem.problemId} ${problem.problemName} | ${websiteName}</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="${description}">
-    <!-- Icon -->
-    <link href="${cdnUrl}/img/favicon.ico?v=${version}" rel="shortcut icon" type="image/x-icon">
+    <title>P${problem.problemId} ${problem.problemName}</title>
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap.min.css?v=${version}"/>
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap-responsive.min.css?v=${version}"/>
@@ -28,7 +22,6 @@
     <script type="text/javascript" src="${cdnUrl}/js/jquery-1.11.1.min.js?v=${version}"></script>
     <script type="text/javascript" src="${cdnUrl}/js/bootstrap.min.js?v=${version}"></script>
     <script type="text/javascript" src="${cdnUrl}/js/md5.min.js?v=${version}"></script>
-
 </head>
 <body>
 <!-- Header -->
@@ -38,25 +31,25 @@
     <div class="row-fluid" style="margin-top: 10px">
         <div id="sidebar" class="span2">
             <c:choose>
-                <c:when test="${isContest}">
+                <c:when test="${isExam}">
                     <div id="actions" class="section">
                         <ul>
                             <c:choose>
-                                <c:when test="${currentTime.after(contest.endTime)}">
+                                <c:when test="${currentTime.after(exam.endTime)}">
                                     <li><button class="btn btn-primary btn-block" onclick="window.location.href='<c:url value="/p/${problem.problemId}" />'">
                                         <spring:message
-                                                code="axos.problems.problem.view-in-problem-mode"
+                                                code="etms.problems.problem.view-in-problem-mode"
                                                 text="View in Problem Mode"/></button>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><button id="submit-solution" class="btn btn-primary btn-block" onclick="javascript:void(0);"><spring:message
-                                            code="axos.problems.problem.submit-solution" text="Submit Solution"/></button>
+                                            code="etms.problems.problem.submit-solution" text="Submit Solution"/></button>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
                             <li><button class="btn btn-primary btn-block" style="margin-top: 10px" onclick="window.location.href='<c:url value="/contest/${contest.contestId}" />'"><spring:message
-                                    code="axos.problems.problem.back-to-contest" text="Back to Contest"/></button></li>
+                                    code="etms.problems.problem.back-to-contest" text="Back to Contest"/></button></li>
                         </ul>
                     </div>
                     <!-- #actions -->
@@ -67,15 +60,15 @@
                             <c:choose>
                                 <c:when test="${isLogin}">
                                     <li><button id="submit-solution" class="btn btn-primary btn-block" onclick="javascript:void(0);"><spring:message
-                                            code="axos.problems.problem.submit-solution" text="Submit Solution"/></button></li>
+                                            code="etms.problems.problem.submit-solution" text="Submit Solution"/></button></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li><button id="login-to-submit" class="btn btn-primary btn-block" onclick="window.location.href='<c:url value="/accounts/login?forward=" />${requestScope['javax.servlet.forward.request_uri']}'"><spring:message
-                                            code="axos.problems.problem.login-to-submit" text="Login to Submit Solution"/></button></li>
+                                            code="etms.problems.problem.login-to-submit" text="Login to Submit Solution"/></button></li>
                                 </c:otherwise>
                             </c:choose>
                             <li><button class="btn btn-primary btn-block" style="margin-top: 10px" onclick="window.location.href='<c:url value="/submission?problemId=${problem.problemId}" />'">
-                                <spring:message code="axos.problems.problem.view-submission" text="Submit Solution"/></button></li>
+                                <spring:message code="etms.problems.problem.view-submission" text="Submit Solution"/></button></li>
                         </ul>
                     </div>
                     <!-- #actions -->
@@ -88,8 +81,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th><spring:message code="axos.problems.problem.submission" text="My submission"/></th>
-                                <th><spring:message code="axos.problems.problems.result" text="Result"/></th>
+                                <th><spring:message code="etms.problems.problem.submission" text="My submission"/></th>
+                                <th><spring:message code="etms.problems.problems.result" text="Result"/></th>
                             </tr>
                             </thead>
                             <c:forEach var="submission" items="${submissions}">
@@ -109,68 +102,30 @@
         <div id="main-content" class="span10">
             <div class="problem">
                 <div class="header">
-                    <c:if test="${isLogin}">
-                        <c:if test="${latestSubmission[problem.problemId] != null}">
-                            <span class="pull-right" id="usr-problem-status">${latestSubmission[problem.problemId].judgeResult.judgeResultName}</span>
-                        </c:if>
-                    </c:if>
                     <span class="name" id="problem-info">P${problem.problemId} ${problem.problemName}</span>
                 </div> <!-- .header -->
                 <div class="body">
                     <div class="section">
-                        <h5><spring:message code="axos.problems.problem.description" text="Description"/></h5>
+                        <h5><spring:message code="etms.problems.problem.description" text="Description"/></h5>
                         <div class="description markdown" >${problem.description}</div> <!-- .description -->
-                    </div> <!-- .section -->
-                    <div class="section">
-                        <h5><spring:message code="axos.problems.problem.input" text="Input"/></h5>
-                        <div class="description">${problem.inputFormat}</div> <!-- .description -->
-                        <h5><spring:message code="axos.problems.problem.output" text="Output"/></h5>
-                        <div class="description">${problem.outputFormat}</div> <!-- .description -->
-                    </div> <!-- .section -->
-                    <div id="io-sample" class="section">
-                        <h5><spring:message code="axos.problems.problem.sample-input" text="Sample Input"/></h5>
-                        <div class="description">
-                            <pre>${problem.sampleInput}</pre>
-                        </div> <!-- .description -->
-                        <h5><spring:message code="axos.problems.problem.sample-output" text="Sample Output"/></h5>
-                        <div class="description">
-                            <pre>${problem.sampleOutput}</pre>
-                        </div> <!-- .description -->
-                    </div> <!-- .section -->
-                    <div class="section">
-                        <div class="description">
-                            <p><strong><spring:message code="axos.problems.problem.time-limit"
-                                                       text="Time Limit"/>: </strong>${problem.timeLimit} ms</p>
-                            <p><strong><spring:message code="axos.problems.problem.memory-limit"
-                                                       text="Memory Limit"/>: </strong>${problem.memoryLimit} KB</p>
-                        </div> <!-- .description -->
                     </div> <!-- .section -->
                     <c:if test="${problem.hint != null and problem.hint != ''}">
                         <div class="section">
-                            <h4><spring:message code="axos.problems.problem.hint" text="Hint"/></h4>
+                            <h4><spring:message code="etms.problems.problem.hint" text="Hint"/></h4>
                             <div class="description markdown">${problem.hint.replace("<", "&lt;").replace(">", "&gt;")}</div>
                             <!-- .description -->
                         </div>
                         <!-- .section -->
                     </c:if>
                     <form id="code-editor" onsubmit="onSubmit(); return false;" method="POST" >
-                        <textarea name="codemirror-editor" id="codemirror-editor"><c:if
-                                test="${isContest and codeSnippet != null}">${codeSnippet['code']}</c:if></textarea>
+                        <textarea name="codemirror-editor" id="codemirror-editor"></textarea>
                         <div class="row-fluid">
-                            <div class="span4">
-                                <select id="languages">
-                                    <c:forEach var="language" items="${languages}">
-                                        <option value="${language.languageSlug}">${language.languageName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div> <!-- .span4 -->
                             <div id="submission-error" class="offset1 span3"></div> <!-- #submission-error -->
-                            <div id="submission-action" class="span4">
-                                <input type="hidden" id="csrf-token" value="${csrfToken}"/>
+                            <div id="submission-action" class="span8">
                                 <button type="submit" class="btn btn-primary"><spring:message
-                                        code="axos.problems.problem.submit" text="Submit"/></button>
+                                        code="etms.problems.problem.submit" text="Submit"/></button>
                                 <button id="close-submission" class="btn"><spring:message
-                                        code="axos.problems.problem.cancel" text="Cancel"/></button>
+                                        code="etms.problems.problem.cancel" text="Cancel"/></button>
                             </div> <!-- #submission-action -->
                         </div> <!-- .row-fluid -->
                     </form> <!-- #code-editor-->
@@ -240,15 +195,6 @@
     });
 </script>
 <script type="text/javascript">
-    $(function () {
-        var preferLanguage = '${myProfile.preferLanguage.languageSlug}';
-        $('select#languages').val(preferLanguage);
-        <c:if test="${isContest and codeSnippet != null}">
-        $('select#languages').val('${codeSnippet['language']}');
-        </c:if>
-    });
-</script>
-<script type="text/javascript">
     $('select#languages').change(function () {
         window.codeMirrorEditor.setOption('mode', $(this).val());
     });
@@ -270,30 +216,26 @@
 <script type="text/javascript">
     function onSubmit() {
         var problemId = ${problem.problemId},
-            language = $('select#languages').val(),
-            code = window.codeMirrorEditor.getValue(),
-            csrfToken = $('#csrf-token').val();
+            context = window.codeMirrorEditor.getValue();
 
         $('button[type=submit]', '#code-editor').attr('disabled', 'disabled');
-        $('button[type=submit]', '#code-editor').html('<spring:message code="axos.problems.problem.please-wait" text="Please wait..." />');
+        $('button[type=submit]', '#code-editor').html('<spring:message code="etms.problems.problem.please-wait" text="Please wait..." />');
 
-        return createSubmissionAction(problemId, language, code, csrfToken);
+        return createSubmissionAction(problemId,context);
     }
 </script>
 <c:choose>
-    <c:when test="${isContest}">
+    <c:when test="${isExam}">
         <script type="text/javascript">
-            function createSubmissionAction(problemId, languageSlug, code, csrfToken) {
+            function createSubmissionAction(problemId, context) {
                 var postData = {
                     'problemId': problemId,
-                    'languageSlug': languageSlug,
-                    'code': code,
-                    'csrfToken': csrfToken
+                    'context': context
                 };
 
                 $.ajax({
                     type: 'POST',
-                    url: '<c:url value="/contest/${contest.contestId}/createSubmission.action" />',
+                    url: '<c:url value="/exam/${exam.examId}/createSubmission.action" />',
                     data: postData,
                     dataType: 'JSON',
                     success: function (result) {
@@ -302,23 +244,18 @@
                             window.location.href = '<c:url value="/submission/" />' + submissionId;
                         } else {
                             var errorMessage = '';
-
-                            if (!result['isCsrfTokenValid']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.invalid-token" text="Invalid token." />';
-                            } else if (!result['isUserLogined']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.user-not-login" text="Please sign in first." />';
+                            if (!result['isUserLogined']) {
+                                errorMessage = '<spring:message code="etms.problems.problem.user-not-login" text="Please sign in first." />';
                             } else if (!result['isProblemExists']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.problem-not-exists" text="The problem not exists." />';
-                            } else if (!result['isLanguageExists']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.language-not-exists" text="The language not exists." />';
-                            } else if (result['isCodeEmpty']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.empty-code" text="Please enter the code." />';
+                                errorMessage = '<spring:message code="etms.problems.problem.problem-not-exists" text="The problem not exists." />';
+                            } else if (result['isContextEmpty']) {
+                                errorMessage = '<spring:message code="etms.problems.problem.empty-context" text="Please enter the context." />';
                             }
                             $('#submission-error').html(errorMessage);
                         }
 
                         $('button[type=submit]', '#code-editor').removeAttr('disabled');
-                        $('button[type=submit]', '#code-editor').html('<spring:message code="axos.problems.problem.submit" text="Submit" />');
+                        $('button[type=submit]', '#code-editor').html('<spring:message code="etms.problems.problem.submit" text="Submit" />');
                     }
                 });
             }
@@ -326,14 +263,11 @@
     </c:when>
     <c:otherwise>
         <script type="text/javascript">
-            function createSubmissionAction(problemId, languageSlug, code, csrfToken) {
+            function createSubmissionAction(problemId, context) {
                 var postData = {
                     'problemId': problemId,
-                    'languageSlug': languageSlug,
-                    'code': code,
-                    'csrfToken': csrfToken
+                    'context': context
                 };
-
                 $.ajax({
                     type: 'POST',
                     url: '<c:url value="/p/createSubmission.action" />',
@@ -346,22 +280,18 @@
                         } else {
                             var errorMessage = '';
 
-                            if (!result['isCsrfTokenValid']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.invalid-token" text="Invalid token." />';
-                            } else if (!result['isUserLogined']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.user-not-login" text="Please sign in first." />';
+                            if (!result['isUserLogined']) {
+                                errorMessage = '<spring:message code="etms.problems.problem.user-not-login" text="Please sign in first." />';
                             } else if (!result['isProblemExists']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.problem-not-exists" text="The problem not exists." />';
-                            } else if (!result['isLanguageExists']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.language-not-exists" text="The language not exists." />';
+                                errorMessage = '<spring:message code="etms.problems.problem.problem-not-exists" text="The problem not exists." />';
                             } else if (result['isCodeEmpty']) {
-                                errorMessage = '<spring:message code="axos.problems.problem.empty-code" text="Please enter the code." />';
+                                errorMessage = '<spring:message code="etms.problems.problem.empty-context" text="Please enter the context." />';
                             }
                             $('#submission-error').html(errorMessage);
                         }
 
                         $('button[type=submit]', '#code-editor').removeAttr('disabled');
-                        $('button[type=submit]', '#code-editor').html('<spring:message code="axos.problems.problem.submit" text="Submit" />');
+                        $('button[type=submit]', '#code-editor').html('<spring:message code="etms.problems.problem.submit" text="Submit" />');
                     }
                 });
             }

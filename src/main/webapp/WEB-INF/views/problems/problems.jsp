@@ -5,7 +5,7 @@
 <spring:eval expression="@propertyConfigurer.getProperty('url.cdn')" var="cdnUrl"/>
 <spring:eval expression="@propertyConfigurer.getProperty('build.version')" var="version"/>
 <!DOCTYPE html>
-<html lang="${language}">
+<html>
 <head>
     <meta charset="UTF-8">
     <title><spring:message code="etms.problems.problems.title" text="Problems"/></title>
