@@ -45,7 +45,6 @@ public class AdministrationController
         view.addObject("newUsersToday", getNumberOfUserRegisteredToday());
         view.addObject("onlineUsers", getOnlineUsers());
         view.addObject("totalProblems", getTotalProblems());
-        view.addObject("numberOfCheckpoints", getNumberOfCheckpoints());
         view.addObject("privateProblems", getPrivateProblems());
         view.addObject("submissionsToday", getSubmissionsToday());
         return view;
