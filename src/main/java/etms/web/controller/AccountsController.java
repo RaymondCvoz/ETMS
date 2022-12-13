@@ -335,7 +335,7 @@ public class AccountsController
 
         Map<String, Boolean> result =
                 userService.updateProfile(
-                        currentUser, email, isCsrfTokenValid);
+                        currentUser, email);
         return result;
     }
 

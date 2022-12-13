@@ -6,8 +6,5 @@
 <jsp:useBean id="date" class="java.util.Date"/>
 <div id="footer">
     <div class="container">
-        <ul id="footer-nav" class="inline">
-            <li><a href="<c:url value="/help" />"><spring:message code="etms.include.footer.help" text="Help"/></a></li>
-        </ul>
     </div>
 </div>

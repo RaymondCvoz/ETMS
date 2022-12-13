@@ -187,7 +187,7 @@
             keyColumn="submission_id"
             useGeneratedKeys="true">
         INSERT INTO etms_submissions(problem_id, uid, submission_submit_time, submission_context)
-        VALUES (#{problem.problemId}, #{user.uid}, #{submitTime}, #{submitContext})
+        VALUES (#{problemId}, #{uid}, #{submitTime}, #{submissionContext})
     </insert>
 
     <update id="updateSubmission"

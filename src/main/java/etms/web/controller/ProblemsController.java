@@ -190,7 +190,6 @@ public class ProblemsController
 
             view.addObject("latestSubmission", submissionOfProblems);
             view.addObject("submissions", submissions);
-            view.addObject("csrfToken", CsrfProtector.getCsrfToken(session));
         }
         return view;
     }
@@ -201,9 +200,7 @@ public class ProblemsController
      * 创建提交.
      *
      * @param problemId    - 试题的唯一标识符
-     * @param languageSlug - 编程语言的别名
-     * @param code         - 代码
-     * @param csrfToken    - 用于防止CSRF攻击的Token
+     * @param context      - 提交内容
      * @param request      - HttpRequest对象
      * @return 一个包含提交记录创建结果的Map<String, Object>对象
      */
@@ -211,27 +208,22 @@ public class ProblemsController
     public @ResponseBody
     Map<String, Object> createSubmissionAction(
             @RequestParam(value = "problemId") long problemId,
-            @RequestParam(value = "languageSlug") String languageSlug,
-            @RequestParam(value = "code") String code,
-            @RequestParam(value = "csrfToken") String csrfToken,
+            @RequestParam(value = "context") String context,
             HttpServletRequest request)
     {
         HttpSession session = request.getSession();
-        String ipAddress = HttpRequestParser.getRemoteAddr(request);
         User currentUser = HttpSessionParser.getCurrentUser(session);
-        boolean isCsrfTokenValid = CsrfProtector.isCsrfTokenValid(csrfToken, session);
-
         Map<String, Object> result =
                 submissionService.createSubmission(
-                        currentUser, problemId, languageSlug, code, isCsrfTokenValid);
+                        currentUser, problemId, context);
         boolean isSuccessful = (Boolean) result.get("isSuccessful");
         if (isSuccessful)
         {
             long submissionId = (Long) result.get("submissionId");
             LOGGER.info(
                     String.format(
-                            "User: {%s} submitted code with SubmissionId #%s at %s",
-                            new Object[]{currentUser, submissionId, ipAddress}));
+                            "User: {%s} submitted code with SubmissionId #%s",
+                            new Object[]{currentUser, submissionId}));
         }
         return result;
     }
