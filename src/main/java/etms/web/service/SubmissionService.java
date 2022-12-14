@@ -315,6 +315,7 @@ public class SubmissionService
             if(problem.getProblemType() == 1)
             {
                 submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
+                submissionMapper.updateSubmission(submission);
             }
             result.put("submissionId", submissionId);
         }

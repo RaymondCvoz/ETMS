@@ -470,16 +470,13 @@ public class ProblemService
      * @param ProblemTagId         - 试题分类的唯一标识符
      * @param ProblemTagSlug       - 试题分类的别名
      * @param ProblemTagName       - 试题分类的名称
-     * @param parentProblemTagSlug - 父级试题分类的别名
      * @return 包含试题分类编辑结果的Map<String, Boolean>对象
      */
     public Map<String, Boolean> editProblemTag(
             int ProblemTagId,
             String ProblemTagSlug,
-            String ProblemTagName,
-            String parentProblemTagSlug)
+            String ProblemTagName)
     {
-        int parentProblemTagId = getProblemTagIdUsingSlug(parentProblemTagSlug);
 
         ProblemTag ProblemTag =
                 new ProblemTag(

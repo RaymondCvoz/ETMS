@@ -91,7 +91,7 @@
                                         <fmt:formatDate value="${submission.submitTime}" type="date" dateStyle="short"
                                                         timeStyle="short"/>
                                     </a></td>
-                                    <td>${submission.judgeResult.judgeResultSlug}</td>
+                                    <td>${submission.judgeScore}</td>
                                 </tr>
                             </c:forEach>
                         </table>

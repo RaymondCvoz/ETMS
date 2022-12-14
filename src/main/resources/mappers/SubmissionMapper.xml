@@ -194,8 +194,8 @@
             parameterType="etms.web.model.Submission"
             flushCache="true">
         UPDATE etms_submissions
-        SET problem_id              = #{problem.problemId},
-            uid                     = #{user.uid},
+        SET problem_id              = #{problemId},
+            uid                     = #{uid},
             submission_submit_time  = #{submitTime},
             submission_judge_score  = #{judgeScore}
         WHERE submission_id = #{submissionId}

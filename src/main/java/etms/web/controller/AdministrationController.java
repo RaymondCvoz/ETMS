@@ -385,105 +385,105 @@ public class AdministrationController
         return view;
     }
 
-    /**
-     * 加载考试列表页面.
-     *
-     * @param request  - HttpServletRequest对象
-     * @param response - HttpServletResponse对象
-     * @return 包含考试列表页面信息的ModelAndView对象
-     */
-    @RequestMapping(value = "/all-contests",method = RequestMethod.GET)
-    public ModelAndView allContestsView(
-            @RequestParam(value = "keyword",required = false) String keyword,
-            @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
-            HttpServletRequest request,
-            HttpServletResponse response
-    )
-    {
-        final int NUMBER_OF_CONTESTS_PER_PAGE = 100;
-        long offset = (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_CONTESTS_PER_PAGE;
-        List<Contest> contests = contestService.getContests(keyword,offset,NUMBER_OF_CONTESTS_PER_PAGE);
-        long totalContests = contests.size();
-
-        ModelAndView view = new ModelAndView("administration/all-exams");
-        view.addObject(
-                "totalPages", (long) Math.ceil(totalContests * 1.0 / NUMBER_OF_CONTESTS_PER_PAGE));
-        view.addObject("contests",contests);
-        view.addObject("currentPage", pageNumber);
-        return view;
-    }
-
-    /**
-     * 创建考试页面
-     * @param request HttpServletRequest对象
-     * @param response HttpServletResponse对象
-     * @return 包含新建考试所需信息的ModelAndView
-     */
-    @RequestMapping(value = "/new-exam",method = RequestMethod.GET)
-    public ModelAndView newContestView(HttpServletRequest request,HttpServletResponse response)
-    {
-        List<Problem> problems = problemService.getProblemsUsingFilters(0,"","","",true,1000000);
-        ModelAndView view = new ModelAndView("administration/new-exam");
-
-        Date currentDate = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateToString =  simpleDateFormat.format(currentDate);
-
-        view.addObject("availableProblems",problems);
-        view.addObject("dateToString",dateToString);
-        return view;
-    }
-
-    /**
-     * 创建考试
-     * @param examName 考试名称
-     * @param examNote 考试备注
-     * @param startTime 开始时间
-     * @param endTime 结束时间
-     * @param examType 考试类型
-     * @param problems 题目
-     * @return 包含考试创建信息的Map对象
-     * @throws ParseException
-     */
-    @RequestMapping(value = "/newContest.action",method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String,Boolean> newContestAction(
-            @RequestParam(value = "examName") String examName,
-            @RequestParam(value = "examNote") String examNote,
-            @RequestParam(value = "startTime") String startTime,
-            @RequestParam(value = "endTime") String endTime,
-            @RequestParam(value = "examType") String examType,
-            @RequestParam(value = "problems") String problems
-    )
-    {
-        Map<String, Boolean> result =
-                contestService.createContest(contestName, contestNote, startTime, endTime, contestMode,problems);
-
-        if ((Boolean) result.get("isSuccessful"))
-        {
-            LOGGER.info("contest" + result.get("contestId") + " has been created");
-        }
-        return result;
-    }
-
-    /**
-     * 删除考试操作
-     * @param exams 包含要删除的考试ID的JSON
-     * @return 删除结果的Map对象
-     */
-    @RequestMapping(value = "/deleteExams.action",method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String,Boolean> deleteContestsAction(@RequestParam(value = "exams") String exams)
-    {
-        Map<String, Boolean> result = new HashMap<>(2, 1);
-        List<Long> examsId = JSON.parseArray(exams, Long.class);
-        for(Long examId : examsId)
-        {
-            contestService.deleteContest(contestId);
-        }
-        result.put("isSuccessful",true);
-        return result;
-    }
+//    /**
+//     * 加载考试列表页面.
+//     *
+//     * @param request  - HttpServletRequest对象
+//     * @param response - HttpServletResponse对象
+//     * @return 包含考试列表页面信息的ModelAndView对象
+//     */
+//    @RequestMapping(value = "/all-contests",method = RequestMethod.GET)
+//    public ModelAndView allContestsView(
+//            @RequestParam(value = "keyword",required = false) String keyword,
+//            @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
+//            HttpServletRequest request,
+//            HttpServletResponse response
+//    )
+//    {
+//        final int NUMBER_OF_CONTESTS_PER_PAGE = 100;
+//        long offset = (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_CONTESTS_PER_PAGE;
+//        List<Exam> contests = contestService.getContests(keyword,offset,NUMBER_OF_CONTESTS_PER_PAGE);
+//        long totalContests = contests.size();
+//
+//        ModelAndView view = new ModelAndView("administration/all-exams");
+//        view.addObject(
+//                "totalPages", (long) Math.ceil(totalContests * 1.0 / NUMBER_OF_CONTESTS_PER_PAGE));
+//        view.addObject("contests",contests);
+//        view.addObject("currentPage", pageNumber);
+//        return view;
+//    }
+//
+//    /**
+//     * 创建考试页面
+//     * @param request HttpServletRequest对象
+//     * @param response HttpServletResponse对象
+//     * @return 包含新建考试所需信息的ModelAndView
+//     */
+//    @RequestMapping(value = "/new-exam",method = RequestMethod.GET)
+//    public ModelAndView newContestView(HttpServletRequest request,HttpServletResponse response)
+//    {
+//        List<Problem> problems = problemService.getProblemsUsingFilters(0,"","","",true,1000000);
+//        ModelAndView view = new ModelAndView("administration/new-exam");
+//
+//        Date currentDate = new Date();
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dateToString =  simpleDateFormat.format(currentDate);
+//
+//        view.addObject("availableProblems",problems);
+//        view.addObject("dateToString",dateToString);
+//        return view;
+//    }
+//
+//    /**
+//     * 创建考试
+//     * @param examName 考试名称
+//     * @param examNote 考试备注
+//     * @param startTime 开始时间
+//     * @param endTime 结束时间
+//     * @param examType 考试类型
+//     * @param problems 题目
+//     * @return 包含考试创建信息的Map对象
+//     * @throws ParseException
+//     */
+//    @RequestMapping(value = "/newContest.action",method = RequestMethod.POST)
+//    public @ResponseBody
+//    Map<String,Boolean> newContestAction(
+//            @RequestParam(value = "examName") String examName,
+//            @RequestParam(value = "examNote") String examNote,
+//            @RequestParam(value = "startTime") String startTime,
+//            @RequestParam(value = "endTime") String endTime,
+//            @RequestParam(value = "examType") String examType,
+//            @RequestParam(value = "problems") String problems
+//    )
+//    {
+//        Map<String, Boolean> result =
+//                contestService.createContest(contestName, contestNote, startTime, endTime, contestMode,problems);
+//
+//        if ((Boolean) result.get("isSuccessful"))
+//        {
+//            LOGGER.info("contest" + result.get("contestId") + " has been created");
+//        }
+//        return result;
+//    }
+//
+//    /**
+//     * 删除考试操作
+//     * @param exams 包含要删除的考试ID的JSON
+//     * @return 删除结果的Map对象
+//     */
+//    @RequestMapping(value = "/deleteExams.action",method = RequestMethod.POST)
+//    public @ResponseBody
+//    Map<String,Boolean> deleteContestsAction(@RequestParam(value = "exams") String exams)
+//    {
+//        Map<String, Boolean> result = new HashMap<>(2, 1);
+//        List<Long> examsId = JSON.parseArray(exams, Long.class);
+//        for(Long examId : examsId)
+//        {
+//            contestService.deleteContest(contestId);
+//        }
+//        result.put("isSuccessful",true);
+//        return result;
+//    }
     /**
      * 删除选定的试题.
      *
@@ -712,28 +712,25 @@ public class AdministrationController
     /**
      * 编辑试题分类.
      *
-     * @param problemCategoryId         - 试题分类的唯一标识符
-     * @param problemCategorySlug       - 试题分类的别名
-     * @param problemCategoryName       - 试题分类的名称
-     * @param parentProblemCategorySlug - 父级试题分类的别名
-     * @param request                   - HttpServletRequest对象
+     * @param problemTagId           - 试题分类的唯一标识符
+     * @param problemTagSlug         - 试题分类的别名
+     * @param problemTagName         - 试题分类的名称
+     * @param request                - HttpServletRequest对象
      * @return 包含试题分类的编辑结果的Map<String, Boolean>对象
      */
-    @RequestMapping(value = "/editProblemCategory.action", method = RequestMethod.POST)
+    @RequestMapping(value = "/editProblemTag.action", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, Boolean> editProblemCategoryAction(
-            @RequestParam(value = "problemCategoryId") String problemCategoryId,
-            @RequestParam(value = "problemCategorySlug") String problemCategorySlug,
-            @RequestParam(value = "problemCategoryName") String problemCategoryName,
-            @RequestParam(value = "parentProblemCategory") String parentProblemCategorySlug,
+            @RequestParam(value = "problemTagId") String problemTagId,
+            @RequestParam(value = "problemTagSlug") String problemTagSlug,
+            @RequestParam(value = "problemTagName") String problemTagName,
             HttpServletRequest request)
     {
         Map<String, Boolean> result =
-                problemService.editProblemCategory(
-                        Integer.parseInt(problemCategoryId),
-                        problemCategorySlug,
-                        problemCategoryName,
-                        parentProblemCategorySlug);
+                problemService.editProblemTag(
+                        Integer.parseInt(problemTagId),
+                        problemTagSlug,
+                        problemTagName);
 
         if (result.get("isSuccessful"))
         {
@@ -742,7 +739,7 @@ public class AdministrationController
             LOGGER.info(
                     String.format(
                             "ProblemCategory: [ProblemCategoryId=%s] was edited by administrator at %s.",
-                            new Object[]{problemCategoryId, ipAddress}));
+                            new Object[]{problemTagId, ipAddress}));
         }
         return result;
     }
@@ -750,34 +747,33 @@ public class AdministrationController
     /**
      * 删除试题分类.
      *
-     * @param problemCategories - 试题分类的唯一标识符集合
+     * @param problemTags - 试题分类的唯一标识符集合
      * @param request           - HttpServletRequest对象
      * @return 包含试题分类的删除结果的Map<String, Boolean>对象
      */
-    @RequestMapping(value = "/deleteProblemCategories.action", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteProblemTags.action", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, Object> deleteProblemCategoryAction(
-            @RequestParam(value = "problemCategories") String problemCategories,
+            @RequestParam(value = "problemTags") String problemTags,
             HttpServletRequest request)
     {
         Map<String, Object> result = new HashMap<>(3, 1);
-        List<Integer> problemCategoryList = JSON.parseArray(problemCategories, Integer.class);
-        List<Integer> deletedProblemCategories = new ArrayList<>();
+        List<Integer> problemTagList = JSON.parseArray(problemTags, Integer.class);
+        List<Integer> deletedProblemTags = new ArrayList<>();
 
-        for (int problemCategoryId : problemCategoryList)
+        for (int problemTagId : problemTagList)
         {
-            if (problemService.deleteProblemCategory(problemCategoryId))
+            if (problemService.deleteProblemTag(problemTagId))
             {
-                deletedProblemCategories.add(problemCategoryId);
+                deletedProblemTags.add(problemTagId);
             }
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
             LOGGER.info(
                     String.format(
                             "ProblemCategory: [ProblemCategoryId=%s] was deleted by administrator at %s.",
-                            new Object[]{problemCategoryId, ipAddress}));
+                            new Object[]{problemTagId}));
         }
         result.put("isSuccessful", true);
-        result.put("deletedProblemCategories", deletedProblemCategories);
+        result.put("deletedProblemCategories", deletedProblemTags);
         return result;
     }
 
@@ -851,29 +847,6 @@ public class AdministrationController
         }
         result.put("isSuccessful", true);
         result.put("deletedSubmissions", deletedSubmissions);
-        return result;
-    }
-
-    /**
-     * 重新评测选定的提交记录.
-     *
-     * @param submissions - 提交记录ID的集合, 以逗号(, )分隔
-     * @param request     - HttpServletRequest对象
-     * @return 重新评测请求的执行结果
-     */
-    @RequestMapping(value = "/restartSubmissions.action", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, Boolean> restartSubmissionsAction(
-            @RequestParam(value = "submissions") String submissions, HttpServletRequest request)
-    {
-        Map<String, Boolean> result = new HashMap<>(2, 1);
-        List<Long> submissionList = JSON.parseArray(submissions, Long.class);
-
-        for (Long submissionId : submissionList)
-        {
-            submissionService.createSubmissionTask(submissionId);
-        }
-        result.put("isSuccessful", true);
         return result;
     }
 
@@ -976,43 +949,6 @@ public class AdministrationController
     }
 
     /**
-     * 加载编程语言设置页面.
-     *
-     * @param request  - HttpServletRequest对象
-     * @param response - HttpServletResponse对象
-     * @return 包含编程语言设置信息的ModelAndView对象
-     */
-    @RequestMapping(value = "/language-settings", method = RequestMethod.GET)
-    public ModelAndView languageSettingsView(
-            HttpServletRequest request, HttpServletResponse response)
-    {
-        ModelAndView view = new ModelAndView("administration/language-settings");
-        view.addObject("languages", languageService.getAllLanguages());
-        return view;
-    }
-
-    /**
-     * 更新网站编程语言选项.
-     *
-     * @param languages - 包含编程语言设置的数组
-     * @param request   - HttpServletRequest对象
-     * @return 编程语言选项的更新结果
-     */
-    @RequestMapping(value = "/updateLanguageSettings.action", method = RequestMethod.POST)
-    public @ResponseBody
-    Map<String, Object> updateLanguageSettingsAction(
-            @RequestParam(value = "languages") String languages, HttpServletRequest request)
-    {
-        List<Language> languagesList = JSON.parseArray(languages, Language.class);
-        Map<String, Object> result = languageService.updateLanguageSettings(languagesList);
-        return result;
-    }
-    /**
-     * 自动注入的ContestService对象.
-     */
-    @Autowired
-    private ContestService contestService;
-    /**
      * 自动注入的UserService对象.
      */
     @Autowired
@@ -1035,18 +971,6 @@ public class AdministrationController
      */
     @Autowired
     private OptionService optionService;
-
-    /**
-     * 自动注入的LanguageService对象. 用于获取系统中的编程语言选项.
-     */
-    @Autowired
-    private LanguageService languageService;
-
-    /**
-     * 自动注入的ApplicationEventListener对象. 用于获取在线评测机的数量.
-     */
-    @Autowired
-    private ApplicationEventListener eventListener;
 
     /**
      * 日志记录器.
