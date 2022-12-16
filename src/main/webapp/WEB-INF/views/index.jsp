@@ -8,6 +8,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Index Page</h2>
+<%response.sendRedirect(request.getServletContext().getContextPath() + "/p");%>
 </body>
 </html>

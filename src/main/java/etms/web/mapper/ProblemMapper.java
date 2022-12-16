@@ -87,6 +87,17 @@ public interface ProblemMapper
             @Param("limit") int limit);
 
     /**
+     * 通过试题唯一标识符和关键字获取某个范围内的所有试题.
+     *
+     * @param keyword           - 关键词
+     * @param problemTagId      - 试题类别的唯一标识符
+     * @return 某个范围内的符合条件的试题
+     */
+    List<Problem> getProblemsUsingFiltersAdmin(
+            @Param("keyword") String keyword,
+            @Param("problemTagId") long problemTagId);
+
+    /**
      * 创建一个新的试题对象.
      *
      * @param problem - 试题对象

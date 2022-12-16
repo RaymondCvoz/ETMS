@@ -348,38 +348,26 @@ public class AdministrationController
     @RequestMapping(value = "/all-problems", method = RequestMethod.GET)
     public ModelAndView allProblemsView(
             @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
-            @RequestParam(value = "problemTag", required = false, defaultValue = "")
-            String problemTagSlug,
-            @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
+            @RequestParam(value = "problemTag", required = false, defaultValue = "") String problemTagSlug,
             HttpServletRequest request,
             HttpServletResponse response)
     {
-        final int NUMBER_OF_PROBLEMS_PER_PAGE = 20;
-        List<ProblemTag> problemCategories = problemService.getProblemTags();
-        long totalProblems =
-                problemService.getNumberOfProblemsUsingFilters(keyword, problemTagSlug, false);
+        List<ProblemTag> problemTags = problemService.getProblemTags();
 
-        long offset = (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_PROBLEMS_PER_PAGE;
-        long problemIdLowerBound = problemService.getFirstIndexOfProblems() + offset;
-        long problemIdUpperBound = problemIdLowerBound + NUMBER_OF_PROBLEMS_PER_PAGE - 1;
+        long problemIdLowerBound = problemService.getFirstIndexOfProblems();
+        long problemIdUpperBound = problemService.getLastIndexOfProblemsAdmin();
 
         List<Problem> problems =
-                problemService.getProblemsUsingFilters(
-                        problemIdLowerBound,
+                problemService.getProblemsUsingFiltersAdmin(
                         keyword,
-                        problemTagSlug,
-                        false,
-                        NUMBER_OF_PROBLEMS_PER_PAGE);
+                        problemTagSlug);
         Map<Long, List<ProblemTag>> problemTagRelationships =
                 problemService.getProblemTagsOfProblems(problemIdLowerBound, problemIdUpperBound);
 
         ModelAndView view = new ModelAndView("administration/all-problems");
-        view.addObject("problemCategories", problemCategories);
+        view.addObject("problemTags", problemTags);
         view.addObject("selectedProblemTag", problemTagSlug);
         view.addObject("keyword", keyword);
-        view.addObject("currentPage", pageNumber);
-        view.addObject(
-                "totalPages", (long) Math.ceil(totalProblems * 1.0 / NUMBER_OF_PROBLEMS_PER_PAGE));
         view.addObject("problems", problems);
         view.addObject("problemTagRelationships", problemTagRelationships);
         return view;

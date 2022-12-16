@@ -72,7 +72,7 @@ public class ProblemsController
         {
             long userId = (Long) session.getAttribute("uid");
             long endIndex =
-                    problemService.getLastIndexOfProblems(true, startIndex, NUMBER_OF_PROBLEMS_PER_PAGE);
+                    problemService.getLastIndexOfProblems(false, startIndex, NUMBER_OF_PROBLEMS_PER_PAGE);
             Map<Long, Submission> submissionOfProblems =
                     submissionService.getSubmissionOfProblems(userId, startIndex, endIndex);
             view.addObject("submissionOfProblems", submissionOfProblems);

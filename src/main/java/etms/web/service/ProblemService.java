@@ -42,6 +42,15 @@ public class ProblemService
     }
 
     /**
+     * 获取试题的结束编号.
+     * @return 试题的结束编号
+     */
+    public long getLastIndexOfProblemsAdmin()
+    {
+        return problemMapper.getUpperBoundOfProblems();
+    }
+
+    /**
      * 通过试题的唯一标识符获取试题的详细信息.
      *
      * @param problemId - 试题的唯一标识符
@@ -83,6 +92,28 @@ public class ProblemService
         }
         return problemMapper.getProblemsUsingFilters(
                 keyword, problemTagId, isPublic, offset, limit);
+    }
+
+    /**
+     * 获取试题列表.
+     *
+     * @param keyword             - 关键字
+     * @param problemTagSlug      - 试题标签的别名
+     * @return 试题列表(List < Problem > 对象)
+     */
+    public List<Problem> getProblemsUsingFiltersAdmin(
+            String keyword,
+            String problemTagSlug)
+    {
+        ProblemTag problemTag =
+                problemTagMapper.getProblemTagUsingTagSlug(problemTagSlug);
+        long problemTagId = 0;
+        if (problemTag != null)
+        {
+            problemTagId = problemTag.getProblemTagId();
+        }
+        return problemMapper.getProblemsUsingFiltersAdmin(
+                keyword, problemTagId);
     }
 
     /**
