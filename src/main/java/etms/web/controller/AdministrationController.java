@@ -539,7 +539,7 @@ public class AdministrationController
             @RequestParam(value = "hint") String hint,
             @RequestParam(value = "problemTags") String problemTags,
             @RequestParam(value = "isPublic") boolean isPublic,
-            @RequestParam(value = "problemType") int problemType,
+            @RequestParam(value = "problemType") boolean problemType,
             @RequestParam(value = "score") int score,
             @RequestParam(value = "answer") String answer,
             HttpServletRequest request)
@@ -619,11 +619,11 @@ public class AdministrationController
             @RequestParam(value = "problemName") String problemName,
             @RequestParam(value = "description") String description,
             @RequestParam(value = "hint") String hint,
-            @RequestParam(value = "problemTags") String problemTags,
-            @RequestParam(value = "isPublic") boolean isPublic,
-            @RequestParam(value = "problemType") int problemType,
-            @RequestParam(value = "score") int score,
             @RequestParam(value = "answer") String answer,
+            @RequestParam(value = "problemType") boolean problemType,
+            @RequestParam(value = "problemTags") String problemTags,
+            @RequestParam(value = "score") int score,
+            @RequestParam(value = "isPublic") boolean isPublic,
             HttpServletRequest request)
     {
         Map<String, Boolean> result =

@@ -219,7 +219,7 @@ public class ProblemService
             String problemName,
             String description,
             String hint,
-            int problemType,
+            boolean problemType,
             String answer,
             int score,
             String problemTags)
@@ -286,7 +286,7 @@ public class ProblemService
             String problemName,
             String description,
             String hint,
-            int problemType,
+            boolean problemType,
             String answer,
             int score,
             String problemTags)
@@ -306,8 +306,9 @@ public class ProblemService
         if (result.get("isSuccessful"))
         {
             problemMapper.updateProblem(problem);
-            updateProblemTagRelationships(problemId, problemTags);
-            updateProblemTags(problemId, problemTags);
+            System.out.println(problemTags);
+//            updateProblemTagRelationships(problemId, problemTags);
+//            updateProblemTags(problemId, problemTags);
         }
         return result;
     }

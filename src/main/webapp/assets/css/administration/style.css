@@ -34,8 +34,8 @@ input[type=password] {
 }
 
 div#wrapper div#sidebar {
-    background-color: #3358c2;
-    border-color: #3358c2;
+    background-color: #0e5abe;
+    border-color: #0e5abe;
     color: #fff;
     position: fixed;
     top: 0;
@@ -87,7 +87,7 @@ div#wrapper div#sidebar div#sidebar-nav ul.nav li.nav-item-has-children i.fa-car
 }
 
 div#wrapper div#sidebar div#sidebar-nav ul.nav li > a {
-    background: #3358c2;
+    background: #0e5abe;
     color: #fff;
     display: block;
     padding: 10px 15px;
@@ -96,7 +96,7 @@ div#wrapper div#sidebar div#sidebar-nav ul.nav li > a {
 
 div#wrapper div#sidebar div#sidebar-nav ul.nav li.active > a,
 div#wrapper div#sidebar div#sidebar-nav ul.nav li > a:hover {
-    background-color: #cb9700;
+    background-color: #230d5b;
 }
 
 div#wrapper div#sidebar div#sidebar-nav ul.sub-nav {
@@ -105,13 +105,13 @@ div#wrapper div#sidebar div#sidebar-nav ul.sub-nav {
 }
 
 div#wrapper div#sidebar div#sidebar-nav ul.sub-nav li > a {
-    background: #4163c2;
+    background: #0032b2;
     padding: 10px 15px 10px 35px;
 }
 
 div#wrapper div#sidebar div#sidebar-nav ul.sub-nav li.active > a,
 div#wrapper div#sidebar div#sidebar-nav ul.sub-nav li > a:hover {
-    background-color: #cb9700;
+    background-color: #230D5B;
 }
 
 div#wrapper div#container {

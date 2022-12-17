@@ -29,7 +29,7 @@ public class Problem
             String problemName,
             String description,
             String hint,
-            int problemType,
+            boolean problemType,
             String answer,
             int score)
     {
@@ -59,7 +59,7 @@ public class Problem
             String problemName,
             String description,
             String hint,
-            int problemType,
+            boolean problemType,
             String answer,
             int score)
     {
@@ -198,7 +198,7 @@ public class Problem
      * 获取试题类型
      * @return 试题类型
      */
-    public int getProblemType()
+    public boolean getProblemType()
     {
         return problemType;
     }
@@ -207,7 +207,7 @@ public class Problem
      * 设置试题类型
      * @param problemType 试题类型
      */
-    public void setProblemType(int problemType)
+    public void setProblemType(boolean problemType)
     {
         this.problemType = problemType;
     }
@@ -283,7 +283,7 @@ public class Problem
     /**
      * 试题类型
      */
-    private int problemType;
+    private boolean problemType;
     /**
      * 试题答案
      */

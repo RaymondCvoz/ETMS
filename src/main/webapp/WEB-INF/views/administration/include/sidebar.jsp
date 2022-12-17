@@ -1,16 +1,21 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div id="sidebar">
 
-    <div id="sidebar-user">
-        <div class="row-fluid">
-            <div class="span12">
-                <a href="<c:url value="/p" />" style="color: #ffffff">
-                    <spring:message code="etms.administration.include.sidebar.welcome-back" text="Administrator Panel"/></a>
-            </div>
-        </div> <!-- .row-fluid -->
-    </div> <!-- #sidebar-user -->
+<%--    <div id="sidebar-user">--%>
+<%--        <div class="row-fluid">--%>
+<%--            <div class="span12">--%>
+<%--                <p style="color: #ffffff">--%>
+<%--                    ${sessionScope.uid}--%>
+<%--                    <spring:message code="etms.administration.include.sidebar.welcome-back" text="Administrator Panel"/></p>--%>
+<%--            </div>--%>
+<%--        </div> <!-- .row-fluid -->--%>
+<%--    </div> <!-- #sidebar-user -->--%>
     <div id="sidebar-nav">
         <ul class="nav">
+            <li class="nav-item primary-nav-item">
+                <a href="<c:url value="/p" />"></i> <spring:message
+                        code="etms.administration.include.sidebar.welcome-back" text="Go Back"/></a>
+            </li>
             <li class="nav-item primary-nav-item">
                 <a href="<c:url value="/administration" />"></i> <spring:message
                         code="etms.administration.include.sidebar.dashboard" text="Dashboard"/></a>
@@ -92,6 +97,7 @@
 <%--                            code="etms.administration.include.sidebar.language-settings" text="Languages"/></a></li>--%>
                 </ul>
             </li>
+
         </ul>
     </div> <!-- #sidebar-nav -->
 </div>

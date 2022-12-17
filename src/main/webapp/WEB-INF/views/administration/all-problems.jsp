@@ -85,7 +85,7 @@
                             <input id="all-problems" type="checkbox" data-toggle="checkbox">
                         </label>
                     </th>
-                    <th class="problem-id">#</th>
+                    <th class="problem-id"><spring:message code="etms.administration.all-problems.id"/></th>
                     <th class="problem-is-public"><spring:message code="etms.administration.all-problems.is-public"
                                                                   text="Public/Private"/></th>
                     <th class="problem-name"><spring:message code="etms.administration.all-problems.problem-name"

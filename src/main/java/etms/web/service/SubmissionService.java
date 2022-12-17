@@ -312,7 +312,7 @@ public class SubmissionService
         {
             submissionMapper.createSubmission(submission);
             long submissionId = submission.getSubmissionId();
-            if(problem.getProblemType() == 1)
+            if(!problem.getProblemType())
             {
                 submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
                 submissionMapper.updateSubmission(submission);

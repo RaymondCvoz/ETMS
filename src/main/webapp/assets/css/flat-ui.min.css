@@ -1646,7 +1646,7 @@ textarea[class*=span] {
 
 .tagsinput .tag {
     border-radius: 4px;
-    background: linear-gradient(to right, #0066CD, purple);
+    background: #0e5abe;
     color: #fff;
     cursor: pointer;
     margin-right: 5px;
@@ -1666,7 +1666,7 @@ textarea[class*=span] {
 }
 
 .tagsinput .tag:hover {
-    background: linear-gradient(to right, #0066CD, purple);
+    background: #582098;
     color: #fff;
     padding-left: 12px;
     padding-right: 20px
@@ -2467,7 +2467,7 @@ textarea[class*=span] {
 }
 
 .has-switch > div.switch-on label {
-    background-color: #3E35A8
+    background-color: #0066CD;
 }
 
 .has-switch input[type=checkbox] {
@@ -2501,7 +2501,7 @@ textarea[class*=span] {
 .has-switch span.switch-left {
     border-radius: 30px 0 0 30px;
     background-color: #303641;
-    color: #3E35A8;
+    color: #FFFFFF;
     border-left: 1px solid transparent
 }
 
@@ -2563,7 +2563,7 @@ textarea[class*=span] {
 
 .switch-square label {
     border-radius: 0 6px 6px 0;
-    border-color: #3E35A8
+    border-color: #FFFFFF;
 }
 
 .share {
