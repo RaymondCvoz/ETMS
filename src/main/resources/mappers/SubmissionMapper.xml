@@ -5,11 +5,14 @@
 <mapper namespace="etms.web.mapper.SubmissionMapper">
     <resultMap id="SubmissionResultMap" type="etms.web.model.Submission">
         <id property="submissionId" column="submission_id"/>
-        <result property="problemId" column="problem_id"/>
         <result property="uid" column="uid"/>
         <result property="submitTime" column="submission_submit_time"/>
         <result property="judgeScore" column="submission_judge_score"/>
         <result property="submissionContext" column="submission_context"/>
+        <association property="problem"
+                     javaType="etms.web.model.Problem"
+                     column="problem_id"
+                     select="etms.web.mapper.ProblemMapper.getProblem"/>
     </resultMap>
 
     <select id="getNumberOfSubmissionsUsingDate"
@@ -187,7 +190,7 @@
             keyColumn="submission_id"
             useGeneratedKeys="true">
         INSERT INTO etms_submissions(problem_id, uid, submission_submit_time, submission_context)
-        VALUES (#{problemId}, #{uid}, #{submitTime}, #{submissionContext})
+        VALUES (#{problem.problemId}, #{uid}, #{submitTime}, #{submissionContext})
     </insert>
 
     <update id="updateSubmission"

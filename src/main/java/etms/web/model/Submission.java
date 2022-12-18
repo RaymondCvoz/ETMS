@@ -16,15 +16,15 @@ public class Submission
 
     /**
      * 提交信息构造函数
-     * @param problemId 题目唯一标识符
+     * @param problem 题目
      * @param uid 用户唯一标识符
      * @param submitTime 提交时间
      * @param judgeScore 得分
      * @param submissionContext 提交内容
      */
-    public Submission(long problemId, long uid, Date submitTime, int judgeScore, String submissionContext)
+    public Submission(Problem problem, long uid, Date submitTime, int judgeScore, String submissionContext)
     {
-        this.problemId = problemId;
+        this.problem = problem;
         this.uid = uid;
         this.submitTime = submitTime;
         this.judgeScore = judgeScore;
@@ -34,16 +34,16 @@ public class Submission
     /**
      * 提交信息类构造函数
      * @param submissionId 提交信息唯一标识符
-     * @param problemId 题目唯一标识符
+     * @param problem 题目
      * @param uid 用户唯一标识符
      * @param submitTime 提交时间
      * @param judgeScore 得分
      * @param submissionContext 提交内容
      */
-    public Submission(long submissionId, long problemId, long uid, Date submitTime, int judgeScore, String submissionContext)
+    public Submission(long submissionId, Problem problem, long uid, Date submitTime, int judgeScore, String submissionContext)
     {
         this.submissionId = submissionId;
-        this.problemId = problemId;
+        this.problem = problem;
         this.uid = uid;
         this.submitTime = submitTime;
         this.judgeScore = judgeScore;
@@ -72,18 +72,18 @@ public class Submission
      * 获取题目唯一标识符
      * @return 题目唯一标识符
      */
-    public long getProblemId()
+    public Problem getProblem()
     {
-        return problemId;
+        return problem;
     }
 
     /**
      * 设置题目唯一标识符
-     * @param problemId 题目唯一标识符
+     * @param problem 题目
      */
-    public void setProblemId(long problemId)
+    public void setProblem(Problem problem)
     {
-        this.problemId = problemId;
+        this.problem = problem;
     }
 
     /**
@@ -159,13 +159,21 @@ public class Submission
     }
 
     /**
+     * 获取提交题目唯一标识符
+     * @return 提交题目唯一标识符
+     */
+    public long getProblemId()
+    {
+        return this.problem.getProblemId();
+    }
+    /**
      * 提交信息唯一标识符
      */
     private long submissionId;
     /**
      * 题目唯一标识符
      */
-    private long problemId;
+    private Problem problem;
     /**
      * 用户唯一标识符
      */

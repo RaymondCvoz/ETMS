@@ -276,6 +276,30 @@ public class SubmissionService
     }
 
     /**
+     * 获取某个用户在某个试题ID区间段内的评测结果.
+     *
+     * @param userId              - 用户的唯一标识符
+     * @param problemIdLowerBound - 试题ID区间的下界
+     * @param problemIdUpperBound - 试题ID区间的上界
+     * @return 某个试题ID区间段内的通过的评测结果
+     */
+    public Map<String, Submission> getSubmissionOfProblemsWithProblemName(
+            long userId, long problemIdLowerBound, long problemIdUpperBound)
+    {
+        Map<String, Submission> submissionOfProblems = new HashMap<>();
+        List<Submission> latestSubmission =
+                submissionMapper.getLatestSubmissionOfProblems(
+                        userId, problemIdLowerBound, problemIdUpperBound);
+        for (Submission s : latestSubmission)
+        {
+            long problemId = s.getProblemId();
+            String problemName = problemMapper.getProblem(problemId).getProblemName();
+            submissionOfProblems.put(problemName, s);
+        }
+        return submissionOfProblems;
+    }
+
+    /**
      * 获取用户评测记录概况.
      *
      * @param userId - 用户的唯一标识符
@@ -302,7 +326,7 @@ public class SubmissionService
     {
         Problem problem = problemMapper.getProblem(problemId);
         Date date = new Date();
-        Submission submission = new Submission(problemId, user.getUid(), date, 0, context);
+        Submission submission = new Submission(problem, user.getUid(), date, 0, context);
 
         @SuppressWarnings("unchecked")
         Map<String, Object> result =

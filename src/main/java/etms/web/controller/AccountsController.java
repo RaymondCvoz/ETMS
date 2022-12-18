@@ -287,7 +287,6 @@ public class AccountsController
         view.addObject("user", user);
         view.addAllObjects(userService.getUserMetaUsingUid(user));
         view.addObject("submissions", submissionService.getSubmissionOfUser(userId));
-        view.addObject("csrfToken", CsrfProtector.getCsrfToken(session));
 
         return view;
     }
@@ -327,12 +326,9 @@ public class AccountsController
     public @ResponseBody
     Map<String, Boolean> updateProfileInDashboardAction(
             @RequestParam(value = "email") String email,
-            @RequestParam(value = "csrfToken") String csrfToken,
             HttpServletRequest request)
     {
         User currentUser = HttpSessionParser.getCurrentUser(request.getSession());
-        boolean isCsrfTokenValid = CsrfProtector.isCsrfTokenValid(csrfToken, request.getSession());
-
         Map<String, Boolean> result =
                 userService.updateProfile(
                         currentUser, email);
