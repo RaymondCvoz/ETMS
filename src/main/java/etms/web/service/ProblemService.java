@@ -240,8 +240,8 @@ public class ProblemService
         {
             problemMapper.createProblem(problem);
             long problemId = problem.getProblemId();
-            createProblemTagRelationships(problemId, problemTags);
-            createProblemTags(problemId, problemTags);
+//            createProblemTagRelationships(problemId, problemTags);
+//            createProblemTags(problemId, problemTags);
 
             result.put("problemId", problemId);
         }

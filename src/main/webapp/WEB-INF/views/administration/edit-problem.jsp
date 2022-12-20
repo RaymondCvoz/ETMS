@@ -246,7 +246,6 @@
             'score': score,
             'isPublic': isPublic
         };
-        alert(isPublic)
         $.ajax({
             type: 'POST',
             url: '<c:url value="/administration/editProblem.action" />',

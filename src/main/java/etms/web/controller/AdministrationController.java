@@ -2,6 +2,7 @@
 package etms.web.controller;
 
 import etms.web.exception.ResourceNotFoundException;
+import etms.web.mapper.UserMetaMapper;
 import etms.web.model.*;
 import etms.web.service.*;
 import etms.web.util.CsrfProtector;
@@ -213,7 +214,9 @@ public class AdministrationController
 
         for (Long userId : userList)
         {
+            userService.deleteUserMeta(userId);
             userService.deleteUser(userId);
+
         }
         result.put("isSuccessful", true);
         return result;
@@ -275,16 +278,17 @@ public class AdministrationController
         if (user != null)
         {
             Map<String, Boolean> updateProfileResult =
-                    userService.updateProfile(user, password, userGroupSlug);
-            Map<String, Boolean> updateUserMetaResult =
-                    userService.updateProfile(user, email);
+                    userService.updateProfile(user, password,email,userGroupSlug);
+//            Map<String, Boolean> updateUserMetaResult =
+//                    userService.updateProfile(user, email);
             boolean isUpdateProfileSuccessful = updateProfileResult.get("isSuccessful");
-            boolean isUpdateUserMetaSuccessful = updateUserMetaResult.get("isSuccessful");
+//            boolean isUpdateUserMetaSuccessful = updateUserMetaResult.get("isSuccessful");
 
             result.putAll(updateProfileResult);
-            result.putAll(updateUserMetaResult);
+//            result.putAll(updateUserMetaResult);
             result.put("isUserExists", true);
-            result.put("isSuccessful", isUpdateProfileSuccessful && isUpdateUserMetaSuccessful);
+//            result.put("isSuccessful", isUpdateProfileSuccessful && isUpdateUserMetaSuccessful);
+            result.put("isSuccessful", isUpdateProfileSuccessful);
         }
         return result;
     }
@@ -536,11 +540,11 @@ public class AdministrationController
     Map<String, Object> createProblemAction(
             @RequestParam(value = "problemName") String problemName,
             @RequestParam(value = "description") String description,
-            @RequestParam(value = "hint") String hint,
+            @RequestParam(value = "hint",defaultValue = "无") String hint,
             @RequestParam(value = "problemTags") String problemTags,
             @RequestParam(value = "isPublic") boolean isPublic,
             @RequestParam(value = "problemType") boolean problemType,
-            @RequestParam(value = "score") int score,
+            @RequestParam(value = "score", defaultValue = "0") int score,
             @RequestParam(value = "answer") String answer,
             HttpServletRequest request)
     {
@@ -558,11 +562,6 @@ public class AdministrationController
         if ((boolean) result.get("isSuccessful"))
         {
             long problemId = (Long) result.get("problemId");
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-            LOGGER.info(
-                    String.format(
-                            "Problem: [ProblemId=%s] was created by administrator at %s.",
-                            new Object[]{problemId, ipAddress}));
         }
         return result;
     }
@@ -959,7 +958,11 @@ public class AdministrationController
      */
     @Autowired
     private OptionService optionService;
-
+    /**
+     * 自动注入的UserMetaMapper对象，用于操作用户元信息
+     */
+    @Autowired
+    private UserMetaMapper userMetaMapper;
     /**
      * 日志记录器.
      */

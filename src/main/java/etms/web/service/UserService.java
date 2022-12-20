@@ -545,14 +545,15 @@ public class UserService
      *
      * @param user               - 待更改个人信息的用户.
      * @param password           - 用户的密码
+     * @param email              - 用户的电子邮箱
      * @param userGroupSlug      - 用户所属用户组的别名
      * @return 包含用户个人信息更改结果的Map<String, Boolean>对象
      */
     public Map<String, Boolean> updateProfile(
-            User user, String password, String userGroupSlug)
+            User user, String password, String email,String userGroupSlug)
     {
         UserGroup userGroup = userGroupMapper.getUserGroupUsingSlug(userGroupSlug);
-        Map<String, Boolean> result = getUpdateProfileResult(password, userGroup);
+        Map<String, Boolean> result = getUpdateProfileResult(password, email, userGroup);
         if (result.get("isSuccessful"))
         {
             if (!password.isEmpty())
@@ -569,24 +570,28 @@ public class UserService
      * [此方法仅供管理员使用] 更改用户的基本信息.
      *
      * @param password       - 用户的密码
+     * @param email          - 用户的电子邮箱
      * @param userGroup      - 用户所属的用户组
      * @return 包含用户个人信息更改结果的Map<String, Boolean>对象
      */
     private Map<String, Boolean> getUpdateProfileResult(
-            String password, UserGroup userGroup)
+            String password,String email, UserGroup userGroup)
     {
         Map<String, Boolean> result = new HashMap<>(6, 1);
         result.put("isPasswordEmpty", password.isEmpty());
         result.put("isPasswordLegal", isPasswordLegal(password));
         result.put("isUserGroupLegal", userGroup != null);
-
+        result.put("isEmailEmpty", email.isEmpty());
+        result.put("isEmailLegal", isEmailLegal(email));
         boolean isSuccessful =
                 result.get("isPasswordEmpty") ^ result.get("isPasswordLegal")
                         && result.get("isUserGroupLegal")
-                        && result.get("isPreferLanguageLegal");
+                        && !result.get("isEmailEmpty")
+                                && result.get("isEmailLegal");
         result.put("isSuccessful", isSuccessful);
         return result;
     }
+
 
     /**
      * [此方法仅供管理员使用] 根据用户的唯一标识符删除用户.
@@ -597,6 +602,17 @@ public class UserService
     {
         userMapper.deleteUser(uid);
     }
+
+    /**
+     * [此方法仅供管理员使用] 根据用户的唯一标识符删除用户元信息.
+     *
+     * @param uid - 用户的唯一标识符
+     */
+    public void deleteUserMeta(long uid)
+    {
+        userMetaMapper.deleteUserMetaUsingUser(uid);
+    }
+
 
     /**
      * 自动注入的UserMapper对象. 用于获取用户基本信息.
