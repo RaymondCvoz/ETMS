@@ -78,15 +78,11 @@ public interface UserMapper
      *
      * @param userGroup - 用户组对象
      * @param username  - 部分或全部用户名
-     * @param offset    - 用户唯一标识符的起始编号
-     * @param limit     - 需要获取的用户的数量
      * @return 符合条件的用户列表
      */
     List<User> getUserUsingUserGroupAndUsername(
             @Param("userGroup") UserGroup userGroup,
-            @Param("username") String username,
-            @Param("offset") long offset,
-            @Param("limit") int limit);
+            @Param("username") String username);
 
     /**
      * 创建新用户对象.

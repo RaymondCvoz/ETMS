@@ -1,7 +1,6 @@
 package etms.web.model;
 
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Component
@@ -17,15 +16,15 @@ public class Submission
     /**
      * 提交信息构造函数
      * @param problem 题目
-     * @param uid 用户唯一标识符
+     * @param user 用户
      * @param submitTime 提交时间
      * @param judgeScore 得分
      * @param submissionContext 提交内容
      */
-    public Submission(Problem problem, long uid, Date submitTime, int judgeScore, String submissionContext)
+    public Submission(Problem problem, User user, Date submitTime, int judgeScore, String submissionContext)
     {
         this.problem = problem;
-        this.uid = uid;
+        this.user = user;
         this.submitTime = submitTime;
         this.judgeScore = judgeScore;
         this.submissionContext = submissionContext;
@@ -35,16 +34,16 @@ public class Submission
      * 提交信息类构造函数
      * @param submissionId 提交信息唯一标识符
      * @param problem 题目
-     * @param uid 用户唯一标识符
+     * @param user 用户
      * @param submitTime 提交时间
      * @param judgeScore 得分
      * @param submissionContext 提交内容
      */
-    public Submission(long submissionId, Problem problem, long uid, Date submitTime, int judgeScore, String submissionContext)
+    public Submission(long submissionId, Problem problem, User user, Date submitTime, int judgeScore, String submissionContext)
     {
         this.submissionId = submissionId;
         this.problem = problem;
-        this.uid = uid;
+        this.user = user;
         this.submitTime = submitTime;
         this.judgeScore = judgeScore;
         this.submissionContext = submissionContext;
@@ -90,18 +89,18 @@ public class Submission
      * 获取用户唯一标识符
      * @return 用户唯一标识符
      */
-    public long getUid()
+    public User getUser()
     {
-        return uid;
+        return user;
     }
 
     /**
      * 设置用户唯一标识符
-     * @param uid 用户唯一标识符
+     * @param user 用户
      */
-    public void setUid(long uid)
+    public void setUser(User user)
     {
-        this.uid = uid;
+        this.user = user;
     }
 
     /**
@@ -169,6 +168,8 @@ public class Submission
     /**
      * 提交信息唯一标识符
      */
+
+
     private long submissionId;
     /**
      * 题目唯一标识符
@@ -177,7 +178,7 @@ public class Submission
     /**
      * 用户唯一标识符
      */
-    private long uid;
+    private User user;
     /**
      * 提交时间
      */

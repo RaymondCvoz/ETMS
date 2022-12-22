@@ -530,14 +530,12 @@ public class UserService
      *
      * @param userGroup - 用户组对象
      * @param username  - 部分或全部用户名
-     * @param offset    - 用户唯一标识符的起始编号
-     * @param limit     - 需要获取的用户的数量
      * @return 符合条件的用户列表
      */
     public List<User> getUserUsingUserGroupAndUsername(
-            UserGroup userGroup, String username, long offset, int limit)
+            UserGroup userGroup, String username)
     {
-        return userMapper.getUserUsingUserGroupAndUsername(userGroup, username, offset, limit);
+        return userMapper.getUserUsingUserGroupAndUsername(userGroup, username);
     }
 
     /**

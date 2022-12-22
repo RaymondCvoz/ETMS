@@ -178,21 +178,17 @@ public class AdministrationController
             HttpServletRequest request,
             HttpServletResponse response)
     {
-        final int NUMBER_OF_USERS_PER_PAGE = 100;
         List<UserGroup> userGroups = userService.getUserGroups();
         UserGroup userGroup = userService.getUserGroupUsingSlug(userGroupSlug);
         long totalUsers = userService.getNumberOfUsersUsingUserGroupAndUsername(userGroup, username);
-        long offset = (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_USERS_PER_PAGE;
         List<User> users =
                 userService.getUserUsingUserGroupAndUsername(
-                        userGroup, username, offset, NUMBER_OF_USERS_PER_PAGE);
+                        userGroup, username);
 
         ModelAndView view = new ModelAndView("administration/all-users");
         view.addObject("userGroups", userGroups);
         view.addObject("selectedUserGroup", userGroupSlug);
         view.addObject("username", username);
-        view.addObject("currentPage", pageNumber);
-        view.addObject("totalPages", (long) Math.ceil(totalUsers * 1.0 / NUMBER_OF_USERS_PER_PAGE));
         view.addObject("users", users);
         return view;
     }
@@ -769,7 +765,6 @@ public class AdministrationController
      *
      * @param problemId  - 提交对应试题的唯一标识符
      * @param username   - 提交者的用户名
-     * @param pageNumber - 当前页面的页码
      * @param request    - HttpServletRequest对象
      * @param response   - HttpServletResponse对象
      * @return 包含提交列表页面信息的ModelAndView对象
@@ -777,29 +772,17 @@ public class AdministrationController
     @RequestMapping(value = "/all-submissions", method = RequestMethod.GET)
     public ModelAndView allSubmissionsView(
             @RequestParam(value = "problemId", required = false, defaultValue = "0") long problemId,
-            @RequestParam(value = "username", required = false, defaultValue = "") String username,
-            @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
-            HttpServletRequest request,
+            @RequestParam(value = "username", required = false, defaultValue = "") String username, HttpServletRequest request,
             HttpServletResponse response)
     {
-        final int NUMBER_OF_SUBMISSIONS_PER_PAGE = 100;
 
-        long totalSubmissions =
-                submissionService.getNumberOfSubmissionsUsingProblemIdAndUsername(problemId, username);
-        long latestSubmissionId = submissionService.getLatestSubmissionId();
-        long offset =
-                latestSubmissionId
-                        - (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_SUBMISSIONS_PER_PAGE;
         List<Submission> submissions =
                 submissionService.getSubmissions(
-                        problemId, username, offset, NUMBER_OF_SUBMISSIONS_PER_PAGE);
+                        problemId, username);
 
         ModelAndView view = new ModelAndView("administration/all-submissions");
         view.addObject("problemId", problemId);
         view.addObject("username", username);
-        view.addObject("currentPage", pageNumber);
-        view.addObject(
-                "totalPages", (long) Math.ceil(totalSubmissions * 1.0 / NUMBER_OF_SUBMISSIONS_PER_PAGE));
         view.addObject("submissions", submissions);
         return view;
     }

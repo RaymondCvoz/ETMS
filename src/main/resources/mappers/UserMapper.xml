@@ -93,7 +93,6 @@
                 AND username LIKE "%"#{username}"%"
             </if>
         </where>
-        LIMIT #{offset}, #{limit}
     </select>
 
     <insert id="createUser"

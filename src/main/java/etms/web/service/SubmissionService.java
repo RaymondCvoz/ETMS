@@ -187,41 +187,25 @@ public class SubmissionService
      *
      * @param problemId - 试题的唯一标识符
      * @param username  - 用户的用户名
-     * @param limit     - 每次加载评测记录的数量
      * @return 试题列表(List < Submission > 对象)
      */
-    public List<Submission> getSubmissions(long problemId, String username, int limit)
+    public List<Submission> getSubmissions(long problemId, String username)
     {
-        return submissionMapper.getSubmissions(problemId, username, limit);
+        return submissionMapper.getSubmissions(problemId, username);
     }
 
-    /**
-     * 获取评测记录列表. 用于异步加载评测记录.
-     *
-     * @param problemId - 试题的唯一标识符
-     * @param username  - 用户的用户名
-     * @param offset    - 评测记录唯一标识符的起始序号
-     * @param limit     - 每次加载评测记录的数量
-     * @return 试题列表(List < Submission > 对象)
-     */
-    public List<Submission> getSubmissions(long problemId, String username, long offset, int limit)
-    {
-        return submissionMapper.getSubmissionsUsingOffset(problemId, username, offset, limit);
-    }
 
     /**
      * 获取最新的评测记录列表. 用于定时获取最新的评测记录.
      *
      * @param problemId - 试题的唯一标识符
      * @param username  - 用户的用户名
-     * @param offset    - 评测记录唯一标识符的起始序号
-     * @param limit     - 每次加载评测记录的数量
      * @return 试题列表(List < Submission > 对象)
      */
     public List<Submission> getLatestSubmissions(
-            long problemId, String username, long offset, int limit)
+            long problemId, String username)
     {
-        return submissionMapper.getLatestSubmissionsUsingOffset(problemId, username, offset, limit);
+        return submissionMapper.getLatestSubmissionsUsingOffset(problemId, username);
     }
 
     /**
@@ -326,7 +310,7 @@ public class SubmissionService
     {
         Problem problem = problemMapper.getProblem(problemId);
         Date date = new Date();
-        Submission submission = new Submission(problem, user.getUid(), date, 0, context);
+        Submission submission = new Submission(problem, user, date, 0, context);
 
         @SuppressWarnings("unchecked")
         Map<String, Object> result =
@@ -373,7 +357,7 @@ public class SubmissionService
             Submission submission)
     {
         Map<String, Boolean> result = new HashMap<>(6, 1);
-        result.put("isUserLogined", submission.getUid() != 0);
+        result.put("isUserLogined", submission.getUser().getUid() != 0);
         result.put("isProblemExists", submission.getProblemId() != 0);
         boolean isSuccessful =
                 result.get("isUserLogined")
