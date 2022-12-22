@@ -47,13 +47,13 @@ DROP TABLE IF EXISTS `etms_exam_participants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exam_participants` (
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
   `participant_id` bigint(20) DEFAULT NULL COMMENT '参与学生唯一标识符',
   KEY `etms_exam_participants_etms_exams_null_fk` (`exam_id`),
   KEY `etms_exam_participants_etms_users_null_fk` (`participant_id`),
   CONSTRAINT `etms_exam_participants_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_exam_participants_etms_users_null_fk` FOREIGN KEY (`participant_id`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与参与测试学生对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试与参与考试学生对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,13 +73,13 @@ DROP TABLE IF EXISTS `etms_exam_submissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exam_submissions` (
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
   `submission_id` bigint(20) DEFAULT NULL COMMENT '提交唯一标识符',
   KEY `etms_exam_submissions_etms_exams_null_fk` (`exam_id`),
   KEY `etms_exam_submissions_etms_submissions_null_fk` (`submission_id`),
   CONSTRAINT `etms_exam_submissions_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_exam_submissions_etms_submissions_null_fk` FOREIGN KEY (`submission_id`) REFERENCES `etms_submissions` (`submission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与提交对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试与提交对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,15 +99,15 @@ DROP TABLE IF EXISTS `etms_exams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exams` (
-  `exam_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '测试唯一标识符',
-  `exam_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试名称',
-  `exam_notes` text COLLATE utf8mb4_unicode_ci COMMENT '测试备注',
-  `exam_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '测试开始时间',
-  `exam_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '测试结束时间',
-  `exam_type` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试类型',
-  `exam_problems` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试题目',
+  `exam_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '考试唯一标识符',
+  `exam_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试名称',
+  `exam_notes` text COLLATE utf8mb4_unicode_ci COMMENT '考试备注',
+  `exam_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '考试开始时间',
+  `exam_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '考试结束时间',
+  `exam_type` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试类型',
+  `exam_problems` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试题目',
   PRIMARY KEY (`exam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,12 +128,12 @@ DROP TABLE IF EXISTS `etms_lesson_exams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_lesson_exams` (
   `lesson_id` bigint(20) DEFAULT NULL COMMENT '课程唯一标识符',
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
   KEY `etms_lesson_exams_etms_exams_null_fk` (`exam_id`),
   KEY `etms_lesson_exams_etms_lessons_null_fk` (`lesson_id`),
   CONSTRAINT `etms_lesson_exams_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_lesson_exams_etms_lessons_null_fk` FOREIGN KEY (`lesson_id`) REFERENCES `etms_lessons` (`lesson_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与测试对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与考试对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,14 +260,14 @@ DROP TABLE IF EXISTS `etms_problem_checkpoints`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_problem_checkpoints` (
   `problem_id` bigint(20) DEFAULT NULL COMMENT '题目唯一标识符',
-  `checkpoint_id` int(11) NOT NULL COMMENT '测试点唯一标识符',
-  `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '测试点是否精确匹配（填空题）',
-  `checkpoint_type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
-  `checkpoint_score` int(11) NOT NULL COMMENT '测试点得分',
-  `checkpoint_answer` longtext COLLATE utf8mb4_unicode_ci COMMENT '测试点答案',
+  `checkpoint_id` int(11) NOT NULL COMMENT '考试点唯一标识符',
+  `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '考试点是否精确匹配（填空题）',
+  `checkpoint_type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试点类型（选择、填空、论述等）',
+  `checkpoint_score` int(11) NOT NULL COMMENT '考试点得分',
+  `checkpoint_answer` longtext COLLATE utf8mb4_unicode_ci COMMENT '考试点答案',
   KEY `etms_problem_checkpoints_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_problem_checkpoints_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目测试点信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目考试点信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -8,55 +8,55 @@ import java.util.Date;
 public class Exam
 {
     /**
-     * 测试默认构造函数
+     * 考试默认构造函数
      */
     public Exam()
     {
     }
 
     /**
-     * 测试构造函数
-     * @param examName 测试名称
-     * @param examNotes 测试备注
+     * 考试构造函数
+     * @param examName 考试名称
+     * @param examNotes 考试备注
      * @param startTime 开始时间
      * @param endTime 结束时间
-     * @param examType 测试类型
-     * @param examProblems 测试包含题目
+     * @param examMode 考试类型
+     * @param examProblems 考试包含题目
      */
-    public Exam(String examName, String examNotes, Date startTime, Date endTime, String examType, String examProblems)
+    public Exam(String examName, String examNotes, Date startTime, Date endTime, String examMode, String examProblems)
     {
         this.examName = examName;
         this.examNotes = examNotes;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.examType = examType;
+        this.examMode = examMode;
         this.examProblems = examProblems;
     }
 
     /**
-     * 测试类构造函数
-     * @param examId        测试唯一标识符
-     * @param examName      测试名称
-     * @param examNotes     测试备注
+     * 考试类构造函数
+     * @param examId        考试唯一标识符
+     * @param examName      考试名称
+     * @param examNotes     考试备注
      * @param startTime     开始时间
      * @param endTime       结束时间
-     * @param examType      测试类型
-     * @param examProblems  测试包含的题目
+     * @param examMode      考试类型
+     * @param examProblems  考试包含的题目
      */
-    public Exam(long examId, String examName, String examNotes, Date startTime, Date endTime, String examType, String examProblems)
+    public Exam(long examId, String examName, String examNotes, Date startTime, Date endTime, String examMode, String examProblems)
     {
         this.examId = examId;
         this.examName = examName;
         this.examNotes = examNotes;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.examType = examType;
+        this.examMode = examMode;
         this.examProblems = examProblems;
     }
 
     /**
-     * 获取测试唯一标识符
-     * @return 测试唯一标识符
+     * 获取考试唯一标识符
+     * @return 考试唯一标识符
      */
     public long getExamId()
     {
@@ -64,8 +64,8 @@ public class Exam
     }
 
     /**
-     * 设置测试唯一标识符
-     * @param examId 测试唯一标识符
+     * 设置考试唯一标识符
+     * @param examId 考试唯一标识符
      */
     public void setExamId(long examId)
     {
@@ -73,8 +73,8 @@ public class Exam
     }
 
     /**
-     * 获取测试名称
-     * @return 测试名称
+     * 获取考试名称
+     * @return 考试名称
      */
     public String getExamName()
     {
@@ -82,8 +82,8 @@ public class Exam
     }
 
     /**
-     * 设置测试名称
-     * @param examName 测试名称
+     * 设置考试名称
+     * @param examName 考试名称
      */
     public void setExamName(String examName)
     {
@@ -91,8 +91,8 @@ public class Exam
     }
 
     /**
-     * 获取测试备注
-     * @return 测试备注
+     * 获取考试备注
+     * @return 考试备注
      */
     public String getExamNotes()
     {
@@ -100,8 +100,8 @@ public class Exam
     }
 
     /**
-     * 设置测试备注
-     * @param examNotes 测试备注
+     * 设置考试备注
+     * @param examNotes 考试备注
      */
     public void setExamNotes(String examNotes)
     {
@@ -109,8 +109,8 @@ public class Exam
     }
 
     /**
-     * 获取测试开始时间
-     * @return 测试开始时间
+     * 获取考试开始时间
+     * @return 考试开始时间
      */
     public Date getStartTime()
     {
@@ -118,8 +118,8 @@ public class Exam
     }
 
     /**
-     * 设置测试开始时间
-     * @param startTime 测试开始时间
+     * 设置考试开始时间
+     * @param startTime 考试开始时间
      */
     public void setStartTime(Date startTime)
     {
@@ -127,8 +127,8 @@ public class Exam
     }
 
     /**
-     * 获取测试结束时间
-     * @return 测试结束时间
+     * 获取考试结束时间
+     * @return 考试结束时间
      */
     public Date getEndTime()
     {
@@ -136,7 +136,7 @@ public class Exam
     }
 
     /**
-     * 设置测试结束时间
+     * 设置考试结束时间
      * @param endTime 结束时间
      */
     public void setEndTime(Date endTime)
@@ -145,26 +145,26 @@ public class Exam
     }
 
     /**
-     * 获取测试类型
-     * @return 测试类型
+     * 获取考试类型
+     * @return 考试类型
      */
-    public String getExamType()
+    public String getExamMode()
     {
-        return examType;
+        return examMode;
     }
 
     /**
-     * 设置测试类型
-     * @param examType 测试类型
+     * 设置考试类型
+     * @param examMode 考试类型
      */
-    public void setExamType(String examType)
+    public void setExamMode(String examMode)
     {
-        this.examType = examType;
+        this.examMode = examMode;
     }
 
     /**
-     *获取测试题目
-     * @return 测试题目字符串
+     *获取考试题目
+     * @return 考试题目字符串
      */
     public String getExamProblems()
     {
@@ -172,8 +172,8 @@ public class Exam
     }
 
     /**
-     * 设置测试题目
-     * @param examProblems 测试题目字符串
+     * 设置考试题目
+     * @param examProblems 考试题目字符串
      */
     public void setExamProblems(String examProblems)
     {
@@ -182,7 +182,7 @@ public class Exam
 
     /**
      * toString
-     * @return 测试toString
+     * @return 考试toString
      */
     @Override
     public String toString()
@@ -193,38 +193,47 @@ public class Exam
                 ", examNotes='" + examNotes + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", examType='" + examType + '\'' +
+                ", examMode='" + examMode + '\'' +
                 ", examProblems='" + examProblems + '\'' +
                 '}';
     }
 
     /**
-     * 测试唯一标识符
+     * 考试唯一标识符
      */
     private long examId;
     /**
-     * 测试名称
+     * 考试名称
      */
     private String examName;
     /**
-     * 测试备注
+     * 考试备注
      */
     private String examNotes;
     /**
-     * 测试开始时间
+     * 考试开始时间
      */
     private Date startTime;
     /**
-     * 测试结束时间
+     * 考试结束时间
      */
     private Date endTime;
     /**
-     * 测试类型
+     * 考试类型
      */
-    private String examType;
+    private String examMode;
     /**
-     * 测试题目
+     * 考试题目
      */
     private String examProblems;
 
+    /**
+     * 竞赛状态. 分别表示未开始、进行中和已结束.
+     */
+    public enum EXAM_STATUS
+    {
+        READY,
+        LIVE,
+        DONE
+    }
 }

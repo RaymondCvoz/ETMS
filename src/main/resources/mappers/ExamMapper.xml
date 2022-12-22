@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.examMapper">
+    <!-- ResultMap -->
+    <resultMap id="examResultMap" type="etms.web.model.Exam">
+        <id property="examId" column="exam_id"/>
+        <result property="examName" column="exam_name"/>
+        <result property="examNotes" column="exam_notes"/>
+        <result property="startTime" column="exam_start_time"/>
+        <result property="endTime" column="exam_end_time"/>
+        <result property="examMode" column="exam_mode"/>
+        <result property="problems" column="exam_problems"/>
+    </resultMap>
+
+    <!-- Methods -->
+    <select id="getNumberOfExams"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(*)
+        FROM etms_exams
+        <where>
+            <if test="keyword != null and keyword != ''">
+                exam_name LIKE "%"#{keyword}"%"
+            </if>
+        </where>
+    </select>
+    <select id="getExams"
+            parameterType="map"
+            resultMap="examResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exams
+        <where>
+            <if test="keyword != null and keyword != ''">
+                exam_name LIKE "%"#{keyword}"%"
+            </if>
+        </where>
+        ORDER BY exam_id DESC
+    </select>
+    <select id="getExam"
+            parameterType="long"
+            resultMap="examResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exams
+        WHERE exam_id = #{examId}
+    </select>
+    <insert id="createExam"
+            parameterType="etms.web.model.Exam"
+            flushCache="true">
+        INSERT INTO etms_exams (exam_name, exam_notes, exam_start_time, exam_end_time, exam_mode,
+                                  exam_problems)
+        VALUES (#{examName}, #{examNotes}, #{startTime}, #{endTime}, #{examMode}, #{problems})
+    </insert>
+    <update id="updateExam"
+            parameterType="etms.web.model.Exam"
+            flushCache="true">
+        UPDATE etms_exams
+        SET exam_name       = #{examName},
+            exam_notes      = #{examNotes},
+            exam_start_time = #{startTime},
+            exam_end_time   = #{endTime},
+            exam_mode       = #{examMode},
+            exam_problems   = #{problems}
+        WHERE exam_id = #{examId}
+    </update>
+    <delete id="deleteExam"
+            parameterType="long"
+            flushCache="true">
+        DELETE
+        FROM etms_exams
+        WHERE exam_id = #{examId}
+    </delete>
+
+</mapper>

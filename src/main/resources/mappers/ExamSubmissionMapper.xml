@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.ExamSubmissionMapper">
+    <!-- ResultMap -->
+    <resultMap id="ExamSubmissionResultMap" type="etms.web.model.ExamSubmission">
+        <association property="exam"
+                     javaType="etms.web.model.Exam"
+                     column="exam_id"
+                     select="etms.web.mapper.ExamMapper.getExam"/>
+        <association property="submission"
+                     javaType="etms.web.model.Submission"
+                     column="submission_id"
+                     select="etms.web.mapper.SubmissionMapper.getSubmission"/>
+    </resultMap>
+    <!-- Methods -->
+    <select id="getSubmissionsOfExam"
+            parameterType="long"
+            resultMap="ExamSubmissionResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exam_submissions
+                 NATURAL JOIN etms_submissions
+        WHERE exam_id = #{examId}
+    </select>
+
+    <select id="getSubmissionOfExamOfExam"
+            parameterType="map"
+            resultMap="ExamSubmissionResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exam_submissions
+                 NATURAL JOIN etms_submissions
+        WHERE exam_id = #{examId}
+    </select>
+    <select id="getSubmissionOfExamOfExamProblem"
+            parameterType="map"
+            resultMap="ExamSubmissionResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exam_submissions
+                 NATURAL JOIN etms_submissions
+        WHERE exam_id = #{examId}
+          AND problem_id = #{problemId}
+        ORDER BY submission_id DESC
+    </select>
+    <insert id="createExamSubmission"
+            parameterType="etms.web.model.ExamSubmission"
+            flushCache="true">
+        INSERT INTO etms_exam_submissions (exam_id, submission_id)
+        VALUES (#{exam.examId}, #{submission.submissionId})
+    </insert>
+    <delete id="deleteExamSubmission"
+            parameterType="map"
+            flushCache="true">
+        DELETE
+        FROM etms_exam_submissions
+        WHERE exam_id = #{examId}
+          AND submission_id = #{submissionId}
+    </delete>
+</mapper>

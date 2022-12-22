@@ -6,15 +6,15 @@ import org.springframework.stereotype.Component;
 public class ExamParticipant
 {
     /**
-     * 测试用户对应关系默认构造函数
+     * 考试用户对应关系默认构造函数
      */
     public ExamParticipant()
     {
     }
 
     /**
-     * 测试用户对应关系构造函数
-     * @param exam 测试对象
+     * 考试用户对应关系构造函数
+     * @param exam 考试对象
      * @param user 用户对象
      */
     public ExamParticipant(Exam exam, User user)
@@ -24,8 +24,8 @@ public class ExamParticipant
     }
 
     /**
-     * 获取测试
-     * @return 测试
+     * 获取考试
+     * @return 考试
      */
     public Exam getExam()
     {
@@ -33,8 +33,8 @@ public class ExamParticipant
     }
 
     /**
-     * 设置测试
-     * @param exam 测试
+     * 设置考试
+     * @param exam 考试
      */
     public void setExam(Exam exam)
     {
@@ -60,7 +60,7 @@ public class ExamParticipant
     }
 
     /**
-     * 测试对象
+     * 考试对象
      */
     private Exam exam;
     /**

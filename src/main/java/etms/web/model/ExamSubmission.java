@@ -6,15 +6,15 @@ import org.springframework.stereotype.Component;
 public class ExamSubmission
 {
     /**
-     * 测试提交默认构造函数
+     * 考试提交默认构造函数
      */
     public ExamSubmission()
     {
     }
 
     /**
-     * 测试提交构造函数
-     * @param exam 测试
+     * 考试提交构造函数
+     * @param exam 考试
      * @param submission 提交
      */
     public ExamSubmission(Exam exam, Submission submission)
@@ -24,8 +24,8 @@ public class ExamSubmission
     }
 
     /**
-     * 获取测试
-     * @return 测试
+     * 获取考试
+     * @return 考试
      */
     public Exam getExam()
     {
@@ -33,8 +33,8 @@ public class ExamSubmission
     }
 
     /**
-     * 设置测试
-     * @param exam 测试
+     * 设置考试
+     * @param exam 考试
      */
     public void setExam(Exam exam)
     {
@@ -60,7 +60,7 @@ public class ExamSubmission
     }
 
     /**
-     * 测试
+     * 考试
      */
     private Exam exam;
     /**

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="etms.web.mapper.ExamParticipantMapper">
+    <!-- ResultMap -->
+    <resultMap id="ExamParticipantResultMap" type="etms.web.model.ExamParticipant">
+        <result property="score" column="participant_score"/>
+        <result property="rank" column="participant_rank"/>
+        <association property="exam"
+                     javaType="etms.web.model.Exam"
+                     column="exam_id"
+                     select="etms.web.mapper.ExamMapper.getExam"/>
+        <association property="participant"
+                     javaType="etms.web.model.User"
+                     column="participant_uid"
+                     select="etms.web.mapper.UserMapper.getUserUsingUid"/>
+    </resultMap>
+    <!-- Methods -->
+    <select id="getNumberOfParticipantsOfExam"
+            parameterType="long"
+            resultType="long"
+            useCache="true">
+        SELECT COUNT(*)
+        FROM etms_exam_participants
+        WHERE exam_id = #{examId}
+    </select>
+    <select id="getParticipantsOfExam"
+            parameterType="map"
+            resultMap="ExamParticipantResultMap"
+            useCache="true">
+        SELECT *,
+               (
+                   SELECT SUM(submission_judge_score)
+                   FROM etms_exam_submissions cs
+                            NATURAL JOIN etms_submissions
+                   WHERE uid = cc.participant_uid
+                     AND submission_id = cs.submission_id
+                     AND cs.exam_id = cc.exam_id
+               ) AS participant_score
+        FROM etms_exam_participants cc
+        WHERE exam_id = #{examId}
+        ORDER BY participant_score DESC
+    </select>
+
+    <select id="getParticipantOfExam"
+            parameterType="map"
+            resultMap="ExamParticipantResultMap"
+            useCache="true">
+        SELECT *
+        FROM etms_exam_participants
+        WHERE exam_id = #{examId}
+          AND participant_uid = #{participantUid}
+    </select>
+    <insert id="createExamParticipant"
+            parameterType="etms.web.model.ExamParticipant"
+            flushCache="true">
+        INSERT INTO etms_exam_participants (exam_id, participant_uid)
+        VALUES (#{exam.examId}, #{participant.uid})
+    </insert>
+    <delete id="deleteExamParticipant"
+            parameterType="map"
+            flushCache="true">
+        DELETE
+        FROM etms_exam_participants
+        WHERE exam_id = #{examId}
+          AND participant_uid = #{participantUid}
+    </delete>
+    <delete id="deleteExamAllParticipant"
+            parameterType="map"
+            flushCache="true">
+        DELETE
+        FROM etms_exam_participants
+        WHERE exam_id = #{examId}
+    </delete>
+</mapper>
