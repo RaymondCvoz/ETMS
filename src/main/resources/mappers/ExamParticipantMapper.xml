@@ -11,9 +11,9 @@
                      javaType="etms.web.model.Exam"
                      column="exam_id"
                      select="etms.web.mapper.ExamMapper.getExam"/>
-        <association property="participant"
+        <association property="user"
                      javaType="etms.web.model.User"
-                     column="participant_uid"
+                     column="uid"
                      select="etms.web.mapper.UserMapper.getUserUsingUid"/>
     </resultMap>
     <!-- Methods -->
@@ -42,7 +42,6 @@
         WHERE exam_id = #{examId}
         ORDER BY participant_score DESC
     </select>
-
     <select id="getParticipantOfExam"
             parameterType="map"
             resultMap="ExamParticipantResultMap"
@@ -56,7 +55,7 @@
             parameterType="etms.web.model.ExamParticipant"
             flushCache="true">
         INSERT INTO etms_exam_participants (exam_id, participant_uid)
-        VALUES (#{exam.examId}, #{participant.uid})
+        VALUES (#{exam.examId}, #{user.uid})
     </insert>
     <delete id="deleteExamParticipant"
             parameterType="map"

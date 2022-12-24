@@ -25,13 +25,11 @@ public class ExamService
      * 获取考试列表.
      *
      * @param keyword - 考试的关键词
-     * @param offset  - 起始考试的游标
-     * @param limit   - 获取考试的数量
      * @return 包含Exam的List对象
      */
-    public List<Exam> getExams(String keyword, long offset, int limit)
+    public List<Exam> getExams(String keyword)
     {
-        return examMapper.getExams(keyword, offset, limit);
+        return examMapper.getExams(keyword);
     }
 
     /**
@@ -116,6 +114,62 @@ public class ExamService
         if((boolean) result.get("isSuccessful"))
         {
             examMapper.createExam(exam);
+        }
+        return result;
+    }
+
+    /**
+     * 此方法仅供管理员使用
+     * 编辑考试
+     *
+     * @param examId 考试ID
+     * @param examName 考试名称
+     * @param examNotes  详细信息
+     * @param examStartTime 开始时间
+     * @param examEndTime 结束时间
+     * @param examMode 模式
+     * @param examProblems 包含题目
+     * @return 包含考试id和考试校验信息的map对象
+     */
+    public Map<String,Boolean> editExam(
+            long examId,
+            String examName,
+            String examNotes,
+            String examStartTime,
+            String examEndTime,
+            String examMode,
+            String examProblems
+    )
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateBegin,dateEnd;
+        try
+        {
+            dateBegin = simpleDateFormat.parse(examStartTime);
+            dateEnd = simpleDateFormat.parse(examEndTime);
+        }
+        catch (Exception ex)
+        {
+            Date currentDate = new Date();
+            dateBegin = currentDate;
+            dateEnd = currentDate;
+        }
+
+        Exam exam = new Exam(
+                examId,
+                examName,
+                examNotes,
+                dateBegin,
+                dateEnd,
+                examMode,
+                "[" + examProblems + "]"
+        );
+
+        @SuppressWarnings("unchecked")
+        Map<String,Boolean> result = (Map<String,Boolean>)getExamCreationResult(exam);
+        if((boolean) result.get("isSuccessful"))
+        {
+            examMapper.updateExam(exam);
         }
         return result;
     }

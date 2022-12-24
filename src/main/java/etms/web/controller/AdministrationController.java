@@ -373,105 +373,159 @@ public class AdministrationController
         return view;
     }
 
-//    /**
-//     * 加载考试列表页面.
-//     *
-//     * @param request  - HttpServletRequest对象
-//     * @param response - HttpServletResponse对象
-//     * @return 包含考试列表页面信息的ModelAndView对象
-//     */
-//    @RequestMapping(value = "/all-contests",method = RequestMethod.GET)
-//    public ModelAndView allContestsView(
-//            @RequestParam(value = "keyword",required = false) String keyword,
-//            @RequestParam(value = "page", required = false, defaultValue = "1") long pageNumber,
-//            HttpServletRequest request,
-//            HttpServletResponse response
-//    )
-//    {
-//        final int NUMBER_OF_CONTESTS_PER_PAGE = 100;
-//        long offset = (pageNumber >= 1 ? pageNumber - 1 : 0) * NUMBER_OF_CONTESTS_PER_PAGE;
-//        List<Exam> contests = contestService.getContests(keyword,offset,NUMBER_OF_CONTESTS_PER_PAGE);
-//        long totalContests = contests.size();
-//
-//        ModelAndView view = new ModelAndView("administration/all-exams");
-//        view.addObject(
-//                "totalPages", (long) Math.ceil(totalContests * 1.0 / NUMBER_OF_CONTESTS_PER_PAGE));
-//        view.addObject("contests",contests);
-//        view.addObject("currentPage", pageNumber);
-//        return view;
-//    }
-//
-//    /**
-//     * 创建考试页面
-//     * @param request HttpServletRequest对象
-//     * @param response HttpServletResponse对象
-//     * @return 包含新建考试所需信息的ModelAndView
-//     */
-//    @RequestMapping(value = "/new-exam",method = RequestMethod.GET)
-//    public ModelAndView newContestView(HttpServletRequest request,HttpServletResponse response)
-//    {
-//        List<Problem> problems = problemService.getProblemsUsingFilters(0,"","","",true,1000000);
-//        ModelAndView view = new ModelAndView("administration/new-exam");
-//
-//        Date currentDate = new Date();
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String dateToString =  simpleDateFormat.format(currentDate);
-//
-//        view.addObject("availableProblems",problems);
-//        view.addObject("dateToString",dateToString);
-//        return view;
-//    }
-//
-//    /**
-//     * 创建考试
-//     * @param examName 考试名称
-//     * @param examNote 考试备注
-//     * @param startTime 开始时间
-//     * @param endTime 结束时间
-//     * @param examType 考试类型
-//     * @param problems 题目
-//     * @return 包含考试创建信息的Map对象
-//     * @throws ParseException
-//     */
-//    @RequestMapping(value = "/newContest.action",method = RequestMethod.POST)
-//    public @ResponseBody
-//    Map<String,Boolean> newContestAction(
-//            @RequestParam(value = "examName") String examName,
-//            @RequestParam(value = "examNote") String examNote,
-//            @RequestParam(value = "startTime") String startTime,
-//            @RequestParam(value = "endTime") String endTime,
-//            @RequestParam(value = "examType") String examType,
-//            @RequestParam(value = "problems") String problems
-//    )
-//    {
-//        Map<String, Boolean> result =
-//                contestService.createContest(contestName, contestNote, startTime, endTime, contestMode,problems);
-//
-//        if ((Boolean) result.get("isSuccessful"))
-//        {
-//            LOGGER.info("contest" + result.get("contestId") + " has been created");
-//        }
-//        return result;
-//    }
-//
-//    /**
-//     * 删除考试操作
-//     * @param exams 包含要删除的考试ID的JSON
-//     * @return 删除结果的Map对象
-//     */
-//    @RequestMapping(value = "/deleteExams.action",method = RequestMethod.POST)
-//    public @ResponseBody
-//    Map<String,Boolean> deleteContestsAction(@RequestParam(value = "exams") String exams)
-//    {
-//        Map<String, Boolean> result = new HashMap<>(2, 1);
-//        List<Long> examsId = JSON.parseArray(exams, Long.class);
-//        for(Long examId : examsId)
-//        {
-//            contestService.deleteContest(contestId);
-//        }
-//        result.put("isSuccessful",true);
-//        return result;
-//    }
+    /**
+     * 加载考试列表页面.
+     *
+     * @param request  - HttpServletRequest对象
+     * @param response - HttpServletResponse对象
+     * @return 包含考试列表页面信息的ModelAndView对象
+     */
+    @RequestMapping(value = "/all-exams",method = RequestMethod.GET)
+    public ModelAndView allExamsView(
+            @RequestParam(value = "keyword",required = false) String keyword,
+            HttpServletRequest request,
+            HttpServletResponse response
+    )
+    {
+        List<Exam> exams = examService.getExams(keyword);
+        long totalExams = exams.size();
+
+        ModelAndView view = new ModelAndView("administration/all-exams");
+        view.addObject("exams",exams);
+        return view;
+    }
+
+    /**
+     * 创建考试页面
+     * @param request HttpServletRequest对象
+     * @param response HttpServletResponse对象
+     * @return 包含新建考试所需信息的ModelAndView
+     */
+    @RequestMapping(value = "/new-exam",method = RequestMethod.GET)
+    public ModelAndView newExamView(HttpServletRequest request,HttpServletResponse response)
+    {
+        List<Problem> problems = problemService.getProblemsUsingFilters(0,"","",true,1000000);
+        ModelAndView view = new ModelAndView("administration/new-exam");
+
+        Date currentDate = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateToString =  simpleDateFormat.format(currentDate);
+
+        view.addObject("availableProblems",problems);
+        view.addObject("dateToString",dateToString);
+        return view;
+    }
+
+    /**
+     * 创建考试
+     * @param examName 考试名称
+     * @param examNote 考试备注
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param examMode 考试类型
+     * @param problems 题目
+     * @return 包含考试创建信息的Map对象
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/newExam.action",method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String,Boolean> newExamAction(
+            @RequestParam(value = "examName") String examName,
+            @RequestParam(value = "examNote") String examNote,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime,
+            @RequestParam(value = "examMode") String examMode,
+            @RequestParam(value = "problems") String problems
+    )
+    {
+        Map<String, Boolean> result =
+                examService.createExam(examName, examNote, startTime, endTime, examMode,problems);
+
+        if ((Boolean) result.get("isSuccessful"))
+        {
+            LOGGER.info("exam" + result.get("examId") + " has been created");
+        }
+        return result;
+    }
+    /**
+     * 加载编辑考试页面.
+     *
+     * @param examId - 考试的唯一标识符
+     * @param request   - HttpServletRequest对象
+     * @param response  - HttpServletResponse对象
+     * @return 包含提交列表页面信息的ModelAndView对象
+     */
+    @RequestMapping(value = "/edit-exam/{examId}", method = RequestMethod.GET)
+    public ModelAndView editExamsView(
+            @PathVariable(value = "examId") long examId,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {
+        Exam exam = examService.getExam(examId);
+        if (exam == null)
+        {
+            throw new ResourceNotFoundException();
+        }
+        ModelAndView view = new ModelAndView("administration/edit-exam");
+        String problems = exam.getExamProblems();
+        String problemsStrip = problems.substring(1,problems.length() - 1);
+        exam.setExamProblems(problemsStrip);
+        Date beginTime = exam.getStartTime();
+        Date endTime = exam.getEndTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beginTimeToString =  simpleDateFormat.format(beginTime);
+        String endTimeToString =  simpleDateFormat.format(endTime);
+        view.addObject("exam", exam);
+        view.addObject("beginTimeToString",beginTimeToString);
+        view.addObject("endTimeToString",endTimeToString);
+
+        return view;
+    }
+
+    @RequestMapping(value = "/editExam.action", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Boolean> editExamAction(
+            @RequestParam(value = "examId") long examId,
+            @RequestParam(value = "examName") String examName,
+            @RequestParam(value = "examNotes") String examNotes,
+            @RequestParam(value = "startTime") String startTime,
+            @RequestParam(value = "endTime") String endTime,
+            @RequestParam(value = "examMode") String examMode,
+            @RequestParam(value = "examProblems") String examProblems,
+            HttpServletRequest request)
+    {
+        Map<String, Boolean> result =
+                examService.editExam(
+                        examId,
+                        examName,
+                        examNotes,
+                        startTime,
+                        endTime,
+                        examMode,
+                        examProblems);
+        return result;
+    }
+
+
+
+    /**
+     * 删除考试操作
+     * @param exams 包含要删除的考试ID的JSON
+     * @return 删除结果的Map对象
+     */
+    @RequestMapping(value = "/deleteExams.action",method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String,Boolean> deleteExamsAction(@RequestParam(value = "exams") String exams)
+    {
+        Map<String, Boolean> result = new HashMap<>(2, 1);
+        List<Long> examsId = JSON.parseArray(exams, Long.class);
+        for(Long examId : examsId)
+        {
+            examService.deleteExam(examId);
+        }
+        result.put("isSuccessful",true);
+        return result;
+    }
     /**
      * 删除选定的试题.
      *
@@ -950,4 +1004,10 @@ public class AdministrationController
      * 日志记录器.
      */
     private static final Logger LOGGER = LogManager.getLogger(AdministrationController.class);
+    
+    /**
+     * 自动注入的ExamService对象，用户操作考试信息
+     */
+    @Autowired
+    private ExamService examService;
 }

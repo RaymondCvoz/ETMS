@@ -41,7 +41,7 @@ public class ExamsController
             HttpServletRequest request,
             HttpServletResponse response)
     {
-        List<Exam> exams = examService.getExams(keyword, 0, NUMBER_OF_CONTESTS_PER_PAGE);
+        List<Exam> exams = examService.getExams(keyword);
 
         ModelAndView view = new ModelAndView("exams/exams");
         view.addObject("exams", exams);
@@ -53,7 +53,6 @@ public class ExamsController
      * 获取考试的列表.
      *
      * @param keyword    - 考试的关键词
-     * @param startIndex - 当前加载的最后一条记录的索引值 (Index)
      * @param request    - HttpRequest对象
      * @return 一个包含考试列表的HashMap对象
      */
@@ -61,13 +60,12 @@ public class ExamsController
     public @ResponseBody
     Map<String, Object> getExamsAction(
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "startIndex") long startIndex,
             HttpServletRequest request)
     {
         Map<String, Object> result = new HashMap<>(3, 1);
 
         List<Exam> exams =
-                examService.getExams(keyword, startIndex, NUMBER_OF_CONTESTS_PER_PAGE);
+                examService.getExams(keyword);
         result.put("isSuccessful", exams != null && !exams.isEmpty());
         result.put("exams", exams);
 
@@ -130,7 +128,6 @@ public class ExamsController
     {
         HttpSession session = request.getSession();
         User currentUser = HttpSessionParser.getCurrentUser(session);
-
         Map<String, Boolean> result =
                 examService.attendExam(examId, currentUser);
         return result;

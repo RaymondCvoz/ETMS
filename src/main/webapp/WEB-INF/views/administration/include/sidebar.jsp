@@ -58,18 +58,18 @@
 
             <li class="nav-item primary-nav-item nav-item-has-children">
                 <a href="javascript:void(0);"></i> <spring:message
-                        code="etms.administration.include.sidebar.contests" text="Contests"/> <i
+                        code="etms.administration.include.sidebar.exams" text="Contests"/> <i
                         class="fa fa-caret-right"></i></a>
                 <ul class="sub-nav nav">
                     <li class="nav-item secondary-nav-item"><a
-                            href="<c:url value="/administration/all-contests" />"><spring:message
-                            code="etms.administration.include.sidebar.all-contests" text="All Contests"/></a></li>
+                            href="<c:url value="/administration/all-exams" />"><spring:message
+                            code="etms.administration.include.sidebar.all-exams" text="All Contests"/></a></li>
                     <li class="nav-item secondary-nav-item"><a
-                            href="<c:url value="/administration/new-contest" />"><spring:message
-                            code="etms.administration.include.sidebar.new-contest" text="New Contest"/></a></li>
+                            href="<c:url value="/administration/new-exam" />"><spring:message
+                            code="etms.administration.include.sidebar.new-exam" text="New Contest"/></a></li>
 <%--                    <li class="nav-item secondary-nav-item hide"><a--%>
-<%--                            href="<c:url value="/administration/edit-contest" />"><spring:message--%>
-<%--                            code="etms.administration.include.sidebar.edit-contest" text="Edit Contest"/></a></li>--%>
+<%--                            href="<c:url value="/administration/edit-exam" />"><spring:message--%>
+<%--                            code="etms.administration.include.sidebar.edit-exam" text="Edit Contest"/></a></li>--%>
                 </ul>
             </li>
             <li class="nav-item primary-nav-item nav-item-has-children">

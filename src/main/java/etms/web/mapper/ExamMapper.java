@@ -2,6 +2,8 @@
 package etms.web.mapper;
 
 import etms.web.model.Exam;
+import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -9,6 +11,8 @@ import java.util.List;
  * Exam Data Access Object.
  *
  */
+@CacheNamespace(implementation = org.mybatis.caches.ehcache.EhcacheCache.class)
+@Mapper
 public interface ExamMapper
 {
     /**
@@ -23,12 +27,10 @@ public interface ExamMapper
      * 获取考试列表.
      *
      * @param keyword - 考试的关键词
-     * @param offset  - 起始考试的偏移量(offset)
-     * @param limit   - 需要获取考试的数量
      * @return 预期的考试对象
      */
     List<Exam> getExams(
-            @Param("keyword") String keyword, @Param("offset") long offset, @Param("limit") int limit);
+            @Param("keyword") String keyword);
 
     /**
      * 根据考试的唯一标识符获取考试.

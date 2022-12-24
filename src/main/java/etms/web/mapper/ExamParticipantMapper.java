@@ -2,6 +2,8 @@
 package etms.web.mapper;
 
 import etms.web.model.ExamParticipant;
+import org.apache.ibatis.annotations.CacheNamespace;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 /**
  * ExamParticipant Data Access Object.
  */
+@CacheNamespace(implementation = org.mybatis.caches.ehcache.EhcacheCache.class)
+@Mapper
 public interface ExamParticipantMapper
 {
     /**

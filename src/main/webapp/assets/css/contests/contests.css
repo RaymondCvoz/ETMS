@@ -2,7 +2,7 @@ div#content div#main-content {
     margin-top: 20px;
 }
 
-div#content div#main-content div#contests table {
+div#content div#main-content div#exams table {
     background-color: #fff;
     border-top: 5px solid #3E35A8;
     margin-bottom: 0;
@@ -11,12 +11,12 @@ div#content div#main-content div#contests table {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-div#content div#main-content div#contests table tr.viewed {
+div#content div#main-content div#exams table tr.viewed {
     filter: alpha(opacity=50);
     opacity: .5;
 }
 
-div#content div#main-content div#contests table.table tr.contest {
+div#content div#main-content div#exams table.table tr.exam {
     cursor: pointer;
     border-bottom: 1px solid #e8e8e8;
     -webkit-transition: background .1s linear;
@@ -24,58 +24,58 @@ div#content div#main-content div#contests table.table tr.contest {
     transition: background .1s linear;
 }
 
-div#content div#main-content div#contests table.table tr.contest > td.overview {
+div#content div#main-content div#exams table.table tr.exam > td.overview {
     padding: 10px;
 }
 
-div#content div#main-content div#contests table.table tr.contest > td.overview ul.inline li {
+div#content div#main-content div#exams table.table tr.exam > td.overview ul.inline li {
     color: #999;
     font-size: 12px;
     padding-left: 0;
 }
 
-div#content div#main-content div#contests table.table tr.contest > td.status {
+div#content div#main-content div#exams table.table tr.exam > td.status {
     font-size: 12px;
     text-align: center;
     vertical-align: middle;
     width: 15%;
 }
 
-div#content div#main-content div#contests table.table tr.contest > td.overview h5 {
+div#content div#main-content div#exams table.table tr.exam > td.overview h5 {
     height: 20px;
     overflow: hidden;
 }
 
-div#content div#main-content div#contests table.table tr.contest > td.status {
+div#content div#main-content div#exams table.table tr.exam > td.status {
     background-color: #eaeaea;
 }
 
-div#content div#main-content div#contests table.table tr.contest:hover {
+div#content div#main-content div#exams table.table tr.exam:hover {
     background-color: #f6f6f6 !important;
 }
 
-div#content div#main-content div#contests table.table tr.contest:hover > td.status {
+div#content div#main-content div#exams table.table tr.exam:hover > td.status {
     background-color: #eaeaea !important;
 }
 
-div#content div#main-content div#contests table.table tr.contest.Done > td.status {
+div#content div#main-content div#exams table.table tr.exam.Done > td.status {
     color: #444;
 }
 
-div#content div#main-content div#contests table.table tr.contest.Ready > td.status {
+div#content div#main-content div#exams table.table tr.exam.Ready > td.status {
     color: #3E35A8;
 }
 
-div#content div#main-content div#contests table.table tr.contest.Live {
+div#content div#main-content div#exams table.table tr.exam.Live {
     background-color: #fff0f0;
 }
 
-div#content div#main-content div#contests table.table tr.contest.Live > td.status {
+div#content div#main-content div#exams table.table tr.exam.Live > td.status {
     background-color: #fdd;
     color: #ff8080;
 }
 
-div#content div#main-content div#contests div#more-contests {
+div#content div#main-content div#exams div#more-exams {
     background-color: #f9f9f9;
     border-bottom: 5px solid #3E35A8;
     cursor: pointer;
@@ -83,11 +83,11 @@ div#content div#main-content div#contests div#more-contests {
     text-align: center;
 }
 
-div#content div#main-content div#contests div#more-contests p {
+div#content div#main-content div#exams div#more-exams p {
     margin-bottom: 0;
 }
 
-div#content div#main-content div#contests div#more-contests img {
+div#content div#main-content div#exams div#more-exams img {
     max-height: 15px;
     height: 15px;
 }

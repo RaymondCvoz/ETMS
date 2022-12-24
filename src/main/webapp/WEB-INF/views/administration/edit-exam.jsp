@@ -32,51 +32,52 @@
         <!-- Content -->
         <div id="content">
             <h2 class="page-header"><i class="fa fa-user"></i> <spring:message
-                    code="etms.administration.new-exam.new-exam" text="New Exam"/></h2>
+                    code="etms.administration.edit-exam.edit-exam" text="New Exam"/></h2>
             <form id="profile-form" onSubmit="onSubmit(); return false;">
                 <div class="alert alert-error hide"></div> <!-- .alert-error -->
-                <div class="alert alert-success hide"><spring:message code="etms.administration.new-exam.exam-created"
+                <div class="alert alert-success hide"><spring:message code="etms.administration.edit-exam.exam-created"
                                                                       text="The exam has been created successfully."/></div>
                 <!-- .alert-success -->
                 <div class="control-group row-fluid">
-                    <label for="exam-name"><spring:message code="etms.administration.new-exam.exam-name"
-                                                             text="Exam-name"/></label>
-                    <input id="exam-name" class="span12" type="text" maxlength="16" required/>
+                    <label for="exam-name"><spring:message code="etms.administration.edit-exam.exam-name"
+                                                           text="Exam-name"/></label>
+                    <input id="exam-name" class="span12" type="text" maxlength="16" value="${exam.examName}" required/>
+                    <input id="exam-id" class="hidden" value="${exam.examId}">
                 </div> <!-- .control-group -->
                 <div class="control-group row-fluid">
-                    <label for="start-time"><spring:message code="etms.administration.new-exam.start-time"
+                    <label for="start-time"><spring:message code="etms.administration.edit-exam.start-time"
                                                             text="start time"/></label>
-                    <input id="start-time" class="span12" type="text" value="${dateToString}" maxlength="64" placeholder="yyyy-mm-dd hh:mm:ss" required />
+                    <input id="start-time" class="span12" type="text" value="${beginTimeToString}" maxlength="64" placeholder="yyyy-mm-dd hh:mm:ss" required />
                 </div> <!-- .control-group -->
                 <div class="control-group row-fluid">
-                    <label for="end-time"><spring:message code="etms.administration.new-exam.end-time"
+                    <label for="end-time"><spring:message code="etms.administration.edit-exam.end-time"
                                                           text="end time"/></label>
-                    <input id="end-time" class="span12" type="text" value="${dateToString}" maxlength="64" placeholder="yyyy-mm-dd hh:mm:ss" required/>
+                    <input id="end-time" class="span12" type="text" value="${endTimeToString}" maxlength="64" placeholder="yyyy-mm-dd hh:mm:ss" required/>
                 </div> <!-- .control-group -->
                 <div class="control-group row-fluid">
-                    <label for="rule"><spring:message code="etms.administration.new-exam.rule"
+                    <label for="rule"><spring:message code="etms.administration.edit-exam.rule"
                                                       text="Rule"/></label>
                     <select id="rule" name="ruleGroup">
-                        <option value="Survey">Survey</option>
                         <option value="Exam">Exam</option>
+                        <option value="Survey">Survey</option>
                     </select>
                 </div> <!-- .control-group -->
                 <div class="control-group row-fluid">
-                    <label for="problems"><spring:message code="etms.administration.new-exam.problems"
+                    <label for="problems"><spring:message code="etms.administration.edit-exam.problems"
                                                           text="Problems"/></label>
                     <input id="problems" class="span12" type="text" maxlength="64"
-                           placeholder="<spring:message code="etms.administration.new-exam.problems-hint" text="Hint"/>" required/>
+                           placeholder="<spring:message code="etms.administration.edit-exam.problems-hint" text="Hint"/>" value="${exam.examProblems}" required/>
                 </div> <!-- .control-group -->
                 <div class="control-group row-fluid">
                     <label for="note"><spring:message code="etms.administration.new-exam.note"
                                                       text="Problems"/></label>
                     <input id="note" class="span12" type="text" maxlength="64"
-                           placeholder="<spring:message code="etms.administration.new-exam.note-hint" text="Hint"/>"/>
+                           placeholder="<spring:message code="etms.administration.edit-exam.note-hint" text="Hint"/>" value="${exam.examNotes}"/>
                 </div> <!-- .control-group -->
                 <div class="row-fluid">
                     <div class="span12">
                         <button class="btn btn-primary" type="submit"><spring:message
-                                code="etms.administration.new-exam.new-exam" text="Create Exam"/></button>
+                                code="etms.administration.edit-exam.save-edit" text="Edit Exam"/></button>
                     </div> <!-- .span12 -->
                 </div> <!-- .row-fluid -->
             </form> <!-- #profile-form -->
@@ -88,11 +89,12 @@
 <%@ include file="/WEB-INF/views/administration/include/footer-script.jsp" %>
 <script type="text/javascript">
     function onSubmit() {
-        var examName = $('#exam-name').val(),
+        var examId = $('#exam-id').val(),
+            examName = $('#exam-name').val(),
             startTime = $('#start-time').val(),
             endTime = $('#end-time').val(),
             examMode = $('#rule').val(),
-            examNote = $('#note').val(),
+            examNotes = $('#note').val(),
             problems = $('#problems').val();
 
         $('.alert-success', '#profile-form').addClass('hide');
@@ -100,23 +102,24 @@
         $('button[type=submit]', '#profile-form').attr('disabled', 'disabled');
         $('button[type=submit]', '#profile-form').html('<spring:message code="etms.administration.new-exam.please-wait" text="Please wait..." />');
 
-        return doCreateExamAction(examName, examNote, startTime, endTime, examMode, problems);
+        return doCreateExamAction(examId, examName, examNotes, startTime, endTime, examMode, problems);
     }
 </script>
 <script type="text/javascript">
-    function doCreateExamAction(examName, examNote, startTime, endTime, examMode, problems) {
+    function doCreateExamAction(examId, examName, examNotes, startTime, endTime, examMode, problems) {
         var postData = {
+            'examId':examId,
             'examName': examName,
-            'examNote': examNote,
+            'examNotes': examNotes,
             'startTime': startTime,
             'endTime': endTime,
             'examMode': examMode,
-            'problems': problems
+            'examProblems': problems
         };
 
         $.ajax({
             type: 'POST',
-            url: '<c:url value="/administration/newExam.action" />',
+            url: '<c:url value="/administration/editExam.action" />',
             data: postData,
             dataType: 'JSON',
             success: function (result) {

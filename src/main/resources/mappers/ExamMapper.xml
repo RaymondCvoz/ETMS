@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="etms.web.mapper.examMapper">
+<mapper namespace="etms.web.mapper.ExamMapper">
     <!-- ResultMap -->
     <resultMap id="examResultMap" type="etms.web.model.Exam">
         <id property="examId" column="exam_id"/>
@@ -11,7 +11,7 @@
         <result property="startTime" column="exam_start_time"/>
         <result property="endTime" column="exam_end_time"/>
         <result property="examMode" column="exam_mode"/>
-        <result property="problems" column="exam_problems"/>
+        <result property="examProblems" column="exam_problems"/>
     </resultMap>
 
     <!-- Methods -->
@@ -52,7 +52,7 @@
             flushCache="true">
         INSERT INTO etms_exams (exam_name, exam_notes, exam_start_time, exam_end_time, exam_mode,
                                   exam_problems)
-        VALUES (#{examName}, #{examNotes}, #{startTime}, #{endTime}, #{examMode}, #{problems})
+        VALUES (#{examName}, #{examNotes}, #{startTime}, #{endTime}, #{examMode}, #{examProblems})
     </insert>
     <update id="updateExam"
             parameterType="etms.web.model.Exam"
@@ -63,7 +63,7 @@
             exam_start_time = #{startTime},
             exam_end_time   = #{endTime},
             exam_mode       = #{examMode},
-            exam_problems   = #{problems}
+            exam_problems   = #{examProblems}
         WHERE exam_id = #{examId}
     </update>
     <delete id="deleteExam"
@@ -73,5 +73,4 @@
         FROM etms_exams
         WHERE exam_id = #{examId}
     </delete>
-
 </mapper>
