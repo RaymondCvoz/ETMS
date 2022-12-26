@@ -47,13 +47,13 @@ DROP TABLE IF EXISTS `etms_exam_participants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exam_participants` (
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
-  `participant_id` bigint(20) DEFAULT NULL COMMENT '参与学生唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
+  `participant_uid` bigint(20) DEFAULT NULL COMMENT '参与学生唯一标识符',
   KEY `etms_exam_participants_etms_exams_null_fk` (`exam_id`),
-  KEY `etms_exam_participants_etms_users_null_fk` (`participant_id`),
+  KEY `etms_exam_participants_etms_users_null_fk` (`participant_uid`),
   CONSTRAINT `etms_exam_participants_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
-  CONSTRAINT `etms_exam_participants_etms_users_null_fk` FOREIGN KEY (`participant_id`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试与参与考试学生对应信息';
+  CONSTRAINT `etms_exam_participants_etms_users_null_fk` FOREIGN KEY (`participant_uid`) REFERENCES `etms_users` (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与参与测试学生对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +62,7 @@ CREATE TABLE `etms_exam_participants` (
 
 LOCK TABLES `etms_exam_participants` WRITE;
 /*!40000 ALTER TABLE `etms_exam_participants` DISABLE KEYS */;
+INSERT INTO `etms_exam_participants` VALUES (1,10001),(2,10006);
 /*!40000 ALTER TABLE `etms_exam_participants` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,13 +74,13 @@ DROP TABLE IF EXISTS `etms_exam_submissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exam_submissions` (
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
   `submission_id` bigint(20) DEFAULT NULL COMMENT '提交唯一标识符',
   KEY `etms_exam_submissions_etms_exams_null_fk` (`exam_id`),
   KEY `etms_exam_submissions_etms_submissions_null_fk` (`submission_id`),
   CONSTRAINT `etms_exam_submissions_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_exam_submissions_etms_submissions_null_fk` FOREIGN KEY (`submission_id`) REFERENCES `etms_submissions` (`submission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试与提交对应信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试与提交对应信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,6 +89,7 @@ CREATE TABLE `etms_exam_submissions` (
 
 LOCK TABLES `etms_exam_submissions` WRITE;
 /*!40000 ALTER TABLE `etms_exam_submissions` DISABLE KEYS */;
+INSERT INTO `etms_exam_submissions` VALUES (1,1),(1,2),(2,3);
 /*!40000 ALTER TABLE `etms_exam_submissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,15 +101,15 @@ DROP TABLE IF EXISTS `etms_exams`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_exams` (
-  `exam_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '考试唯一标识符',
-  `exam_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试名称',
-  `exam_notes` text COLLATE utf8mb4_unicode_ci COMMENT '考试备注',
-  `exam_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '考试开始时间',
-  `exam_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '考试结束时间',
-  `exam_type` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试类型',
-  `exam_problems` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试题目',
+  `exam_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '测试唯一标识符',
+  `exam_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试名称',
+  `exam_notes` text COLLATE utf8mb4_unicode_ci COMMENT '测试备注',
+  `exam_start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '测试开始时间',
+  `exam_end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '测试结束时间',
+  `exam_mode` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试类型',
+  `exam_problems` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试题目',
   PRIMARY KEY (`exam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='考试信息';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +118,7 @@ CREATE TABLE `etms_exams` (
 
 LOCK TABLES `etms_exams` WRITE;
 /*!40000 ALTER TABLE `etms_exams` DISABLE KEYS */;
+INSERT INTO `etms_exams` VALUES (1,'期末考试2','说明','2022-12-23 23:47:19','2022-12-23 23:50:19','Exam','[2,3]'),(2,'期末考试3','','2022-12-23 23:55:02','2022-12-23 23:56:02','Exam','[4,5]');
 /*!40000 ALTER TABLE `etms_exams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,12 +131,12 @@ DROP TABLE IF EXISTS `etms_lesson_exams`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_lesson_exams` (
   `lesson_id` bigint(20) DEFAULT NULL COMMENT '课程唯一标识符',
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '考试唯一标识符',
+  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
   KEY `etms_lesson_exams_etms_exams_null_fk` (`exam_id`),
   KEY `etms_lesson_exams_etms_lessons_null_fk` (`lesson_id`),
   CONSTRAINT `etms_lesson_exams_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
   CONSTRAINT `etms_lesson_exams_etms_lessons_null_fk` FOREIGN KEY (`lesson_id`) REFERENCES `etms_lessons` (`lesson_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与考试对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与测试对应关系';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,9 +157,9 @@ DROP TABLE IF EXISTS `etms_lesson_participants`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_lesson_participants` (
   `lesson_id` int(11) NOT NULL COMMENT '课程唯一标识符',
-  `participant_id` int(11) NOT NULL COMMENT '选课学生唯一标识符',
+  `participant_uid` int(11) NOT NULL COMMENT '选课学生唯一标识符',
   KEY `etms_lesson_participant_etms_lessons_null_fk` (`lesson_id`),
-  KEY `etms_lesson_participant_etms_users_null_fk` (`participant_id`)
+  KEY `etms_lesson_participant_etms_users_null_fk` (`participant_uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学生选课信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -260,14 +263,14 @@ DROP TABLE IF EXISTS `etms_problem_checkpoints`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_problem_checkpoints` (
   `problem_id` bigint(20) DEFAULT NULL COMMENT '题目唯一标识符',
-  `checkpoint_id` int(11) NOT NULL COMMENT '考试点唯一标识符',
-  `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '考试点是否精确匹配（填空题）',
-  `checkpoint_type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '考试点类型（选择、填空、论述等）',
-  `checkpoint_score` int(11) NOT NULL COMMENT '考试点得分',
-  `checkpoint_answer` longtext COLLATE utf8mb4_unicode_ci COMMENT '考试点答案',
+  `checkpoint_id` int(11) NOT NULL COMMENT '测试点唯一标识符',
+  `checkpoint_exactly_match` tinyint(4) NOT NULL COMMENT '测试点是否精确匹配（填空题）',
+  `checkpoint_type` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '测试点类型（选择、填空、论述等）',
+  `checkpoint_score` int(11) NOT NULL COMMENT '测试点得分',
+  `checkpoint_answer` longtext COLLATE utf8mb4_unicode_ci COMMENT '测试点答案',
   KEY `etms_problem_checkpoints_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_problem_checkpoints_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目考试点信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目测试点信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +350,7 @@ CREATE TABLE `etms_problems` (
   `problem_answer` text COLLATE utf8mb4_unicode_ci COMMENT '题目标准答案',
   `problem_score` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`problem_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目信息';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +359,7 @@ CREATE TABLE `etms_problems` (
 
 LOCK TABLES `etms_problems` WRITE;
 /*!40000 ALTER TABLE `etms_problems` DISABLE KEYS */;
-INSERT INTO `etms_problems` VALUES (1,1,'1+1 Problem','1+1',NULL,1,'2',10);
+INSERT INTO `etms_problems` VALUES (2,1,'计算机学科专业基础01','将一个 10X10 对称矩阵 M 的上三角部分的元素mij(1≤i≤j≤10)按列优先存 入 C 语言的一位数组 N 中，元素m7,2在 N 中的下标是：\n\nA、15 \n\nB、16 \n\nC、22 \n\nD、23','请提交选项（A、B、C、D）',0,'C',10),(3,1,'计算机学科专业基础02','对 空 栈 S 进 行 Push 和 pop 操作，入栈序列 a,b,c,d,e 经 过 Push,Push,Pop,Push,Pop,Push,Push,Pop 操作后得到的出栈序列是：\n\nA、b,a,c \n\nB、b,a,e \n\nC、b,c,a \n\nD、b,c,e\n','请提交选项（A、B、C、D）',0,'D',10),(4,1,'计算机学科专业基础03','修改递归方式实现的图的深度优先搜索（DFS）算法，将输出（访问）定点信 息的语句移到退出递归前（即执行输出语句后立刻退出递归）。采用修改后的算 法遍历有向无环图 G，若输出结果中包含 G 中的全部顶点，则输出的顶点序列是 G 的：\n\nA、拓扑有序序列 \n\nB、逆拓扑有序序列 \n\nC、广度优先搜索序列 \n\nD、深度优先搜索序列','请提交选项（A、B、C、D）',0,'B',10),(5,1,'计算机学科专业基础04','在按字节编址，采用小端方式的 32 位计算机中，按边界对齐方式为以下 C 语言结构型变量 a 分配存储空间。 Struct record{ short x1; int x2; } a;\n若 a 的首地址为 2020 FE00H，a 的成员变量 x2 的机器数为 1234 0000H，则其中 34H 所在存储单元的地址是：\n\nA、2020 FE03H； \n\nB、2020 FE04H； \n\nC、2020 FE05H； \n\nD、2020 FE06H；','请提交选项（A、B、C、D）',0,'D',10),(6,1,'计算机学科专业基础05','若主机甲与主机乙建立 TCP 连接时发送的 SYN 段中的序号为 1000，在断开 连接时，甲发送给乙的 FIN 段中的序号为 5001，则在无任何重传的情况下，甲 向乙已经发送的应用层数据的字节数为：\n\nA、4002； \n\nB、4001； \n\nC、4000； \n\nD、3999；','请提交选项（A、B、C、D）',0,'C',10),(7,1,'思想政治理论01','中国共产党坚持马克思上义基本原理，坚持实事求是，从中国实际出发，洞察时代大势，把握历中主动，进行艰辛探索，不推进马克思主义中国化时代化，指导人民不断推进伟大社会革命。习近平总书记指出，“中国共产党为什么能，由特色社会主义为什么好，归根到底是因为马克思主义行!”马克思主义之所以根本原因在于（    ） \n\nA.马克思主义具有鲜明的政治立场 \n\nB.马克思主义具有自觉的历史担当 \n\nC.马克思主义是科学的世界观和方法论 \n\nD.马克思主义是无产阶级政党自我革命的武器 ','请提交选项（A、B、C、D）',0,'C',10),(8,1,'思想政治理论02','马克思在《资本论》中指出∶”一个商品占有者出售他现有的商品，而另一个商品占有者却只是作为货币的代表或作为未来货币的代表来购买这种商品。卖者成为债权人，买者成为债务人。由于商品的形态变化或育晶的价值形式的发展在这里起了变化，货币也就取得了另一种职能。”这里所论述的货币”另一种职能”指的是（    ） \n\nA.价值尺度 \n\nB.流通手段 \n\nC.贮藏手段 \n\nD.支付手段 ','请提交选项（A、B、C、D）',0,'D',10),(9,1,'思想政治理论03','中华传统关德是中华优秀文化的重要组成部分，其内容博大精深、源远流长。从《诗经》中的“夙夜在公”到《尚书》中的“以公灭私”，从西汉贾谊《治安策》中的“国而忘家，公而忘私”到宋代范仲淹《岳阳楼记》中的“先天下之忧而忧，后天下之乐而乐”，再到清代林则徐的“苟利国家生死以，岂因祸福避趋之”，贯穿其中的传统关德是（    ） \n\nA.强调知行合一，注重躬行实践 \n\nB.推崇“仁爱”原则，注重以和为贵 \n\nC.重视整体利益，强调责任奉献 \n\nD.提倡人伦价值，重视道德义务 ','无',0,'C',10),(13,1,'思想政治理论04','人类历史上的每一次科技革命都与材料的发展息息相关，而新材料的研制却是颇为不易的。人工智能可以借助数据共享，对先进材科的物理化学性质进行预测筛选，从而加快新材料的合成和生产。作为人工智能的一个分支，机器学习算法在辅助新材料设计时尤为“得力”，其工作过程主要包括“描述符”生成、模型构建和验证、材料预测、实验验证等步骤。人工智能辅助新材料研发的过程表明\n\nA.科学研究能够任意改变物质的性质和结构\n\nB.人工智能能够取代人类对物质世界的认识\n\nC.人类对于物质的认识是一个不断深化的过程 \n\nD.具体的物质结构和性质的变化并不改变世界的物质性 ','无',0,'CD',10);
 /*!40000 ALTER TABLE `etms_problems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,7 +409,7 @@ CREATE TABLE `etms_submissions` (
   KEY `etms_submissions_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目提交信息';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目提交信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,6 +418,7 @@ CREATE TABLE `etms_submissions` (
 
 LOCK TABLES `etms_submissions` WRITE;
 /*!40000 ALTER TABLE `etms_submissions` DISABLE KEYS */;
+INSERT INTO `etms_submissions` VALUES (1,2,10001,'2022-12-23 23:41:03',10,'C'),(2,2,10001,'2022-12-23 23:47:31',10,'C'),(3,4,10006,'2022-12-23 23:55:18',0,'C');
 /*!40000 ALTER TABLE `etms_submissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +463,7 @@ CREATE TABLE `etms_usermeta` (
   PRIMARY KEY (`meta_id`),
   KEY `etms_user_meta_etms_users_null_fk` (`uid`),
   CONSTRAINT `etms_user_meta_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户其他信息';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户其他信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +472,7 @@ CREATE TABLE `etms_usermeta` (
 
 LOCK TABLES `etms_usermeta` WRITE;
 /*!40000 ALTER TABLE `etms_usermeta` DISABLE KEYS */;
-INSERT INTO `etms_usermeta` VALUES (1,10005,'registerTime','2022-11-20 10:37:09');
+INSERT INTO `etms_usermeta` VALUES (1,10005,'registerTime','2022-11-20 10:37:09'),(2,10006,'registerTime','2022-12-24 15:52:48');
 /*!40000 ALTER TABLE `etms_usermeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,7 +494,7 @@ CREATE TABLE `etms_users` (
   UNIQUE KEY `etms_users_email_pk` (`email`),
   KEY `etms_users_etms_user_groups_null_fk` (`user_group_id`),
   CONSTRAINT `etms_users_etms_user_groups_null_fk` FOREIGN KEY (`user_group_id`) REFERENCES `etms_user_groups` (`user_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10006 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户基本信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10007 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户基本信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -499,7 +503,7 @@ CREATE TABLE `etms_users` (
 
 LOCK TABLES `etms_users` WRITE;
 /*!40000 ALTER TABLE `etms_users` DISABLE KEYS */;
-INSERT INTO `etms_users` VALUES (10000,'admin','0000',NULL,3),(10001,'raymond','0000',NULL,3),(10003,'testtest','000000','1@axos.com',1),(10005,'testau1','000000','testau1@etms.com',1);
+INSERT INTO `etms_users` VALUES (10000,'admin','0000',NULL,3),(10001,'raymond','0000',NULL,3),(10003,'testtest','000000','1@axos.com',1),(10005,'testau1','000000','testau1@etms.com',1),(10006,'arixarix','00000000','s@1.com',1);
 /*!40000 ALTER TABLE `etms_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -512,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-13 10:14:28
+-- Dump completed on 2022-12-26 10:05:47
