@@ -48,8 +48,8 @@
                                     </li>
                                 </c:otherwise>
                             </c:choose>
-                            <li><button class="btn btn-primary btn-block" style="margin-top: 10px" onclick="window.location.href='<c:url value="/contest/${contest.contestId}" />'"><spring:message
-                                    code="etms.problems.problem.back-to-contest" text="Back to Contest"/></button></li>
+                            <li><button class="btn btn-primary btn-block" style="margin-top: 10px" onclick="window.location.href='<c:url value="/exam/${exam.examId}" />'"><spring:message
+                                    code="etms.problems.problem.back-to-exam" text="Back to Exam"/></button></li>
                         </ul>
                     </div>
                     <!-- #actions -->

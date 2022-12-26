@@ -204,12 +204,7 @@
             success: function (result) {
                 if (result['isSuccessful']) {
                     for (var i = 0; i < submissions.length; ++i) {
-                        var submission = $('tr[data-value=%s]'.format(submissions[i])),
-                            judgeResult = $('td.flag', $(submission));
-
-                        $(judgeResult).removeClass();
-                        $(judgeResult).addClass('flag flag-PD');
-                        $('a', $(judgeResult)).html('Pending');
+                        var submission = $('tr[data-value=%s]'.format(submissions[i]));
                     }
                 } else {
                     $('.alert').html('<spring:message code="etms.administration.all-submissions.restart-error" text="Some errors occurred while restarting judging for submissions." />');

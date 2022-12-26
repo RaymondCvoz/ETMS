@@ -778,7 +778,6 @@ public class AdministrationController
             HttpServletRequest request, HttpServletResponse response)
     {
         List<ProblemTag> problemCategories = problemService.getProblemTags();
-
         ModelAndView view = new ModelAndView("administration/problem-categories");
         view.addObject("problemCategories", problemCategories);
         return view;
@@ -939,6 +938,33 @@ public class AdministrationController
         }
         result.put("isSuccessful", true);
         result.put("deletedSubmissions", deletedSubmissions);
+        return result;
+    }
+
+    /**
+     * 重新评测选定的提交记录.
+     *
+     * @param submissions - 提交记录ID的集合, 以逗号(, )分隔
+     * @param request     - HttpServletRequest对象
+     * @return 提交记录的删除结果
+     */
+    @RequestMapping(value = "/restartSubmissions.action", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> restartSubmissionsAction(
+            @RequestParam(value = "submissions") String submissions, HttpServletRequest request)
+    {
+        Map<String, Object> result = new HashMap<>(3, 1);
+        List<Long> submissionList = JSON.parseArray(submissions, Long.class);
+        List<Long> finishedSubmissions = new ArrayList<>();
+
+        for (Long submissionId : submissionList)
+        {
+            submissionService.restartSubmission(submissionId);
+            finishedSubmissions.add(submissionId);
+        }
+
+        result.put("isSuccessful", true);
+        result.put("finishedSubmissions", finishedSubmissions);
         return result;
     }
 

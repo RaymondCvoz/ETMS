@@ -311,7 +311,6 @@ public class SubmissionService
         Problem problem = problemMapper.getProblem(problemId);
         Date date = new Date();
         Submission submission = new Submission(problem, user, date, 0, context);
-
         @SuppressWarnings("unchecked")
         Map<String, Object> result =
                 (Map<String, Object>) getSubmissionCreationResult(submission);
@@ -324,10 +323,30 @@ public class SubmissionService
             {
                 if(!examFlag)
                     submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
+                else
+                    submission.setJudgeScore(-1);
+                submissionMapper.updateSubmission(submission);
+            }
+            else
+            {
+                submission.setJudgeScore(-2);
                 submissionMapper.updateSubmission(submission);
             }
             result.put("submissionId", submissionId);
         }
+        return result;
+    }
+
+    /**
+     * 重新提交
+     * @param submissionId     - 已登录的用户对象
+     */
+    public int restartSubmission(long submissionId)
+    {
+        Submission submission = getSubmission(submissionId);
+        long problemId = submission.getProblemId();
+        submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
+        int result = submissionMapper.updateSubmission(submission);
         return result;
     }
 
@@ -337,7 +356,7 @@ public class SubmissionService
      * @param problemId 题目唯一标识符
      * @return 得分
      */
-    private int getSubmissionResult(long submissionId,long problemId)
+    public int getSubmissionResult(long submissionId,long problemId)
     {
         String context = submissionMapper.getSubmission(submissionId).getSubmissionContext();
         String answer = problemMapper.getProblem(problemId).getAnswer();
