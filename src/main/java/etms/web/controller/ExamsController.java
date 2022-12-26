@@ -146,7 +146,7 @@ public class ExamsController
 
         Map<String, Object> result =
                 submissionService.createSubmission(
-                        currentUser, problemId, context);
+                        currentUser, problemId, context,true);
         boolean isSuccessful = (Boolean) result.get("isSuccessful");
         if (isSuccessful)
         {
@@ -207,6 +207,46 @@ public class ExamsController
         return view;
     }
 
+    /**
+     * 显示排行榜.
+     *
+     * @param examId - 竞赛的唯一标识符
+     * @param request   - HttpRequest对象
+     * @param response  - HttpResponse对象
+     * @return 包含竞赛排行榜的ModelAndView对象
+     */
+    @RequestMapping(value = "/{examId}/leaderboard", method = RequestMethod.GET)
+    public ModelAndView leaderboardView(
+            @PathVariable("examId") long examId,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {
+        Exam exam = examService.getExam(examId);
+        Date currentTime = new Date();
+        if (exam == null)
+        {
+            throw new ResourceNotFoundException();
+        }
+
+        List<Long> problemIdList = JSON.parseArray(exam.getExamProblems(), Long.class);
+        List<Problem> problems = examService.getProblemsOfExams(problemIdList);
+
+        ModelAndView view = null;
+        Map<String, Object> result = null;
+        view = new ModelAndView("exams/leaderboard");
+
+        result = examService.getLeaderBoard(examId);
+
+        List<ExamParticipant> participants = (List<ExamParticipant>) result.get("participants");
+        Map<Long, Map<Long, Submission>> submissions =
+                (Map<Long, Map<Long, Submission>>) result.get("submissions");
+        view.addObject("participants", participants);
+        view.addObject("submissions", submissions);
+        view.addObject("exam", exam);
+        view.addObject("problems", problems);
+        return view;
+    }
+    
     /**
      * 每次查询需要加载考试的数量.
      */

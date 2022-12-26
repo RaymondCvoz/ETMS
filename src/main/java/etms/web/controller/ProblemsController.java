@@ -214,7 +214,7 @@ public class ProblemsController
         User currentUser = HttpSessionParser.getCurrentUser(session);
         Map<String, Object> result =
                 submissionService.createSubmission(
-                        currentUser, problemId, context);
+                        currentUser, problemId, context,false);
         boolean isSuccessful = (Boolean) result.get("isSuccessful");
         if (isSuccessful)
         {

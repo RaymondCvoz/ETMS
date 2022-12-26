@@ -441,10 +441,6 @@ public class AdministrationController
         Map<String, Boolean> result =
                 examService.createExam(examName, examNote, startTime, endTime, examMode,problems);
 
-        if ((Boolean) result.get("isSuccessful"))
-        {
-            LOGGER.info("exam" + result.get("examId") + " has been created");
-        }
         return result;
     }
     /**

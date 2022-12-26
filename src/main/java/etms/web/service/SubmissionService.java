@@ -306,7 +306,7 @@ public class SubmissionService
      * @return 一个包含提交记录创建结果的Map<String, Object>对象, 并包含创建的提交记录的唯一标识符.
      */
     public Map<String, Object> createSubmission(
-            User user, long problemId, String context)
+            User user, long problemId, String context, boolean examFlag)
     {
         Problem problem = problemMapper.getProblem(problemId);
         Date date = new Date();
@@ -322,7 +322,8 @@ public class SubmissionService
             long submissionId = submission.getSubmissionId();
             if(!problem.getProblemType())
             {
-                submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
+                if(!examFlag)
+                    submission.setJudgeScore(getSubmissionResult(submissionId,problemId));
                 submissionMapper.updateSubmission(submission);
             }
             result.put("submissionId", submissionId);

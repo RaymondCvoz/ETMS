@@ -54,9 +54,6 @@
                 <thead>
                 <tr>
                     <th class="name"><spring:message code="etms.problems.problems.name" text="Name"/></th>
-                    <th class="submission"><spring:message code="etms.problems.problems.pass"
-                                                           text="Pass"/>/<spring:message code="etms.problems.problems.submission"
-                                                                                         text="Submission"/></th>
                     <c:if test="${isLogin}">
                         <th class="flag"><spring:message code="etms.problems.problems.result" text="Result"/></th>
                     </c:if>
@@ -68,21 +65,20 @@
                         <td class="name">
                             <a href="<c:url value="/p/${problem.problemId}" />" style="color: #3E35A8">P${problem.problemId} ${problem.problemName}</a>
                         </td>
-<%--                        <td>${problem.acceptedSubmission}/${problem.totalSubmission}</td>--%>
-<%--                        <c:if test="${isLogin}">--%>
-<%--                            <c:choose>--%>
-<%--                                <c:when test="${submissionOfProblems[problem.problemId] == null}">--%>
-<%--                                    <td></td>--%>
-<%--                                </c:when>--%>
-<%--                                <c:otherwise>--%>
-<%--                                    <td class="flag-${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}">--%>
-<%--                                        <a href="<c:url value="/submission/${submissionOfProblems[problem.problemId].submissionId}" />">--%>
-<%--                                                ${submissionOfProblems[problem.problemId].judgeResult.judgeResultSlug}--%>
-<%--                                        </a>--%>
-<%--                                    </td>--%>
-<%--                                </c:otherwise>--%>
-<%--                            </c:choose>--%>
-<%--                        </c:if>--%>
+                        <c:if test="${isLogin}">
+                            <c:choose>
+                                <c:when test="${submissionOfProblems[problem.problemId] == null}">
+                                    <td></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>
+                                        <a href="<c:url value="/submission/${submissionOfProblems[problem.problemId].submissionId}" />">
+                                                ${submissionOfProblems[problem.problemId].judgeScore}
+                                        </a>
+                                    </td>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
                     </tr>
                 </c:forEach>
                 </tbody>

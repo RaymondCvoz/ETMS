@@ -64,6 +64,57 @@ public class ExamService
         return problems;
     }
 
+
+    /**
+     * 获取考试记录.
+     *
+     * @param examId - 考试的唯一标识符
+     * @return 包含考生和提交记录信息的Map对象
+     */
+    public Map<String, Object> getLeaderBoard(long examId)
+    {
+        Map<String, Object> result = new HashMap<>(3, 1);
+        List<ExamParticipant> participants =
+                examParticipantMapper.getParticipantsOfExam(examId);
+        Map<Long, Map<Long, Submission>> submissions =
+                getSubmissionsGroupByParticipant(examSubmissionMapper.getSubmissionsOfExam(examId), true);
+        result.put("participants", participants);
+        result.put("submissions", submissions);
+        return result;
+    }
+
+    /**
+     * 建立考试提交记录的索引 (参赛者UID - 试题ID).
+     *
+     * @param examSubmissions 包含全部竞赛提交记录的列表
+     * @param override           - 当同一题出现多次提交时, 是否覆盖已有的提交记录
+     * @return 组织后的竞赛提交记录
+     */
+    private Map<Long, Map<Long, Submission>> getSubmissionsGroupByParticipant(
+            List<ExamSubmission> examSubmissions, boolean override)
+    {
+        Map<Long, Map<Long, Submission>> submissions = new HashMap<>();
+
+        for (ExamSubmission cs : examSubmissions)
+        {
+            long problemId = cs.getSubmission().getProblem().getProblemId();
+            long participantUid = cs.getSubmission().getUser().getUid();
+
+            if (!submissions.containsKey(participantUid))
+            {
+                submissions.put(participantUid, new HashMap<Long,Submission>());
+            }
+            Map<Long, Submission> submissionsOfParticipant = submissions.get(participantUid);
+
+            if (!override && submissionsOfParticipant.containsKey(problemId))
+            {
+                continue;
+            }
+            submissionsOfParticipant.put(problemId, cs.getSubmission());
+        }
+        return submissions;
+    }
+    
     /**
      * 此方法仅供管理员使用
      * 创建考试
@@ -213,15 +264,13 @@ public class ExamService
         List<Integer> problemsId = new ArrayList<>();
         result.put("isExamNameEmpty",exam.getExamName().isEmpty());
         result.put("isEndDateGreaterThanBeginDate", exam.getEndTime().after(exam.getStartTime()));
-        result.put("isBeginDateGreaterThanCurrentDate",exam.getStartTime().after(currentDate));
         result.put("isExamModeEmpty",exam.getExamMode().isEmpty());
         result.put("isProblemsAvailable",isProblemsAvailable);
         boolean isSuccessful =
                 !result.get("isExamNameEmpty")
                         && result.get("isEndDateGreaterThanBeginDate")
                         && !result.get("isExamModeEmpty")
-                        && result.get("isProblemsAvailable")
-                        && result.get("isBeginDateGreaterThanCurrentDate");
+                        && result.get("isProblemsAvailable");
         result.put("isSuccessful",isSuccessful);
         return result;
     }

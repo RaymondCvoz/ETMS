@@ -24,26 +24,24 @@ public interface ExamParticipantMapper
     long getNumberOfParticipantsOfExam(long examId);
 
     /**
-     * 获取某个考试的参赛者列表 (OI赛制).
+     * 获取某个考试的参赛者列表
      *
      * @param examId - 考试的唯一标识符
-     * @param offset    - 起始参赛者的偏移量(offset)
-     * @param limit     - 需要获取参赛者的数量
      * @return 某个考试的参赛者列表
      */
     List<ExamParticipant> getParticipantsOfExam(
-            @Param("examId") long examId, @Param("offset") long offset, @Param("limit") int limit);
+            @Param("examId") long examId);
 
 
     /**
      * 获取某个选手在某个考试的参赛记录.
      *
      * @param examId     - 考试的唯一标识符
-     * @param participantUid - 参赛者的用户唯一标识符
+     * @param uid - 参赛者的用户唯一标识符
      * @return 对应的某个选手在某个考试的参赛记录
      */
     ExamParticipant getParticipantOfExam(
-            @Param("examId") long examId, @Param("participantUid") long participantUid);
+            @Param("examId") long examId, @Param("uid") long uid);
 
     /**
      * 创建参赛记录(用于参加考试).

@@ -9,7 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <title><spring:message code="etms.administration.new-problem.title" text="New Problem"/> - ${problem.problemName}</title>
-
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap.min.css?v=${version}"/>
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap-responsive.min.css?v=${version}"/>
@@ -23,7 +22,6 @@
     <script type="text/javascript" src="${cdnUrl}/js/flat-ui.min.js?v=${version}"></script>
     <script type="text/javascript" src="${cdnUrl}/js/md5.min.js?v=${version}"></script>
     <script type="text/javascript" src="${cdnUrl}/js/pace.min.js?v=${version}"></script>
-
 </head>
 <body>
 <div id="wrapper">
@@ -40,6 +38,8 @@
                 <div class="row-fluid">
                     <div class="span8">
                         <div class="alert alert-error hide"></div> <!-- .alert-error -->
+                        <div class="alert alert-success hide"><spring:message
+                                code="etms.administration.new-problem.problem-created" text="Problem created."/></div>
 
                         <div class="control-group row-fluid">
                             <label for="problem-name"><spring:message
@@ -259,6 +259,10 @@
             } else if (!result['isProblemNameLegal']) {
                 errorMessage += '<spring:message code="etms.administration.new-problem.problem-name-illegal" text="The length of Problem Name CANNOT exceed 128 characters." /><br>';
             }
+            if (result['isDescriptionEmpty']) {
+                errorMessage += '<spring:message code="etms.administration.new-problem.description-empty" text="You can&acute;t leave Description empty." /><br>';
+            }
+
             if (result['isDescriptionEmpty']) {
                 errorMessage += '<spring:message code="etms.administration.new-problem.description-empty" text="You can&acute;t leave Description empty." /><br>';
             }
