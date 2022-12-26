@@ -1,62 +1,51 @@
+
 package etms.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import org.springframework.stereotype.Component;
+import java.util.List;
 
-import java.util.Date;
-
-/**
- * 课程类
- */
-@Component
 public class Lesson
 {
     /**
-     * 课程类默认构造函数
+     * 课程的默认构造函数.
      */
     public Lesson()
     {
-
     }
 
     /**
      * 课程构造函数
      * @param lessonName 课程名称
      * @param description 课程描述
-     * @param startTime 开始时间
-     * @param endTime 结束时间
-     * @param lecturerId 讲师唯一标识符
      */
-    public Lesson(String lessonName, String description, Date startTime, Date endTime, long lecturerId)
+    public Lesson(
+            String lessonName,
+            String description)
     {
         this.lessonName = lessonName;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.lecturerId = lecturerId;
     }
 
     /**
-     * 课程类构造函数
-     * @param lessonId      课程唯一标识符
-     * @param lessonName    课程名
-     * @param description   课程描述
-     * @param startTime     课程开始时间
-     * @param endTime       课程结束时间
-     * @param lecturerId    讲师唯一标识符
+     * 课程类的构造函数
+     * @param lessonId 课程唯一标识符
+     * @param lessonName 课程名称
+     * @param description 课程描述
      */
-    public Lesson(long lessonId, String lessonName, String description, Date startTime, Date endTime, long lecturerId)
+    public Lesson(
+            long lessonId,
+            String lessonName,
+            String description)
     {
         this.lessonId = lessonId;
         this.lessonName = lessonName;
         this.description = description;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.lecturerId = lecturerId;
     }
 
     /**
-     * 获取课程唯一标识符
+     * 获取课程唯一标识符.
+     *
      * @return 课程唯一标识符
      */
     public long getLessonId()
@@ -65,17 +54,20 @@ public class Lesson
     }
 
     /**
-     * 设置课程唯一标识符
-     * @param lessonId 课程唯一标识符
+     * 设置课程唯一标识符.
+     *
+     * @param lessonId - 课程唯一标识符
      */
     public void setLessonId(long lessonId)
     {
         this.lessonId = lessonId;
     }
+    
 
     /**
-     * 获取课程名
-     * @return 课程名
+     * 获取课程名称.
+     *
+     * @return 课程名称
      */
     public String getLessonName()
     {
@@ -83,16 +75,19 @@ public class Lesson
     }
 
     /**
-     * 设置课程名
-     * @param lessonName 课程名
+     * 设置课程名称.
+     *
+     * @param lessonName - 课程名称
      */
     public void setLessonName(String lessonName)
     {
         this.lessonName = lessonName;
     }
+    
 
     /**
-     * 获取课程描述
+     * 获取课程描述.
+     *
      * @return 课程描述
      */
     public String getDescription()
@@ -101,103 +96,29 @@ public class Lesson
     }
 
     /**
-     * 设置课程描述
-     * @param description 课程描述
+     * 设置课程描述.
+     *
+     * @param description - 课程描述
      */
     public void setDescription(String description)
     {
         this.description = description;
     }
-
+    
     /**
-     * 获取课程起始时间
-     * @return 课程起始时间
-     */
-    public Date getStartTime()
-    {
-        return startTime;
-    }
-
-    /**
-     * 设置课程起始时间
-     * @param startTime 课程起始时间
-     */
-    public void setStartTime(Date startTime)
-    {
-        this.startTime = startTime;
-    }
-
-    /**
-     * 获取课程结束时间
-     * @return 课程结束时间
-     */
-    public Date getEndTime()
-    {
-        return endTime;
-    }
-
-    /**
-     * 设置课程结束时间
-     * @param endTime 课程结束时间
-     */
-    public void setEndTime(Date endTime)
-    {
-        this.endTime = endTime;
-    }
-
-    /**
-     * 获取课程讲师唯一标识符
-     * @return 课程讲师唯一标识符
-     */
-    public long getLecturerId()
-    {
-        return lecturerId;
-    }
-
-    /**
-     * 设置课程讲师唯一标识符
-     * @param lecturerId 课程讲师唯一标识符
-     */
-    public void setLecturerId(long lecturerId)
-    {
-        this.lecturerId = lecturerId;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "Lesson{" +
-                "lessonId=" + lessonId +
-                ", lessonName='" + lessonName + '\'' +
-                ", description='" + description + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", lecturerId=" + lecturerId +
-                '}';
-    }
-
-    /**
-     * 课程唯一标识符
+     * 课程的唯一标识符.
      */
     private long lessonId;
+
     /**
-     * 课程名
+     * 课程名称.
      */
     private String lessonName;
+    
     /**
-     * 课程描述
+     * 课程描述.
      */
+    @JsonIgnore
     private String description;
-    /**
-     * 课程开始时间
-     */
-    private Date startTime;
-    /**
-     * 课程结束时间
-     */
-    private Date endTime;
-    /**
-     * 课程讲师唯一标识符
-     */
-    private long lecturerId;
+    
 }
