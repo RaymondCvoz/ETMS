@@ -124,18 +124,6 @@ public class AdministrationController
         return submissionService.getNumberOfSubmissionsUsingDate(startTime, endTime);
     }
 
-    /**
-     * 获取Web应用当前内存占用情况.
-     *
-     * @return Web应用当前内存占用(MB)
-     */
-    private long getCurrentMemoryUsage()
-    {
-        long totalMemory = Runtime.getRuntime().totalMemory();
-        long freeMemory = Runtime.getRuntime().freeMemory();
-
-        return (totalMemory - freeMemory) / 1048576;
-    }
 
 
     /**
@@ -548,6 +536,90 @@ public class AdministrationController
                             new Object[]{problemId, ipAddress}));
         }
         result.put("isSuccessful", true);
+        return result;
+    }
+    /**
+     * 加载创建课程页面.
+     *
+     * @param request  - HttpServletRequest对象
+     * @param response - HttpServletResponse对象
+     * @return 包含创建试题页面信息的ModelAndView对象
+     */
+    @RequestMapping(value = "/new-lesson", method = RequestMethod.GET)
+    public ModelAndView newLessonView(HttpServletRequest request, HttpServletResponse response)
+    {
+        ModelAndView view = new ModelAndView("administration/new-lesson");
+        return view;
+    }
+
+    /**
+     * 加载试题列表页面.
+     *
+     * @param request  - HttpServletRequest对象
+     * @param response - HttpServletResponse对象
+     * @return 包含提交列表页面信息的ModelAndView对象
+     */
+    @RequestMapping(value = "/all-lessons", method = RequestMethod.GET)
+    public ModelAndView allLessonsView(
+            @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword,
+            HttpServletRequest request,
+            HttpServletResponse response)
+    {
+        List<Lesson> lessons =
+                lessonService.getLessonsUsingFilters(keyword);
+        ModelAndView view = new ModelAndView("administration/all-lessons");
+        view.addObject("keyword", keyword);
+        view.addObject("lessons", lessons);
+        return view;
+    }
+
+
+    /**
+     * 删除选定的试题.
+     *
+     * @param lessons - 课程ID的集合, 以逗号(, )分隔
+     * @param request  - HttpServletRequest对象
+     * @return 试题的删除结果
+     */
+    @RequestMapping(value = "/deleteLessons.action", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Boolean> deleteLessonsAction(
+            @RequestParam(value = "lessons") String lessons,
+            HttpServletRequest request)
+    {
+        Map<String, Boolean> result = new HashMap<>(2, 1);
+        List<Long> lessonList = JSON.parseArray(lessons, Long.class);
+        for (Long lessonId : lessonList)
+        {
+            lessonService.deleteLesson(lessonId);
+        }
+        result.put("isSuccessful", true);
+        return result;
+    }
+    /**
+     * 处理用户创建试题的请求.
+     *
+     * @param lessonName       - 课程名称
+     * @param description       - 课程描述
+     * @param request           - HttpServletRequest对象
+     * @return 包含试题创建结果的 Map<String, Boolean>对象
+     */
+    @RequestMapping(value = "/createLesson.action", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> createProblemAction(
+            @RequestParam(value = "lessonName") String lessonName,
+            @RequestParam(value = "description") String description,
+            HttpServletRequest request)
+    {
+
+        Map<String, Object> result =
+                lessonService.createLesson(
+                        lessonName,
+                        description);
+        if ((boolean) result.get("isSuccessful"))
+        {
+            long problemId = (Long) result.get("lessonId");
+        }
         return result;
     }
 
@@ -1002,8 +1074,14 @@ public class AdministrationController
     private static final Logger LOGGER = LogManager.getLogger(AdministrationController.class);
     
     /**
-     * 自动注入的ExamService对象，用户操作考试信息
+     * 自动注入的ExamService对象，用于操作考试信息
      */
     @Autowired
     private ExamService examService;
+
+    /**
+     * 自动注入的LessonService对象，用于操作课程信息
+     */
+    @Autowired
+    private LessonService lessonService;
 }

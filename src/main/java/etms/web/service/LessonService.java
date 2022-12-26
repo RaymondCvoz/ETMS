@@ -23,19 +23,6 @@ public class LessonService
 
     /**
      * 获取课程的结束编号.
-     *
-     * @param isPublic     - 是否只筛选公开课程
-     * @param offset       - 课程唯一标识符的起始序号
-     * @param limit        - 每次加载课程的数量
-     * @return 课程的结束编号
-     */
-    public long getLastIndexOfLessons(boolean isPublic, long offset, int limit)
-    {
-        return lessonMapper.getUpperBoundOfLessonsWithLimit(isPublic, offset, limit);
-    }
-
-    /**
-     * 获取课程的结束编号.
      * @return 课程的结束编号
      */
     public long getLastIndexOfLessonsAdmin()
@@ -63,7 +50,6 @@ public class LessonService
     public List<Lesson> getLessonsUsingFilters(
             String keyword)
     {
-        
         return lessonMapper.getLessonsUsingFilters(
                 keyword);
     }

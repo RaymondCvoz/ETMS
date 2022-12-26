@@ -44,18 +44,6 @@ public interface LessonMapper
      */
     long getUpperBoundOfLessons();
 
-    /**
-     * 获取某个课程区间内最后一个课程的ID.
-     *
-     * @param isPublic     - 是否只筛选公开课程
-     * @param offset       - 课程唯一标识符的起始编号
-     * @param limit        - 需要获取的课程的数量
-     * @return 某个课程区间内最后一个课程的ID
-     */
-    long getUpperBoundOfLessonsWithLimit(
-            @Param("isPublic") boolean isPublic,
-            @Param("lessonId") long offset,
-            @Param("limit") int limit);
 
     /**
      * 通过课程唯一标识符获取课程对象.

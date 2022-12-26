@@ -1,13 +1,6 @@
-
 package etms.web.controller;
-
-import etms.web.exception.ResourceNotFoundException;
 import etms.web.model.*;
 import etms.web.service.LessonService;
-import etms.web.service.SubmissionService;
-import etms.web.util.HttpSessionParser;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,29 +23,18 @@ public class LessonsController
 {
     /**
      * 显示课程库中的全部课程.
-     *
-     * @param startIndex          - 课程的起始下标
      * @param keyword             - 关键词
-     * @param lessonTagSlug - 课程分类的别名
      * @param request             - HttpRequest对象
      * @param response            - HttpResponse对象
      * @return 包含课程库页面信息的ModelAndView对象
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView lessonsView(
-            @RequestParam(value = "start", required = false, defaultValue = "1") long startIndex,
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "tag", required = false) String lessonTagSlug,
             HttpServletRequest request,
             HttpServletResponse response)
             throws UnsupportedEncodingException
     {
-        long startIndexOfLessons = getFirstIndexOfLessons();
-        if (startIndex < startIndexOfLessons)
-        {
-            startIndex = startIndexOfLessons;
-        }
-
         List<Lesson> lessons =
                 lessonService.getLessonsUsingFilters(keyword);
         long totalLessons =
@@ -123,7 +105,6 @@ public class LessonsController
             HttpServletResponse response)
     {
         HttpSession session = request.getSession();
-        boolean isLoggedIn = isLoggedIn(session);
         Lesson lesson = lessonService.getLesson(lessonId);
         ModelAndView view = new ModelAndView("lessons/lesson");
         view.addObject("lesson", lesson);

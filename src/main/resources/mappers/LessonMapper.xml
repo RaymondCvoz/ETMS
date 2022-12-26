@@ -6,13 +6,8 @@
     <!-- ResultMap -->
     <resultMap id="LessonResultMap" type="etms.web.model.Lesson">
         <id property="lessonId" column="lesson_id"/>
-        <result property="isPublic" column="lesson_is_public"/>
         <result property="lessonName" column="lesson_name"/>
         <result property="description" column="lesson_description"/>
-        <result property="hint" column="lesson_hint"/>
-        <result property="lessonType" column="lesson_type"/>
-        <result property="answer" column="lesson_answer"/>
-        <result property="score" column="lesson_score"/>
     </resultMap>
 
     <!-- Methods -->
@@ -76,14 +71,9 @@
             useCache="true">
         SELECT DISTINCT(p.lesson_id), lesson_name
         FROM etms_lessons p
-        WHERE p.lesson_id &gt;= #{lessonId}
         <if test="keyword != null and keyword != ''">
-            AND lesson_name LIKE "%"#{keyword}"%"
+            WHERE lesson_name LIKE "%"#{keyword}"%"
         </if>
-        <if test="lessonTagId != 0">
-            AND lesson_tag_id = #{lessonTagId}
-        </if>
-        LIMIT #{limit}
     </select>
 
     <select id="getLessonsUsingFiltersAdmin"

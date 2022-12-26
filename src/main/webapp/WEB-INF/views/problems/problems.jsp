@@ -9,11 +9,6 @@
 <head>
     <meta charset="UTF-8">
     <title><spring:message code="etms.problems.problems.title" text="Problems"/></title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="${description}">
-    <!-- Icon -->
-    <link href="${cdnUrl}/img/favicon.ico?v=${version}" rel="shortcut icon" type="image/x-icon">
     <!-- StyleSheets -->
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap.min.css?v=${version}"/>
     <link rel="stylesheet" type="text/css" href="${cdnUrl}/css/bootstrap-responsive.min.css?v=${version}"/>

@@ -72,6 +72,24 @@
 <%--                            code="etms.administration.include.sidebar.edit-exam" text="Edit Contest"/></a></li>--%>
                 </ul>
             </li>
+
+            <li class="nav-item primary-nav-item nav-item-has-children">
+                <a href="javascript:void(0);"></i> <spring:message
+                        code="etms.administration.include.sidebar.lessons" text="Lessons"/> <i
+                        class="fa fa-caret-right"></i></a>
+                <ul class="sub-nav nav">
+                    <li class="nav-item secondary-nav-item"><a
+                            href="<c:url value="/administration/all-lessons" />"><spring:message
+                            code="etms.administration.include.sidebar.all-lessons" text="All Lessons"/></a></li>
+                    <li class="nav-item secondary-nav-item"><a
+                            href="<c:url value="/administration/new-lesson" />"><spring:message
+                            code="etms.administration.include.sidebar.new-lesson" text="New Lesson"/></a></li>
+                    <%--                    <li class="nav-item secondary-nav-item hide"><a--%>
+                    <%--                            href="<c:url value="/administration/edit-exam" />"><spring:message--%>
+                    <%--                            code="etms.administration.include.sidebar.edit-exam" text="Edit Contest"/></a></li>--%>
+                </ul>
+            </li>
+
             <li class="nav-item primary-nav-item nav-item-has-children">
                 <a href="javascript:void(0);"></i> <spring:message
                         code="etms.administration.include.sidebar.submissions" text="Submissions"/> <i
