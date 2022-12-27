@@ -754,15 +754,6 @@ public class AdministrationController
                         answer,
                         score,
                         problemTags);
-        if (result.get("isSuccessful"))
-        {
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-
-            LOGGER.info(
-                    String.format(
-                            "Problem: [ProblemId=%s] was edited by administrator at %s.",
-                            new Object[]{problemId, ipAddress}));
-        }
         return result;
     }
 
@@ -803,12 +794,6 @@ public class AdministrationController
         if ((boolean) result.get("isSuccessful"))
         {
             long problemTagId = (Long) result.get("problemTagId");
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-
-            LOGGER.info(
-                    String.format(
-                            "ProblemCategory: [ProblemCategoryId=%s] was created by administrator at %s.",
-                            new Object[]{problemTagId, ipAddress}));
         }
         return result;
     }
@@ -836,15 +821,6 @@ public class AdministrationController
                         problemTagSlug,
                         problemTagName);
 
-        if (result.get("isSuccessful"))
-        {
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-
-            LOGGER.info(
-                    String.format(
-                            "ProblemCategory: [ProblemCategoryId=%s] was edited by administrator at %s.",
-                            new Object[]{problemTagId, ipAddress}));
-        }
         return result;
     }
 
@@ -871,10 +847,6 @@ public class AdministrationController
             {
                 deletedProblemTags.add(problemTagId);
             }
-            LOGGER.info(
-                    String.format(
-                            "ProblemCategory: [ProblemCategoryId=%s] was deleted by administrator at %s.",
-                            new Object[]{problemTagId}));
         }
         result.put("isSuccessful", true);
         result.put("deletedProblemCategories", deletedProblemTags);
@@ -930,14 +902,33 @@ public class AdministrationController
             {
                 deletedSubmissions.add(submissionId);
             }
-            String ipAddress = HttpRequestParser.getRemoteAddr(request);
-            LOGGER.info(
-                    String.format(
-                            "Submission: [SubmissionId=%s] deleted by administrator at %s.",
-                            new Object[]{submissionId, ipAddress}));
         }
         result.put("isSuccessful", true);
         result.put("deletedSubmissions", deletedSubmissions);
+        return result;
+    }
+
+
+    /**
+     * 更新提交记录.
+     *
+     * @param submissionId - 提交记录ID的集合, 以逗号(, )分隔
+     * @param judgeScore   -评测得分
+     * @param request     - HttpServletRequest对象
+     * @return 提交记录的删除结果
+     */
+    @RequestMapping(value = "/editSubmission.action", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, Object> editSubmissionAction(
+            @RequestParam(value = "submissionId") long submissionId,
+            @RequestParam(value = "judgeScore") int judgeScore,
+            HttpServletRequest request)
+    {
+        Map<String, Object> result = new HashMap<>(3, 1);
+        Submission submission = submissionService.getSubmission(submissionId);
+        submission.setJudgeScore(judgeScore);
+        submissionService.updateSubmission(submission);
+        result.put("isSuccessful", true);
         return result;
     }
 
@@ -989,7 +980,6 @@ public class AdministrationController
         }
         ModelAndView view = new ModelAndView("administration/edit-submission");
         view.addObject("submission", submission);
-        view.addObject("csrfToken", CsrfProtector.getCsrfToken(request.getSession()));
         return view;
     }
 

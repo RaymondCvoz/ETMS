@@ -351,6 +351,16 @@ public class SubmissionService
     }
 
     /**
+     * 更新提交记录
+     * @param submission 提交记录
+     * @return 更新结果
+     */
+    public int updateSubmission(Submission submission)
+    {
+        int result = submissionMapper.updateSubmission(submission);
+        return result;
+    }
+    /**
      * 计算题目得分情况
      * @param submissionId 提交信息唯一标识符
      * @param problemId 题目唯一标识符
