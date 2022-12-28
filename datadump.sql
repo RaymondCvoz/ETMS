@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.36, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: etms
 -- ------------------------------------------------------
--- Server version	5.7.36-log
+-- Server version	5.7.40-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -123,56 +123,6 @@ INSERT INTO `etms_exams` VALUES (1,'期末考试2','说明','2022-12-23 23:47:19
 UNLOCK TABLES;
 
 --
--- Table structure for table `etms_lesson_exams`
---
-
-DROP TABLE IF EXISTS `etms_lesson_exams`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `etms_lesson_exams` (
-  `lesson_id` bigint(20) DEFAULT NULL COMMENT '课程唯一标识符',
-  `exam_id` bigint(20) DEFAULT NULL COMMENT '测试唯一标识符',
-  KEY `etms_lesson_exams_etms_exams_null_fk` (`exam_id`),
-  KEY `etms_lesson_exams_etms_lessons_null_fk` (`lesson_id`),
-  CONSTRAINT `etms_lesson_exams_etms_exams_null_fk` FOREIGN KEY (`exam_id`) REFERENCES `etms_exams` (`exam_id`),
-  CONSTRAINT `etms_lesson_exams_etms_lessons_null_fk` FOREIGN KEY (`lesson_id`) REFERENCES `etms_lessons` (`lesson_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程与测试对应关系';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `etms_lesson_exams`
---
-
-LOCK TABLES `etms_lesson_exams` WRITE;
-/*!40000 ALTER TABLE `etms_lesson_exams` DISABLE KEYS */;
-/*!40000 ALTER TABLE `etms_lesson_exams` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `etms_lesson_participants`
---
-
-DROP TABLE IF EXISTS `etms_lesson_participants`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `etms_lesson_participants` (
-  `lesson_id` int(11) NOT NULL COMMENT '课程唯一标识符',
-  `participant_uid` int(11) NOT NULL COMMENT '选课学生唯一标识符',
-  KEY `etms_lesson_participant_etms_lessons_null_fk` (`lesson_id`),
-  KEY `etms_lesson_participant_etms_users_null_fk` (`participant_uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='学生选课信息';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `etms_lesson_participants`
---
-
-LOCK TABLES `etms_lesson_participants` WRITE;
-/*!40000 ALTER TABLE `etms_lesson_participants` DISABLE KEYS */;
-/*!40000 ALTER TABLE `etms_lesson_participants` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `etms_lesson_resources`
 --
 
@@ -207,16 +157,11 @@ DROP TABLE IF EXISTS `etms_lessons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `etms_lessons` (
-  `lesson_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '课程唯一标识符',
-  `lesson_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '课程名称',
-  `description` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '课程描述',
-  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '课程开始时间',
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '课程结束时间',
-  `lecturer_id` bigint(20) DEFAULT NULL COMMENT '讲师用户唯一标识符',
-  PRIMARY KEY (`lesson_id`),
-  KEY `etms_lessons_etms_users_null_fk` (`lecturer_id`),
-  CONSTRAINT `etms_lessons_etms_users_null_fk` FOREIGN KEY (`lecturer_id`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='课程信息';
+  `lesson_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程唯一标识符',
+  `lesson_name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '课程名称',
+  `lesson_description` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '课程内容',
+  PRIMARY KEY (`lesson_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,6 +170,7 @@ CREATE TABLE `etms_lessons` (
 
 LOCK TABLES `etms_lessons` WRITE;
 /*!40000 ALTER TABLE `etms_lessons` DISABLE KEYS */;
+INSERT INTO `etms_lessons` VALUES (1,'Electron快速入门','Electron是一个使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。 Electron 将 Chromium 和 Node.js 嵌入到了一个二进制文件中，因此它允许你仅需一个代码仓库，就可以撰写支持 Windows、macOS 和 Linux 的跨平台应用。\n\n本教程将指导您使用 Electron 开发一个桌面应用，并将其分发给终端用户。');
 /*!40000 ALTER TABLE `etms_lessons` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,7 +355,7 @@ CREATE TABLE `etms_submissions` (
   KEY `etms_submissions_etms_problems_null_fk` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_problems_null_fk` FOREIGN KEY (`problem_id`) REFERENCES `etms_problems` (`problem_id`),
   CONSTRAINT `etms_submissions_etms_users_null_fk` FOREIGN KEY (`uid`) REFERENCES `etms_users` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目提交信息';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='题目提交信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -418,7 +364,7 @@ CREATE TABLE `etms_submissions` (
 
 LOCK TABLES `etms_submissions` WRITE;
 /*!40000 ALTER TABLE `etms_submissions` DISABLE KEYS */;
-INSERT INTO `etms_submissions` VALUES (1,2,10001,'2022-12-23 23:41:03',10,'C'),(2,2,10001,'2022-12-23 23:47:31',10,'C'),(3,4,10006,'2022-12-23 23:55:18',0,'C');
+INSERT INTO `etms_submissions` VALUES (1,2,10001,'2022-12-23 23:41:03',10,'C'),(2,2,10001,'2022-12-23 23:47:31',10,'C'),(3,4,10006,'2022-12-23 23:55:18',0,'C'),(4,5,10001,'2022-12-26 05:06:57',10,'A');
 /*!40000 ALTER TABLE `etms_submissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,4 +462,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-26 10:05:47
+-- Dump completed on 2022-12-28 16:18:12
