@@ -1,5 +1,6 @@
 package etms.web.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -62,9 +63,11 @@ public class ExamParticipant
     /**
      * 考试对象
      */
+    @Autowired
     private Exam exam;
     /**
      * 用户对象
      */
+    @Autowired
     private User user;
 }

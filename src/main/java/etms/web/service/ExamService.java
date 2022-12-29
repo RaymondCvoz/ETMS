@@ -66,21 +66,29 @@ public class ExamService
 
 
     /**
-     * 获取考试记录.
+     * 获取考试考生记录.
      *
      * @param examId - 考试的唯一标识符
      * @return 包含考生和提交记录信息的Map对象
      */
-    public Map<String, Object> getLeaderBoard(long examId)
+    public List<ExamParticipant> getLeaderBoardParticipants(long examId)
     {
-        Map<String, Object> result = new HashMap<>(3, 1);
         List<ExamParticipant> participants =
                 examParticipantMapper.getParticipantsOfExam(examId);
+        return participants;
+    }
+
+    /**
+     * 获取考试提交记录.
+     *
+     * @param examId - 考试的唯一标识符
+     * @return 包含考生和提交记录信息的Map对象
+     */
+    public Map<Long, Map<Long, Submission>> getLeaderBoardSubmissions(long examId)
+    {
         Map<Long, Map<Long, Submission>> submissions =
                 getSubmissionsGroupByParticipant(examSubmissionMapper.getSubmissionsOfExam(examId), true);
-        result.put("participants", participants);
-        result.put("submissions", submissions);
-        return result;
+        return submissions;
     }
 
     /**

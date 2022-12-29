@@ -38,12 +38,12 @@
         SELECT *
         FROM etms_exam_participants
         WHERE exam_id = #{examId}
-          AND participant_uid = #{uid}
+          AND uid = #{uid}
     </select>
     <insert id="createExamParticipant"
             parameterType="etms.web.model.ExamParticipant"
             flushCache="true">
-        INSERT INTO etms_exam_participants (exam_id, participant_uid)
+        INSERT INTO etms_exam_participants (exam_id, uid)
         VALUES (#{exam.examId}, #{user.uid})
     </insert>
     <delete id="deleteExamParticipant"
@@ -52,7 +52,7 @@
         DELETE
         FROM etms_exam_participants
         WHERE exam_id = #{exam.examId}
-          AND participant_uid = #{user.uid}
+          AND uid = #{user.uid}
     </delete>
     <delete id="deleteExamAllParticipant"
             parameterType="map"

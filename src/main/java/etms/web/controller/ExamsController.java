@@ -235,11 +235,14 @@ public class ExamsController
         Map<String, Object> result = null;
         view = new ModelAndView("exams/leaderboard");
 
-        result = examService.getLeaderBoard(examId);
+        List<ExamParticipant> participants = examService.getLeaderBoardParticipants(examId);
+        Map<Long, Map<Long, Submission>> submissions = examService.getLeaderBoardSubmissions(examId);
 
-        List<ExamParticipant> participants = (List<ExamParticipant>) result.get("participants");
-        Map<Long, Map<Long, Submission>> submissions =
-                (Map<Long, Map<Long, Submission>>) result.get("submissions");
+        for(ExamParticipant examParticipant : participants)
+        {
+            System.out.println(examParticipant.getUser().toString());
+        }
+
         view.addObject("participants", participants);
         view.addObject("submissions", submissions);
         view.addObject("exam", exam);
