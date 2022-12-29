@@ -47,9 +47,9 @@
                     <li class="nav-item secondary-nav-item"><a
                             href="<c:url value="/administration/new-problem" />"><spring:message
                             code="etms.administration.include.sidebar.new-problem" text="New Problem"/></a></li>
-                    <li class="nav-item secondary-nav-item"><a
-                            href="<c:url value="/administration/problem-categories" />"><spring:message
-                            code="etms.administration.include.sidebar.problem-categories" text="Categories"/></a></li>
+<%--                    <li class="nav-item secondary-nav-item"><a--%>
+<%--                            href="<c:url value="/administration/problem-categories" />"><spring:message--%>
+<%--                            code="etms.administration.include.sidebar.problem-categories" text="Categories"/></a></li>--%>
 <%--                    <li class="nav-item secondary-nav-item hide"><a--%>
 <%--                            href="<c:url value="/administration/edit-problem" />"><spring:message--%>
 <%--                            code="etms.administration.include.sidebar.edit-problem" text="Edit Problem"/></a></li>--%>
@@ -102,19 +102,19 @@
 <%--                            code="etms.administration.include.sidebar.edit-submission" text="Edit Submission"/></a></li>--%>
                 </ul>
             </li>
-            <li class="nav-item primary-nav-item nav-item-has-children">
-                <a href="javascript:void(0);"> <spring:message
-                        code="etms.administration.include.sidebar.settings" text="Settings"/> <i
-                        class="fa fa-caret-right"></i></a>
-                <ul class="sub-nav nav">
-                    <li class="nav-item secondary-nav-item"><a
-                            href="<c:url value="/administration/general-settings" />"><spring:message
-                            code="etms.administration.include.sidebar.general-settings" text="General"/></a></li>
+<%--            <li class="nav-item primary-nav-item nav-item-has-children">--%>
+<%--                <a href="javascript:void(0);"> <spring:message--%>
+<%--                        code="etms.administration.include.sidebar.settings" text="Settings"/> <i--%>
+<%--                        class="fa fa-caret-right"></i></a>--%>
+<%--                <ul class="sub-nav nav">--%>
 <%--                    <li class="nav-item secondary-nav-item"><a--%>
-<%--                            href="<c:url value="/administration/language-settings" />"><spring:message--%>
-<%--                            code="etms.administration.include.sidebar.language-settings" text="Languages"/></a></li>--%>
-                </ul>
-            </li>
+<%--                            href="<c:url value="/administration/general-settings" />"><spring:message--%>
+<%--                            code="etms.administration.include.sidebar.general-settings" text="General"/></a></li>--%>
+<%--&lt;%&ndash;                    <li class="nav-item secondary-nav-item"><a&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            href="<c:url value="/administration/language-settings" />"><spring:message&ndash;%&gt;--%>
+<%--&lt;%&ndash;                            code="etms.administration.include.sidebar.language-settings" text="Languages"/></a></li>&ndash;%&gt;--%>
+<%--                </ul>--%>
+<%--            </li>--%>
 
         </ul>
     </div> <!-- #sidebar-nav -->
