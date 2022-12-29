@@ -109,7 +109,7 @@
                     </div> <!-- .span4 -->
                     <div class="span8">
                         <div class="control-group">
-                            <input id="college" class="span8" type="text" value="${user.email}" maxlength="64" readonly/>
+                            <input id="college" class="span8" type="text" value="山东科技大学电气信息系" maxlength="64" readonly/>
                         </div> <!-- .control-group -->
                     </div> <!-- .span8 -->
                 </div>
@@ -120,7 +120,7 @@
                     </div> <!-- .span4 -->
                     <div class="span8">
                         <div class="control-group">
-                            <input id="major" class="span8" type="text" value="${user.email}" maxlength="64" readonly/>
+                            <input id="major" class="span8" type="text" value="计算机科学与技术" maxlength="64" readonly/>
                         </div> <!-- .control-group -->
                     </div> <!-- .span8 -->
                 </div>
@@ -131,7 +131,7 @@
                     </div> <!-- .span4 -->
                     <div class="span8">
                         <div class="control-group">
-                            <input id="number" class="span8" type="text" value="${user.email}" maxlength="64" readonly/>
+                            <input id="number" class="span8" type="text" value="${user.uid}" maxlength="64" readonly/>
                         </div> <!-- .control-group -->
                     </div> <!-- .span8 -->
                 </div>
